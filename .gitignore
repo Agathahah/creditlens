@@ -1,0 +1,76 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Data files (jangan commit data besar)
+data/raw/*.csv
+data/raw/*.zip
+data/raw/*.parquet
+data/processed/*.parquet
+data/processed/*.csv
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Docker
+docker-compose.override.yml
+
+# ML artifacts
+mlruns/
+*.pkl
+*.joblib
+*.onnx
+*.h5
+wandb/
+lightning_logs/
+
+# dbt
+target/
+dbt_packages/
+logs/
+.profiles.yml
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Claude Code
+.claude/
+CLAUDE.local.md
