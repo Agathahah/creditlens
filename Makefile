@@ -54,6 +54,15 @@ docker-logs: ## Show Docker logs
 eval: ## Run model evaluation
 	.venv/bin/python src/ml/evaluate.py --output results/
 
+db-revision: ## Create a new Alembic migration (usage: make db-revision m="add users table")
+	.venv/bin/alembic revision --autogenerate -m "$(m)"
+
+db-upgrade: ## Apply migrations up to head
+	.venv/bin/alembic upgrade head
+
+db-downgrade: ## Roll back one migration
+	.venv/bin/alembic downgrade -1
+
 clean: ## Remove all generated files
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
 	rm -rf .pytest_cache htmlcov .coverage mlruns target/ .mypy_cache .ruff_cache
