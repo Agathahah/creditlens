@@ -135,7 +135,7 @@ class DataLoader:
                         row["title"] if not pd.isna(row["title"]) else None,
                         row["zip_code"],
                         row["addr_state"],
-                        float(row["dti"]) if not pd.isna(row["dti"]) else 0.0,
+                        float(row["dti"]) if (not pd.isna(row["dti"]) and float(row["dti"]) >= 0) else None,
                         int(row["delinq_2yrs"]) if not pd.isna(row["delinq_2yrs"]) else 0,
                         earliest_cr,
                         int(row["inq_last_6mths"]) if not pd.isna(row["inq_last_6mths"]) else 0,
@@ -163,70 +163,69 @@ class DataLoader:
             cursor.close()
             conn.close()
 
-    def _download_sec_zip(self, year: int, quarter: int) -> io.BytesIO:
-        """Download SEC EDGAR quarterly financial statements ZIP.
+    # SEC EDGAR bulk ZIP (sub.txt + num.txt) is no longer served at the old
+    # /dera/data/financial-statements/ path. Use the XBRL frames API instead:
+    # https://data.sec.gov/api/xbrl/frames/{taxonomy}/{tag}/{unit}/{period}.json
+    _SEC_GAAP_TAGS: list[tuple[str, str]] = [
+        ("NetIncomeLoss", "USD"),
+        ("Revenues", "USD"),
+        ("Assets", "USD"),
+        ("Liabilities", "USD"),
+        ("StockholdersEquity", "USD"),
+        ("CashAndCashEquivalentsAtCarryingValue", "USD"),
+        ("EarningsPerShareBasic", "USD/shares"),
+        ("LongTermDebt", "USD"),
+    ]
+
+    def _fetch_sec_frame(self, tag: str, unit: str, period: str) -> pd.DataFrame:
+        """Fetch one XBRL concept for all companies from the SEC frames API.
 
         Args:
-            year: Calendar year (e.g. 2023).
-            quarter: Quarter number 1-4.
+            tag: GAAP tag name (e.g. 'NetIncomeLoss').
+            unit: Unit of measure (e.g. 'USD').
+            period: Frame period string (e.g. 'CY2023Q4I').
 
         Returns:
-            BytesIO buffer containing the ZIP archive.
-
-        Raises:
-            requests.HTTPError: If the SEC server returns a non-200 status.
+            DataFrame with columns: adsh, cik, company_name, tag, period, value, uom.
         """
-        url = f"https://www.sec.gov/Archives/edgar/full-index/{year}/QTR{quarter}/company.gz"
-        # Prefer the financial-statements bulk download (has num.txt + sub.txt)
-        url = (
-            f"https://www.sec.gov/Archives/edgar/full-index/{year}/"
-            f"QTR{quarter}/full-index.zip"
-        )
-        fs_url = f"https://www.sec.gov/dera/data/financial-statements/{year}q{quarter}.zip"
-        logger.info(f"Downloading SEC EDGAR {year} Q{quarter} from {fs_url}...")
-        resp = requests.get(fs_url, headers={"User-Agent": "CreditLens research@creditlens.ai"}, timeout=120)
+        url = f"https://data.sec.gov/api/xbrl/frames/us-gaap/{tag}/{unit}/{period}.json"
+        resp = requests.get(url, headers={"User-Agent": "CreditLens admin@creditlens.ai"}, timeout=60)
+        if resp.status_code == 404:
+            logger.warning(f"No frame data for {tag}/{unit}/{period} — skipping.")
+            return pd.DataFrame()
         resp.raise_for_status()
-        return io.BytesIO(resp.content)
-
-    def _parse_sec_quarter(self, zip_data: io.BytesIO) -> pd.DataFrame:
-        """Parse sub.txt and num.txt from SEC quarterly ZIP into a joined DataFrame.
-
-        Args:
-            zip_data: BytesIO of the downloaded ZIP archive.
-
-        Returns:
-            DataFrame with columns matching raw.sec_financials schema.
-        """
-        with zipfile.ZipFile(zip_data) as zf:
-            sub = pd.read_csv(zf.open("sub.txt"), sep="\t", dtype=str, low_memory=False)
-            num = pd.read_csv(zf.open("num.txt"), sep="\t", dtype=str, low_memory=False)
-
-        sub = sub[["adsh", "cik", "name", "form", "period", "fy", "fp"]].rename(
-            columns={"name": "company_name", "form": "form_type"}
-        )
-        num = num[["adsh", "tag", "uom", "value"]].dropna(subset=["value"])
-        merged = num.merge(sub, on="adsh", how="left")
-        merged["period"] = pd.to_datetime(merged["period"], format="%Y%m%d", errors="coerce")
-        merged["value"] = pd.to_numeric(merged["value"], errors="coerce")
-        merged["cik"] = pd.to_numeric(merged["cik"], errors="coerce")
-        merged["fy"] = pd.to_numeric(merged["fy"], errors="coerce")
-        return merged.dropna(subset=["period", "value"])
+        payload = resp.json()
+        rows = payload.get("data", [])
+        if not rows:
+            return pd.DataFrame()
+        # API returns list of dicts: {accn, cik, entityName, loc, end, val}
+        df = pd.DataFrame(rows).rename(columns={
+            "accn": "adsh", "entityName": "company_name", "val": "value"
+        })
+        df["tag"] = tag
+        df["uom"] = unit
+        df["period"] = pd.to_datetime(df["end"], errors="coerce")
+        return df[["adsh", "cik", "company_name", "tag", "period", "value", "uom"]]
 
     def load_sec_edgar(self, year: int, quarter: int) -> None:
-        """Download and upsert one quarter of SEC EDGAR financial statements.
+        """Fetch key GAAP concepts for all SEC filers via the XBRL frames API.
+
+        Iterates over _SEC_GAAP_TAGS for instant and point-in-time frames
+        (CY{year}Q{quarter}I) and upserts into raw.sec_financials.
 
         Args:
             year: Calendar year (e.g. 2023).
             quarter: Quarter number 1-4.
 
         Raises:
-            requests.HTTPError: On download failure.
             psycopg2.Error: On database failure.
         """
         import psycopg2
-        zip_data = self._download_sec_zip(year, quarter)
-        df = self._parse_sec_quarter(zip_data)
-        logger.info(f"Parsed {len(df):,} rows for {year} Q{quarter}. Upserting...")
+        period = f"CY{year}Q{quarter}I"
+        logger.info(f"Loading SEC EDGAR XBRL frames for {period}...")
+        frames = [self._fetch_sec_frame(tag, unit, period) for tag, unit in self._SEC_GAAP_TAGS]
+        df = pd.concat([f for f in frames if not f.empty], ignore_index=True)
+        logger.info(f"Fetched {len(df):,} rows across {len(self._SEC_GAAP_TAGS)} GAAP tags.")
 
         conn = psycopg2.connect(self.settings.POSTGRES_URL)
         cursor = conn.cursor()
@@ -236,7 +235,7 @@ class DataLoader:
                     row["adsh"], row["tag"], row["period"].date() if pd.notna(row["period"]) else None,
                     int(row["cik"]) if pd.notna(row["cik"]) else None,
                     row.get("company_name"), row.get("form_type"),
-                    int(row["fy"]) if pd.notna(row["fy"]) else None,
+                    int(row.get("fy")) if pd.notna(row.get("fy")) else None,
                     row.get("fp"), float(row["value"]), row.get("uom"),
                 )
                 for _, row in df.iterrows()
