@@ -1,34 +1,42 @@
 import logging
 import sys
-import uuid
 from contextvars import ContextVar
+from typing import Any
+
 import structlog
+
 from src.common.config import get_settings
 
 # Context variable for request tracing
 request_id_var: ContextVar[str] = ContextVar("request_id", default="")
 
+
 def get_request_id() -> str:
     """Retrieve the current thread request identifier for logs tracing."""
     return request_id_var.get()
+
 
 def set_request_id(request_id: str) -> None:
     """Set the current thread request identifier."""
     request_id_var.set(request_id)
 
-def add_request_id_processor(logger: structlog.types.WrappedLogger, method_name: str, event_dict: dict) -> dict:
+
+def add_request_id_processor(
+    logger: structlog.types.WrappedLogger, method_name: str, event_dict: dict[str, Any]
+) -> dict[str, Any]:
     """Processor to dynamically append the request_id context variable to every logged record."""
     req_id = get_request_id()
     if req_id:
         event_dict["request_id"] = req_id
     return event_dict
 
+
 def configure_logging() -> None:
     """Configure structured console logging depending on environment."""
     settings = get_settings()
     is_production = settings.ENV == "production"
 
-    shared_processors = [
+    shared_processors: list[Any] = [
         structlog.stdlib.add_logger_name,
         structlog.stdlib.add_log_level,
         structlog.stdlib.PositionalArgumentsFormatter(),
@@ -39,7 +47,8 @@ def configure_logging() -> None:
     ]
 
     structlog.configure(
-        processors=shared_processors + [
+        processors=shared_processors
+        + [
             structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
         ],
         logger_factory=structlog.stdlib.LoggerFactory(),

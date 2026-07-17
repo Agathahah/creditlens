@@ -1,10 +1,14 @@
-import pytest
 from datetime import date
+from typing import Any
+
+import pytest
 from pydantic import ValidationError
+
 from src.common.models import Applicant
 
-def test_applicant_valid_serialization():
-    data = {
+
+def test_applicant_valid_serialization() -> None:
+    data: dict[str, Any] = {
         "annual_inc": 85000.0,
         "emp_length": "10+ years",
         "home_ownership": "MORTGAGE",
@@ -15,13 +19,14 @@ def test_applicant_valid_serialization():
         "open_acc": 10,
         "revol_bal": 15000.0,
         "revol_util": 42.1,
-        "total_acc": 22
+        "total_acc": 22,
     }
     applicant = Applicant(**data)
     assert applicant.annual_inc == 85000.0
     assert applicant.addr_state == "CA"
 
-def test_applicant_invalid_income():
+
+def test_applicant_invalid_income() -> None:
     with pytest.raises(ValidationError):
         Applicant(
             annual_inc=-500.0,  # Invalid: must be gt=0
@@ -32,5 +37,5 @@ def test_applicant_invalid_income():
             open_acc=5,
             revol_bal=1000.0,
             revol_util=50.0,
-            total_acc=10
+            total_acc=10,
         )
