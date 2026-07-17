@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: loan_features
+    description: "Tabel fitur pinjaman yang sudah diproses dengan engineered metrics tingkat lanjut."
+    columns:
+      - name: id
+        description: "Primary key pinjaman."
+        tests:
+          - unique
+          - not_null
+      - name: is_default
+        description: "Target biner penunggakan (1 = Default, 0 = Fully Paid, NULL = Ongoing)."
+        tests:
+          - accepted_values:
+              values: [0, 1]
+      - name: installment_to_income_ratio
+        description: "Rasio beban cicilan terhadap total pendapatan tahunan."
+        tests:
+          - not_null
+
+  - name: macro_features
+    description: "Tabel makroekonomi FRED bulanan dengan lagged features (3 dan 6 bulan)."
+    columns:
+      - name: date
+        description: "Tanggal awal bulan rilis data makro."
+        tests:
+          - unique
+          - not_null
+
+  - name: final_features
+    description: "Tabel akhir denormalisasi gabungan fitur pinjaman dan makroekonomi."
+    columns:
+      - name: id
+        description: "Primary key pinjaman."
+        tests:
+          - unique
+          - not_null
+      - name: is_default
+        description: "Target biner penunggakan."
+        tests:
+          - accepted_values:
+              values: [0, 1]
