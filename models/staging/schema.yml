@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: lc_loans_clean
+    description: >
+      Cleaned and deduplicated Lending Club loans. Adds is_default binary target,
+      emp_length_years, credit_age_years, and issue_year/month for temporal splits.
+      Filters to rows with definitive loan outcomes for ML training.
+    columns:
+      - name: loan_id
+        description: "Lending Club loan identifier (primary key)"
+        tests: [not_null, unique]
+      - name: is_default
+        description: "Binary ML target: 1=default/charged-off, 0=fully-paid, NULL=ongoing"
+      - name: emp_length_years
+        description: "Employment length parsed to integer years (0–11)"
+      - name: credit_age_years
+        description: "Years between earliest credit line and loan issue date"
+      - name: issue_year
+        description: "Year of loan issuance (for temporal train/test split)"
+      - name: dti
+        description: "Debt-to-income ratio, NULL coerced to 0"
+
+  - name: fred_macro_clean
+    description: >
+      Monthly macro indicators pivoted to wide format.
+      FEDFUNDS, UNRATE, CPIAUCSL, GDPC1 each become a column.
+      Adds cpi_yoy_change and gdp_qoq_growth as derived features.
+    columns:
+      - name: observation_month
+        description: "First day of calendar month (join key for lc_loans.issue_date)"
+        tests: [not_null, unique]
+      - name: fed_funds_rate
+        description: "Effective Federal Funds Rate (%)"
+      - name: unemployment_rate
+        description: "Civilian Unemployment Rate (%)"
+      - name: cpi
+        description: "Consumer Price Index for All Urban Consumers"
+      - name: cpi_yoy_change
+        description: "Year-over-year CPI change (inflation proxy)"
+      - name: real_gdp
+        description: "Real GDP in billions of chained 2017 dollars (quarterly, forward-filled)"
+      - name: gdp_qoq_growth
+        description: "Quarter-over-quarter GDP growth rate (%)"

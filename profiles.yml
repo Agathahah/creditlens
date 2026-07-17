@@ -1,0 +1,13 @@
+creditlens:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: creditlens
+      password: devpassword
+      dbname: creditlens
+      schema: staging
+      threads: 4
+      keepalives_idle: 0

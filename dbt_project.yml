@@ -1,0 +1,24 @@
+name: creditlens
+version: "1.0.0"
+config-version: 2
+profile: creditlens
+
+model-paths: ["models"]
+test-paths: ["tests/dbt"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+analysis-paths: ["analyses"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  creditlens:
+    staging:
+      +schema: staging
+      +materialized: view
+    mart:
+      +schema: mart
+      +materialized: table
