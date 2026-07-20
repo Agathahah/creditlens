@@ -35,6 +35,7 @@ dependencies = [
     "evidently>=0.4.0",
     "fredapi>=0.5.0",
     "pydantic>=2.8.0",
+    "email-validator>=2.0.0",
     "pydantic-settings>=2.4.0",
     "structlog>=24.4.0",
     "redis>=5.0.0",
@@ -84,16 +85,24 @@ line_length = 100
 
 [tool.ruff]
 line-length = 100
-target-version = "py311"
+target-version = "py312"
+
+[tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["N803", "N806"]
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.12"
 strict = true
 warn_return_any = true
 warn_unused_configs = true
+ignore_missing_imports = true
+disable_error_code = ["import-untyped"]
 
 [tool.pytest.ini_options]
 testpaths = ["src", "tests"]
 asyncio_mode = "auto"
 addopts = "-v --tb=short"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
