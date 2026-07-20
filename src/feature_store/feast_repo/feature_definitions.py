@@ -101,7 +101,7 @@ credit_scoring_service = FeatureService(
     description="Feature set served to the credit scoring API",
 )
 
-ALL_DEFINITIONS: list[object] = [
+ALL_DEFINITIONS: list[Entity | FeatureView | FeatureService] = [
     loan,
     loan_features_view,
     macro_features_view,

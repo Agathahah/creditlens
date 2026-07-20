@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import cast
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -165,7 +167,7 @@ def test_predict_fetches_features_from_online_store(
     registry: ModelRegistry, low_risk_payload: dict[str, object]
 ) -> None:
     """Without inline features, features must come from the feature fetcher."""
-    features = low_risk_payload["features"]
+    features = cast(dict[str, float], low_risk_payload["features"])
     fetching_registry = ModelRegistry(
         predictor=registry.predictor,
         explainer=registry.explainer,
