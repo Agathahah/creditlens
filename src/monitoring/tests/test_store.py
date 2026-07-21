@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 from typing import Any
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import numpy as np
 
@@ -82,19 +82,7 @@ def test_persist_drift_inserts_run_and_features() -> None:
 
 def test_get_sync_engine_normalizes_async_url() -> None:
     """The async driver prefix must be rewritten to the sync driver."""
-    captured: dict[str, str] = {}
-
-    def _fake_create_engine(url: str) -> str:
-        captured["url"] = url
-        return url
-
-    import sqlalchemy
-
-    original = sqlalchemy.create_engine
-    sqlalchemy.create_engine = _fake_create_engine  # type: ignore[assignment]
-    try:
+    with patch("sqlalchemy.create_engine", side_effect=lambda url: url) as create_engine:
         store.get_sync_engine("postgresql+asyncpg://u:p@h:5432/db")
-    finally:
-        sqlalchemy.create_engine = original  # type: ignore[assignment]
 
-    assert captured["url"] == "postgresql://u:p@h:5432/db"
+    create_engine.assert_called_once_with("postgresql://u:p@h:5432/db")
