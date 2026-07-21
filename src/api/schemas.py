@@ -21,12 +21,16 @@ class ApplicantInput(BaseModel):
     """
 
     applicant_id: str | None = Field(
-        default=None, description="Client-supplied applicant identifier", examples=["app-001"]
+        default=None,
+        description="Applicant/loan identifier; used as the Feast entity key "
+        "when 'features' is omitted",
+        examples=["app-001"],
     )
-    features: dict[str, float] = Field(
-        ...,
+    features: dict[str, float] | None = Field(
+        default=None,
         min_length=1,
-        description="Mapping of model feature name to preprocessed numeric value",
+        description="Mapping of model feature name to preprocessed numeric value. "
+        "Omit to fetch features from the Feast online store by applicant_id.",
         examples=[{"loan_amnt": 15000.0, "int_rate": 13.5, "dti_eff": 18.2}],
     )
 

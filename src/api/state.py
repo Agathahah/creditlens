@@ -7,7 +7,9 @@ can inject lightweight fakes.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass, field
+from typing import Any
 
 import pandas as pd
 from fastapi import HTTPException, Request, status
@@ -25,6 +27,7 @@ class ModelRegistry:
     explainer: ShapExplainer | None = None
     counterfactual_generator: CounterfactualGenerator | None = None
     expected_features: list[str] = field(default_factory=list)
+    feature_fetcher: Callable[[str], dict[str, Any] | None] | None = None
 
     @property
     def model_loaded(self) -> bool:
@@ -83,6 +86,41 @@ class ModelRegistry:
                 detail=f"Missing required features: {missing}",
             )
         return pd.DataFrame([{name: features[name] for name in expected}])
+
+    def resolve_feature_frame(
+        self, applicant_id: str | None, features: dict[str, float] | None
+    ) -> pd.DataFrame:
+        """Resolve the feature frame from the payload or the online store.
+
+        Inline features take precedence; otherwise the Feast online store
+        is queried by applicant_id (ADR-006).
+
+        Args:
+            applicant_id: Loan/applicant entity key for online lookup.
+            features: Inline preprocessed feature values, if provided.
+
+        Returns:
+            Single-row feature DataFrame ready for scoring.
+
+        Raises:
+            HTTPException: 422 when neither inline features nor an online
+                lookup are possible; 404 when the entity is not in the
+                online store.
+        """
+        if features:
+            return self.build_feature_frame(features)
+        if self.feature_fetcher is None or not applicant_id:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="Provide 'features', or 'applicant_id' with a configured feature store.",
+            )
+        fetched = self.feature_fetcher(applicant_id)
+        if fetched is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"No online features found for applicant '{applicant_id}'.",
+            )
+        return self.build_feature_frame(fetched)
 
 
 def get_registry(request: Request) -> ModelRegistry:

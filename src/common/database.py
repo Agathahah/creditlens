@@ -1,3 +1,4 @@
+import inspect
 import logging
 from collections.abc import AsyncGenerator
 
@@ -77,7 +78,10 @@ class DatabaseManager:
         # 2. Test Redis
         try:
             r_client = await self.get_redis()
-            await r_client.ping()
+            # redis-py types ping() as Awaitable[bool] | bool depending on client
+            pong = r_client.ping()
+            if inspect.isawaitable(pong):
+                await pong
             diagnostics["redis"] = "healthy"
         except Exception as e:
             logger.error(f"Redis diagnostic health check failed: {e}")

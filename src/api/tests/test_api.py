@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
+from typing import cast
+
 import numpy as np
 import pandas as pd
 import pytest
 from fastapi.testclient import TestClient
 from xgboost import XGBClassifier
 
-from src.api.main import create_app, load_registry
+from src.api.main import build_feature_fetcher, create_app, load_registry
 from src.api.state import ModelRegistry
 from src.explainability.counterfactual import CounterfactualGenerator
 from src.explainability.shap_explainer import ShapExplainer
@@ -159,6 +161,62 @@ def test_endpoints_return_503_without_model(low_risk_payload: dict[str, object])
     assert bare_client.post("/explain", json=low_risk_payload).status_code == 503
     health_body = bare_client.get("/health").json()
     assert health_body["model_loaded"] is False
+
+
+def test_predict_fetches_features_from_online_store(
+    registry: ModelRegistry, low_risk_payload: dict[str, object]
+) -> None:
+    """Without inline features, features must come from the feature fetcher."""
+    features = cast(dict[str, float], low_risk_payload["features"])
+    fetching_registry = ModelRegistry(
+        predictor=registry.predictor,
+        explainer=registry.explainer,
+        expected_features=registry.expected_features,
+        feature_fetcher=lambda loan_id: features if loan_id == "app-low-001" else None,
+    )
+    fetch_client = TestClient(create_app(registry=fetching_registry))
+
+    response = fetch_client.post("/predict", json={"applicant_id": "app-low-001"})
+    assert response.status_code == 200
+    assert response.json()["approved"] is True
+
+    missing = fetch_client.post("/predict", json={"applicant_id": "ghost"})
+    assert missing.status_code == 404
+
+
+def test_predict_without_features_or_fetcher_is_rejected(registry: ModelRegistry) -> None:
+    """No inline features and no configured store must yield 422."""
+    bare_registry = ModelRegistry(
+        predictor=registry.predictor,
+        explainer=registry.explainer,
+        expected_features=registry.expected_features,
+    )
+    bare_client = TestClient(create_app(registry=bare_registry))
+    response = bare_client.post("/predict", json={"applicant_id": "app-low-001"})
+    assert response.status_code == 422
+
+
+def test_build_feature_fetcher_disabled_without_repo() -> None:
+    """No FEAST_REPO_PATH means online fetching stays disabled."""
+    assert build_feature_fetcher(None) is None
+    assert build_feature_fetcher("") is None
+
+
+def test_build_feature_fetcher_wires_feast_store() -> None:
+    """A configured repo path must produce a fetcher bound to the store."""
+    from unittest.mock import patch
+
+    with (
+        patch("src.feature_store.materialize.get_feature_store") as get_store,
+        patch("src.feature_store.serve.fetch_feature_vector") as fetch_vector,
+    ):
+        fetch_vector.return_value = {"int_rate": 13.5}
+        fetcher = build_feature_fetcher("/some/feast/repo")
+        assert fetcher is not None
+        assert fetcher("loan-1") == {"int_rate": 13.5}
+
+    get_store.assert_called_once_with("/some/feast/repo")
+    fetch_vector.assert_called_once_with(get_store.return_value, "loan-1")
 
 
 def test_load_registry_missing_artifact(tmp_path: object) -> None:

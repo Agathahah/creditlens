@@ -10,8 +10,9 @@ present so that /health can report readiness.
 from __future__ import annotations
 
 import os
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Callable
 from contextlib import asynccontextmanager
+from typing import Any
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -27,6 +28,32 @@ configure_logging()
 DEFAULT_MODEL_PATH = "models/xgboost_credit.joblib"
 
 
+def build_feature_fetcher(
+    repo_path: str | None,
+) -> Callable[[str], dict[str, Any] | None] | None:
+    """Build a Feast online-store fetcher when a repo path is configured.
+
+    Args:
+        repo_path: Feast repository directory (feature_store.yaml). When
+            None or empty, online feature fetching is disabled.
+
+    Returns:
+        Callable mapping a loan/applicant id to its feature vector, or
+        None when no feature store is configured.
+    """
+    if not repo_path:
+        return None
+    from src.feature_store.materialize import get_feature_store
+    from src.feature_store.serve import fetch_feature_vector
+
+    store = get_feature_store(repo_path)
+
+    def fetch(loan_id: str) -> dict[str, Any] | None:
+        return fetch_feature_vector(store, loan_id)
+
+    return fetch
+
+
 def load_registry(model_path: str | None = None) -> ModelRegistry:
     """Load ML artifacts from disk into a ModelRegistry.
 
@@ -38,14 +65,20 @@ def load_registry(model_path: str | None = None) -> ModelRegistry:
         Populated ModelRegistry, or an empty one if the artifact is absent.
     """
     path = model_path or os.environ.get("MODEL_PATH", DEFAULT_MODEL_PATH)
+    fetcher = build_feature_fetcher(os.environ.get("FEAST_REPO_PATH"))
     if not os.path.exists(path):
-        return ModelRegistry()
+        return ModelRegistry(feature_fetcher=fetcher)
 
     predictor = CreditPredictor(model_path=path)
     explainer = ShapExplainer(predictor.model)
     feature_names = getattr(predictor.model, "feature_names_in_", None)
     expected = [str(name) for name in feature_names] if feature_names is not None else []
-    return ModelRegistry(predictor=predictor, explainer=explainer, expected_features=expected)
+    return ModelRegistry(
+        predictor=predictor,
+        explainer=explainer,
+        expected_features=expected,
+        feature_fetcher=fetcher,
+    )
 
 
 @asynccontextmanager

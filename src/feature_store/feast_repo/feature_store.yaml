@@ -1,0 +1,15 @@
+project: creditlens
+registry: data/feast_registry.db
+provider: local
+offline_store:
+  type: postgres
+  host: localhost
+  port: 5432
+  database: creditlens
+  db_schema: mart
+  user: creditlens
+  password: devpassword
+online_store:
+  type: redis
+  connection_string: localhost:6379
+entity_key_serialization_version: 3

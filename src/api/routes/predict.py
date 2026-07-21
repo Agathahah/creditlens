@@ -34,7 +34,7 @@ def predict(
     """
     started = time.perf_counter()
     predictor = registry.require_predictor()
-    frame = registry.build_feature_frame(payload.features)
+    frame = registry.resolve_feature_frame(payload.applicant_id, payload.features)
     score_id = payload.applicant_id or f"score-{uuid.uuid4().hex[:12]}"
 
     result = predictor.score_applicant(frame, score_id=score_id)
