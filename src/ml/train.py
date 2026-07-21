@@ -6,7 +6,9 @@ evaluating performance using credit-specific metrics (PR-AUC, ROC-AUC, Recall@P8
 
 from __future__ import annotations
 
+import argparse
 import os
+import sys
 from typing import Any
 
 import joblib
@@ -21,6 +23,12 @@ from xgboost import XGBClassifier
 from src.common.logging import configure_logging
 
 configure_logging()
+
+DEFAULT_MODEL_PATHS: dict[str, str] = {
+    "xgboost": "models/xgboost_credit.joblib",
+    "lightgbm": "models/lightgbm_credit.joblib",
+    "logistic_regression": "models/logreg_credit.joblib",
+}
 
 
 def compute_credit_metrics(
@@ -161,3 +169,57 @@ def load_model_artifact(filepath: str) -> Any:
     if not os.path.exists(filepath):
         raise FileNotFoundError(f"Model file not found at: {filepath}")
     return joblib.load(filepath)
+
+
+def run_training(
+    model_type: str = "xgboost",
+    output_path: str | None = None,
+    postgres_url: str | None = None,
+) -> tuple[Any, dict[str, float]]:
+    """Load features, train a model on the temporal split, and persist it.
+
+    Args:
+        model_type: Classifier architecture to train.
+        output_path: Destination artifact path. Defaults per model type.
+        postgres_url: Optional database URL override for feature loading.
+
+    Returns:
+        Tuple of (trained_model, test_metrics).
+    """
+    from src.features.features import (
+        load_feature_data,
+        prepare_ml_dataset,
+        preprocess_features,
+        temporal_train_test_split,
+    )
+
+    df = preprocess_features(load_feature_data(postgres_url))
+    train_df, test_df = temporal_train_test_split(df)
+    x_train, y_train = prepare_ml_dataset(train_df)
+    x_test, y_test = prepare_ml_dataset(test_df)
+    model, metrics = train_model(x_train, y_train, x_test, y_test, model_type=model_type)
+    save_model_artifact(model, output_path or DEFAULT_MODEL_PATHS[model_type])
+    return model, metrics
+
+
+def main(argv: list[str] | None = None) -> int:
+    """CLI entrypoint for training a single model.
+
+    Args:
+        argv: Optional argument list (defaults to ``sys.argv``).
+
+    Returns:
+        Process exit code.
+    """
+    parser = argparse.ArgumentParser(description="Train a CreditLens model.")
+    parser.add_argument("--model", default="xgboost", choices=sorted(DEFAULT_MODEL_PATHS))
+    parser.add_argument("--output", default=None, help="Artifact output path")
+    args = parser.parse_args(argv)
+
+    _, metrics = run_training(args.model, output_path=args.output)
+    print(f"Trained {args.model}: PR-AUC={metrics['pr_auc']:.4f} ROC-AUC={metrics['roc_auc']:.4f}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
