@@ -57,3 +57,16 @@ def test_main_prints_and_returns_zero(capsys: object) -> None:
     ):
         code = train.main(["--model", "lightgbm"])
     assert code == 0
+
+
+def test_main_track_logs_to_mlflow() -> None:
+    """--track must forward the run to the MLflow tracking helper."""
+    metrics = {"pr_auc": 0.4, "roc_auc": 0.7}
+    with (
+        patch.object(train, "run_training", return_value=(MagicMock(), metrics)),
+        patch("src.monitoring.tracking.log_training_run") as log_run,
+    ):
+        code = train.main(["--model", "xgboost", "--track"])
+
+    assert code == 0
+    log_run.assert_called_once_with("xgboost", {"model_type": "xgboost"}, metrics)
