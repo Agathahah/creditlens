@@ -23,7 +23,9 @@ from src.feature_store.materialize import (
     REPO_PATH,
     apply_definitions,
     get_feature_store,
+    main,
     materialize_features,
+    materialize_incremental,
     run,
 )
 
@@ -88,6 +90,36 @@ def test_materialize_features_rejects_inverted_window() -> None:
     with pytest.raises(ValueError, match="before end_date"):
         materialize_features(store, start_date=end, end_date=end)
     store.materialize.assert_not_called()
+
+
+def test_materialize_incremental_calls_feast() -> None:
+    """Incremental materialization must delegate to Feast with an end date."""
+    store = MagicMock()
+    end = materialize_incremental(store)
+
+    assert (datetime.now(UTC) - end).total_seconds() < 60
+    store.materialize_incremental.assert_called_once_with(end_date=end)
+
+
+def test_run_incremental_applies_then_materializes() -> None:
+    """run(incremental=True) must apply definitions then incrementally materialize."""
+    with patch("src.feature_store.materialize.FeatureStore") as store_cls:
+        store = store_cls.return_value
+        start, end = run(incremental=True)
+
+    assert start is None
+    store.apply.assert_called_once_with(list(ALL_DEFINITIONS))
+    store.materialize_incremental.assert_called_once_with(end_date=end)
+
+
+def test_main_incremental(capsys: object) -> None:
+    """The CLI --incremental flag must trigger an incremental run."""
+    with patch("src.feature_store.materialize.run") as run_fn:
+        run_fn.return_value = (None, datetime(2026, 1, 1, tzinfo=UTC))
+        code = main(["--incremental"])
+
+    assert code == 0
+    run_fn.assert_called_once_with(incremental=True, end_date=None)
 
 
 def test_run_applies_then_materializes() -> None:

@@ -10,6 +10,7 @@ Run as a module for a one-off materialization:
 
 from __future__ import annotations
 
+import argparse
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
@@ -71,20 +72,68 @@ def materialize_features(
     return start_date, end_date
 
 
-def run(repo_path: str | Path = REPO_PATH) -> tuple[datetime, datetime]:
-    """Apply definitions and materialize the default window.
+def materialize_incremental(store: FeatureStore, end_date: datetime | None = None) -> datetime:
+    """Incrementally materialize features up to ``end_date``.
+
+    Feast tracks the last materialization checkpoint per feature view, so
+    this only moves rows newer than the previous run into the online store.
+
+    Args:
+        store: Target FeatureStore (definitions must be applied).
+        end_date: Upper bound for materialization. Defaults to now (UTC).
+
+    Returns:
+        The end_date that was materialized up to.
+    """
+    if end_date is None:
+        end_date = datetime.now(UTC)
+    store.materialize_incremental(end_date=end_date)
+    return end_date
+
+
+def run(
+    repo_path: str | Path = REPO_PATH,
+    incremental: bool = False,
+    end_date: datetime | None = None,
+) -> tuple[datetime | None, datetime]:
+    """Apply definitions and materialize features.
 
     Args:
         repo_path: Directory containing feature_store.yaml.
+        incremental: When True, run an incremental materialization.
+        end_date: Optional upper bound for the materialization window.
 
     Returns:
-        The materialized (start_date, end_date) window.
+        The (start_date, end_date) window; start_date is None for
+        incremental runs.
     """
     store = get_feature_store(repo_path)
     apply_definitions(store)
-    return materialize_features(store)
+    if incremental:
+        return None, materialize_incremental(store, end_date)
+    return materialize_features(store, end_date=end_date)
+
+
+def main(argv: list[str] | None = None) -> int:
+    """CLI entrypoint for full or incremental Feast materialization.
+
+    Args:
+        argv: Optional argument list (defaults to ``sys.argv``).
+
+    Returns:
+        Process exit code.
+    """
+    parser = argparse.ArgumentParser(description="Materialize CreditLens features into Feast.")
+    parser.add_argument("--incremental", action="store_true", help="Incremental materialization")
+    parser.add_argument("--end-date", default=None, help="ISO end date (default: now)")
+    args = parser.parse_args(argv)
+
+    end_date = datetime.fromisoformat(args.end_date) if args.end_date else None
+    start, end = run(incremental=args.incremental, end_date=end_date)
+    scope = "incremental" if args.incremental else f"from {start.isoformat() if start else '-'}"
+    print(f"Materialized features ({scope}) up to {end.isoformat()}")
+    return 0
 
 
 if __name__ == "__main__":
-    window = run()
-    print(f"Materialized features for window {window[0].isoformat()} - {window[1].isoformat()}")
+    raise SystemExit(main())

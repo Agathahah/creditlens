@@ -11,6 +11,13 @@ import numpy as np
 from src.ml import evaluate
 
 
+def _separable() -> tuple[np.ndarray, np.ndarray]:
+    """A well-separated (y_true, y_prob) pair for evaluation paths."""
+    y_true = np.array([0, 0, 0, 0, 1, 1, 1, 1])
+    y_prob = np.array([0.05, 0.1, 0.2, 0.3, 0.7, 0.8, 0.9, 0.95])
+    return y_true, y_prob
+
+
 def test_evaluate_predictions_returns_metrics() -> None:
     """evaluate_predictions must return the credit metric keys in range."""
     y_true = np.array([0, 0, 0, 1, 1, 1])
@@ -34,6 +41,34 @@ def test_write_metrics_creates_json(tmp_path: Path) -> None:
     evaluate._write_metrics({"pr_auc": 0.42}, str(out))
     written = json.loads((out / "metrics.json").read_text())
     assert written["pr_auc"] == 0.42
+
+
+def test_run_evaluation_writes_artifacts_and_tracks(tmp_path: Path) -> None:
+    """run_evaluation must render artifacts, write metrics.json, and log to MLflow."""
+    y_true, y_prob = _separable()
+    out = tmp_path / "results"
+
+    with (
+        patch.object(evaluate, "score_test_split", return_value=(y_true, y_prob)),
+        patch("src.monitoring.tracking.log_evaluation") as log_eval,
+    ):
+        metrics = evaluate.run_evaluation(output_dir=str(out), track=True, artifacts=True)
+
+    assert "best_threshold" in metrics and "confusion_matrix" in metrics
+    assert (out / "metrics.json").exists()
+    assert (out / "roc_curve.png").exists()
+    log_eval.assert_called_once()
+    # artifacts list passed to MLflow must be the four rendered plots
+    assert len(log_eval.call_args.args[1]) == 4
+
+
+def test_run_evaluation_core_only(tmp_path: Path) -> None:
+    """Without track/artifacts, run_evaluation still returns extended metrics."""
+    y_true, y_prob = _separable()
+    with patch.object(evaluate, "score_test_split", return_value=(y_true, y_prob)):
+        metrics = evaluate.run_evaluation()
+    assert metrics["pr_auc"] >= 0.0
+    assert "confusion_matrix" in metrics
 
 
 def test_main_returns_zero_when_above_threshold() -> None:

@@ -55,6 +55,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="CreditLens data drift check.")
     parser.add_argument("--evidently-out", default=None, help="HTML drift report path")
     parser.add_argument("--track", action="store_true", help="Log summary to MLflow")
+    parser.add_argument("--persist", action="store_true", help="Write drift metrics to PostgreSQL")
     args = parser.parse_args(argv)
 
     reference_df, current_df = load_reference_and_current()
@@ -69,6 +70,10 @@ def main(argv: list[str] | None = None) -> int:
         from src.monitoring.tracking import log_drift_report
 
         log_drift_report(report)
+    if args.persist:
+        from src.monitoring.store import persist_drift
+
+        persist_drift(report)
 
     return 1 if report["dataset_drift"] else 0
 

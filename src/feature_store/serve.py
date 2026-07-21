@@ -65,3 +65,19 @@ def fetch_feature_vector(
     if row.isna().all():
         return None
     return {str(name): value for name, value in row.items()}
+
+
+def online_store_ready(store: FeatureStore, loan_id: str) -> bool:
+    """Check whether a loan's features are populated in the online store.
+
+    Useful as a post-materialization smoke check before the API serves
+    from Feast.
+
+    Args:
+        store: FeatureStore bound to the CreditLens repository.
+        loan_id: A loan entity key expected to be materialized.
+
+    Returns:
+        True if a non-null feature vector is returned for the loan.
+    """
+    return fetch_feature_vector(store, loan_id) is not None
