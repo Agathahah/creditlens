@@ -14,6 +14,8 @@ PSI interpretation (industry convention for credit models):
 
 from __future__ import annotations
 
+from typing import Any
+
 import numpy as np
 import pandas as pd
 from scipy.stats import ks_2samp
@@ -69,7 +71,8 @@ def _bin_shares(values: np.ndarray, edges: np.ndarray) -> np.ndarray:
     """
     counts, _ = np.histogram(values, bins=edges)
     shares = counts / max(counts.sum(), 1)
-    return np.clip(shares, _EPSILON, None)
+    clipped: np.ndarray = np.clip(shares, _EPSILON, None)
+    return clipped
 
 
 def ks_statistic(reference: np.ndarray | pd.Series, current: np.ndarray | pd.Series) -> float:
@@ -95,7 +98,7 @@ def detect_drift(
     current_df: pd.DataFrame,
     features: list[str],
     psi_threshold: float = DEFAULT_PSI_THRESHOLD,
-) -> dict[str, object]:
+) -> dict[str, Any]:
     """Detect per-feature and dataset-level drift between two frames.
 
     Args:

@@ -51,9 +51,9 @@ def test_build_report_uses_evidently_api(tmp_path: Path) -> None:
     report_cls = MagicMock(return_value=fake_report)
 
     report_mod = types.ModuleType("evidently.report")
-    report_mod.Report = report_cls
+    setattr(report_mod, "Report", report_cls)
     preset_mod = types.ModuleType("evidently.metric_preset")
-    preset_mod.DataDriftPreset = MagicMock()
+    setattr(preset_mod, "DataDriftPreset", MagicMock())
     evidently_pkg = types.ModuleType("evidently")
 
     modules = {
