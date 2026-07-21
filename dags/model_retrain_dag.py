@@ -35,12 +35,12 @@ with DAG(
 ) as dag:
     retrain_xgboost = BashOperator(
         task_id="retrain_xgboost",
-        bash_command=project_command(f"{PYTHON_BIN} src/ml/train.py --model xgboost"),
+        bash_command=project_command(f"{PYTHON_BIN} src/ml/train.py --model xgboost --track"),
     )
 
     retrain_lightgbm = BashOperator(
         task_id="retrain_lightgbm",
-        bash_command=project_command(f"{PYTHON_BIN} src/ml/train.py --model lightgbm"),
+        bash_command=project_command(f"{PYTHON_BIN} src/ml/train.py --model lightgbm --track"),
     )
 
     evaluate_model = BashOperator(

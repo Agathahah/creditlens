@@ -214,9 +214,14 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Train a CreditLens model.")
     parser.add_argument("--model", default="xgboost", choices=sorted(DEFAULT_MODEL_PATHS))
     parser.add_argument("--output", default=None, help="Artifact output path")
+    parser.add_argument("--track", action="store_true", help="Log run to MLflow")
     args = parser.parse_args(argv)
 
     _, metrics = run_training(args.model, output_path=args.output)
+    if args.track:
+        from src.monitoring.tracking import log_training_run
+
+        log_training_run(args.model, {"model_type": args.model}, metrics)
     print(f"Trained {args.model}: PR-AUC={metrics['pr_auc']:.4f} ROC-AUC={metrics['roc_auc']:.4f}")
     return 0
 

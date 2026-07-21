@@ -1,0 +1,12 @@
+apiVersion: 1
+
+# Auto-provision the CreditLens monitoring dashboards from this folder.
+providers:
+  - name: CreditLens
+    orgId: 1
+    folder: CreditLens
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /etc/grafana/provisioning/dashboards

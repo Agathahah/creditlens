@@ -1,0 +1,39 @@
+{
+  "uid": "creditlens-monitoring",
+  "title": "CreditLens Monitoring",
+  "tags": ["creditlens", "monitoring"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "1h",
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Loans Scored (last 24h)",
+      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 0 },
+      "datasource": { "type": "postgres", "uid": "creditlens-postgres" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT count(*) AS scored FROM mart.final_features WHERE issue_d >= now() - interval '24 hours';"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "Default Rate by Issue Month",
+      "gridPos": { "h": 8, "w": 16, "x": 8, "y": 0 },
+      "datasource": { "type": "postgres", "uid": "creditlens-postgres" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "time_series",
+          "rawSql": "SELECT date_trunc('month', issue_d) AS time, avg(is_default::float) AS default_rate FROM mart.final_features WHERE is_default IS NOT NULL GROUP BY 1 ORDER BY 1;"
+        }
+      ]
+    }
+  ]
+}
