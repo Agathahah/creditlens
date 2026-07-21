@@ -65,6 +65,12 @@ dev = [
 bonus = [
     "markitdown[all]>=0.1.6",
 ]
+# Airflow is heavy and normally runs in its own container (docker-compose).
+# Installed separately so it never conflicts with the core/dev resolution;
+# required only to run the DAG structure tests locally.
+airflow = [
+    "apache-airflow>=2.9,<3.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/YOUR_USERNAME/creditlens"
@@ -100,7 +106,7 @@ ignore_missing_imports = true
 disable_error_code = ["import-untyped"]
 
 [tool.pytest.ini_options]
-testpaths = ["src", "tests"]
+testpaths = ["src", "tests", "dags"]
 asyncio_mode = "auto"
 addopts = "-v --tb=short"
 

@@ -7,6 +7,11 @@ CREATE SCHEMA IF NOT EXISTS raw;
 CREATE SCHEMA IF NOT EXISTS staging;
 CREATE SCHEMA IF NOT EXISTS mart;
 
+-- Dedicated metadata database for the Apache Airflow orchestration services.
+-- (Runs on the same PostgreSQL instance; created once on first init.)
+SELECT 'CREATE DATABASE airflow OWNER creditlens'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'airflow')\gexec
+
 -- ============================================
 -- RAW LAYER: Transactional Source Tables
 -- ============================================
