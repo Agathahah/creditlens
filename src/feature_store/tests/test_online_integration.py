@@ -1,40 +1,27 @@
 """Live integration test for Feast materialization + online reads.
 
-Skipped unless PostgreSQL and Redis are reachable (they run in
-docker-compose, not in the lightweight CI/test env). On a developer
-machine with the stack up and the warehouse materialized, this exercises
-the real online-read path the API depends on.
+Opt-in only: these tests require a *fully provisioned* stack — PostgreSQL
+with the dbt ``mart`` materialized, Redis, and an applied Feast registry
+(all from docker-compose). CI spins up bare PostgreSQL/Redis services
+without the warehouse, so a mere port check is not enough; the tests run
+only when ``CREDITLENS_RUN_INTEGRATION=1`` is set explicitly. On a
+developer machine with the stack up, this exercises the real online-read
+path the API depends on.
+
+    CREDITLENS_RUN_INTEGRATION=1 pytest src/feature_store/tests/test_online_integration.py
 """
 
 from __future__ import annotations
 
-import socket
+import os
 
 import pytest
 
-from src.common.config import get_settings
-
-
-def _port_open(host: str, port: int, timeout: float = 1.5) -> bool:
-    """Return True when a TCP connection to host:port succeeds."""
-    try:
-        with socket.create_connection((host, port), timeout=timeout):
-            return True
-    except OSError:
-        return False
-
-
-def _infra_available() -> bool:
-    """Check that both PostgreSQL and Redis are reachable."""
-    settings = get_settings()
-    pg_ok = _port_open("localhost", 5432)
-    redis_ok = _port_open("localhost", 6379)
-    return pg_ok and redis_ok and settings is not None
-
+RUN_INTEGRATION = os.environ.get("CREDITLENS_RUN_INTEGRATION") == "1"
 
 pytestmark = pytest.mark.skipif(
-    not _infra_available(),
-    reason="PostgreSQL/Redis not reachable — Feast online integration skipped",
+    not RUN_INTEGRATION,
+    reason="Set CREDITLENS_RUN_INTEGRATION=1 with the full stack up to run Feast integration tests",
 )
 
 
