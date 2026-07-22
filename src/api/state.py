@@ -17,6 +17,7 @@ from fastapi import HTTPException, Request, status
 from src.explainability.counterfactual import CounterfactualGenerator
 from src.explainability.shap_explainer import ShapExplainer
 from src.ml.predict import CreditPredictor
+from src.ml.survival import SurvivalAnalysis
 
 
 @dataclass
@@ -28,6 +29,7 @@ class ModelRegistry:
     counterfactual_generator: CounterfactualGenerator | None = None
     expected_features: list[str] = field(default_factory=list)
     feature_fetcher: Callable[[str], dict[str, Any] | None] | None = None
+    survival_model: SurvivalAnalysis | None = None
 
     @property
     def model_loaded(self) -> bool:
@@ -49,6 +51,22 @@ class ModelRegistry:
                 detail="No scoring model is loaded.",
             )
         return self.predictor
+
+    def require_survival_model(self) -> SurvivalAnalysis:
+        """Return the survival model or fail with 503 when unavailable.
+
+        Returns:
+            The loaded SurvivalAnalysis model.
+
+        Raises:
+            HTTPException: 503 if no survival model is loaded.
+        """
+        if self.survival_model is None:
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="No survival model is loaded.",
+            )
+        return self.survival_model
 
     def require_explainer(self) -> ShapExplainer:
         """Return the SHAP explainer or fail with 503 when unavailable.

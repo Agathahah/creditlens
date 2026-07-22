@@ -196,6 +196,57 @@ def test_predict_without_features_or_fetcher_is_rejected(registry: ModelRegistry
     assert response.status_code == 422
 
 
+def test_survival_endpoint(registry: ModelRegistry) -> None:
+    """POST /survival must return a median and decreasing horizon probabilities."""
+    from src.ml.survival import DURATION_COL, EVENT_COL, SurvivalAnalysis
+
+    rng = np.random.default_rng(5)
+    n = 200
+    surv_df = pd.DataFrame(
+        {
+            "int_rate": rng.uniform(5, 30, n),
+            "dti_eff": rng.uniform(5, 45, n),
+            DURATION_COL: np.clip(rng.exponential(24.0, n), 1.0, 36.0),
+            EVENT_COL: rng.integers(0, 2, n),
+        }
+    )
+    survival_model = SurvivalAnalysis("cox").fit(surv_df, ["int_rate", "dti_eff"])
+    surv_registry = ModelRegistry(
+        predictor=registry.predictor,
+        explainer=registry.explainer,
+        expected_features=registry.expected_features,
+        survival_model=survival_model,
+    )
+    surv_client = TestClient(create_app(registry=surv_registry))
+
+    response = surv_client.post(
+        "/survival",
+        json={
+            "applicant_id": "app-surv-001",
+            "features": {
+                "loan_amnt": 5_000.0,
+                "int_rate": 12.0,
+                "dti_eff": 20.0,
+                "annual_inc": 80_000.0,
+            },
+        },
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert body["score_id"] == "app-surv-001"
+    probs = {int(k): v for k, v in body["survival_probabilities"].items()}
+    assert set(probs) == {12, 24, 36}
+    assert probs[12] >= probs[24] >= probs[36]
+    if body["median_survival_months"] is not None:
+        assert body["median_survival_months"] > 0
+
+
+def test_survival_endpoint_503_without_model(low_risk_payload: dict[str, object]) -> None:
+    """POST /survival must fail with 503 when no survival model is loaded."""
+    bare_client = TestClient(create_app(registry=ModelRegistry()))
+    assert bare_client.post("/survival", json=low_risk_payload).status_code == 503
+
+
 def test_build_feature_fetcher_disabled_without_repo() -> None:
     """No FEAST_REPO_PATH means online fetching stays disabled."""
     assert build_feature_fetcher(None) is None
