@@ -174,11 +174,12 @@ class TestDeepSurv:
 def test_deepsurv_without_extra_raises_import_error() -> None:
     """Without pycox/torch, fitting deepsurv must raise a helpful ImportError."""
     import builtins
+    from typing import Any
     from unittest.mock import patch
 
     real_import = builtins.__import__
 
-    def _no_torch(name: str, *args: object, **kwargs: object) -> object:
+    def _no_torch(name: str, *args: Any, **kwargs: Any) -> Any:
         if name in {"torch", "torchtuples", "pycox.models", "pycox"}:
             raise ImportError(name)
         return real_import(name, *args, **kwargs)
