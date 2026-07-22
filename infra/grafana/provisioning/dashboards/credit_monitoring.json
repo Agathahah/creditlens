@@ -4,14 +4,15 @@
   "tags": ["creditlens", "monitoring"],
   "timezone": "browser",
   "schemaVersion": 39,
-  "version": 1,
-  "refresh": "1h",
+  "version": 2,
+  "refresh": "5m",
+  "time": { "from": "now-90d", "to": "now" },
   "panels": [
     {
       "id": 1,
       "type": "stat",
       "title": "Loans Scored (last 24h)",
-      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 0 },
+      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 0 },
       "datasource": { "type": "postgres", "uid": "creditlens-postgres" },
       "targets": [
         {
@@ -23,15 +24,169 @@
     },
     {
       "id": 2,
+      "type": "stat",
+      "title": "Latest Drift Status",
+      "gridPos": { "h": 5, "w": 6, "x": 6, "y": 0 },
+      "datasource": { "type": "postgres", "uid": "creditlens-postgres" },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "OK", "color": "green" } } },
+            { "type": "value", "options": { "1": { "text": "DRIFT", "color": "red" } } }
+          ],
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "red", "value": 1 }
+          ] }
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT dataset_drift::int AS status FROM monitoring.drift_runs ORDER BY run_ts DESC LIMIT 1;"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Drifted Features (latest)",
+      "gridPos": { "h": 5, "w": 6, "x": 12, "y": 0 },
+      "datasource": { "type": "postgres", "uid": "creditlens-postgres" },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 1 },
+            { "color": "red", "value": 3 }
+          ] }
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT n_drifted FROM monitoring.drift_runs ORDER BY run_ts DESC LIMIT 1;"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Latest PR-AUC",
+      "gridPos": { "h": 5, "w": 6, "x": 18, "y": 0 },
+      "datasource": { "type": "postgres", "uid": "creditlens-postgres" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT pr_auc FROM monitoring.model_metrics ORDER BY run_ts DESC LIMIT 1;"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "barchart",
+      "title": "PSI per Feature (latest run)",
+      "description": "PSI >= 0.25 indicates significant drift (red).",
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 5 },
+      "datasource": { "type": "postgres", "uid": "creditlens-postgres" },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 0.1 },
+            { "color": "red", "value": 0.25 }
+          ] },
+          "color": { "mode": "thresholds" }
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT feature, psi FROM monitoring.feature_drift WHERE run_ts = (SELECT max(run_ts) FROM monitoring.feature_drift) ORDER BY psi DESC;"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "barchart",
+      "title": "KS Statistic per Feature (latest run)",
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 5 },
+      "datasource": { "type": "postgres", "uid": "creditlens-postgres" },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "red", "value": 0.2 }
+          ] },
+          "color": { "mode": "thresholds" }
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT feature, ks_statistic FROM monitoring.feature_drift WHERE run_ts = (SELECT max(run_ts) FROM monitoring.feature_drift) ORDER BY ks_statistic DESC;"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "barchart",
+      "title": "Prediction Distribution (latest run)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
+      "datasource": { "type": "postgres", "uid": "creditlens-postgres" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT round(bin_lo::numeric, 2)::text AS bucket, count FROM monitoring.prediction_bins WHERE run_ts = (SELECT max(run_ts) FROM monitoring.prediction_bins) ORDER BY bin_lo;"
+        }
+      ]
+    },
+    {
+      "id": 8,
       "type": "timeseries",
       "title": "Default Rate by Issue Month",
-      "gridPos": { "h": 8, "w": 16, "x": 8, "y": 0 },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 14 },
       "datasource": { "type": "postgres", "uid": "creditlens-postgres" },
       "targets": [
         {
           "refId": "A",
           "format": "time_series",
           "rawSql": "SELECT date_trunc('month', issue_d) AS time, avg(is_default::float) AS default_rate FROM mart.final_features WHERE is_default IS NOT NULL GROUP BY 1 ORDER BY 1;"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "timeseries",
+      "title": "Model Metrics Trend (ROC / PR / KS)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 22 },
+      "datasource": { "type": "postgres", "uid": "creditlens-postgres" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "time_series",
+          "rawSql": "SELECT run_ts AS time, roc_auc, pr_auc, ks_statistic FROM monitoring.model_metrics ORDER BY run_ts;"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "table",
+      "title": "Drift Alerts (PSI >= 0.25 or KS >= 0.2)",
+      "description": "Features breaching the drift thresholds in the latest run.",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 22 },
+      "datasource": { "type": "postgres", "uid": "creditlens-postgres" },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT feature, psi, ks_statistic FROM monitoring.feature_drift WHERE run_ts = (SELECT max(run_ts) FROM monitoring.feature_drift) AND (psi >= 0.25 OR ks_statistic >= 0.2) ORDER BY psi DESC;"
         }
       ]
     }

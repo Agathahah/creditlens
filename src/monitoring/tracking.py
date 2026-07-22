@@ -59,6 +59,51 @@ def log_training_run(
         return str(run.info.run_id)
 
 
+def _flatten_scalar_metrics(metrics: dict[str, Any]) -> dict[str, float]:
+    """Extract numeric scalar metrics, expanding a confusion_matrix mapping.
+
+    Args:
+        metrics: Extended metric mapping (may contain nested dicts).
+
+    Returns:
+        Flat mapping of metric name to float, suitable for MLflow.
+    """
+    flat: dict[str, float] = {}
+    for key, value in metrics.items():
+        if isinstance(value, dict) and key == "confusion_matrix":
+            flat.update({f"cm_{name}": float(count) for name, count in value.items()})
+        elif isinstance(value, (int, float)) and not isinstance(value, bool):
+            flat[key] = float(value)
+    return flat
+
+
+def log_evaluation(
+    metrics: dict[str, Any],
+    artifacts: list[str] | None = None,
+    model_name: str = "evaluation",
+    tracking_uri: str | None = None,
+    experiment: str = DEFAULT_EXPERIMENT,
+) -> str:
+    """Log evaluation metrics and diagnostic artifacts to MLflow.
+
+    Args:
+        metrics: Extended metric mapping (from ``extended_metrics``).
+        artifacts: Paths of plot files to attach (ROC/PR/confusion/calibration).
+        model_name: Run name.
+        tracking_uri: Optional tracking URI override.
+        experiment: Experiment name.
+
+    Returns:
+        The MLflow run ID.
+    """
+    configure_tracking(tracking_uri, experiment)
+    with mlflow.start_run(run_name=model_name) as run:
+        mlflow.log_metrics(_flatten_scalar_metrics(metrics))
+        for path in artifacts or []:
+            mlflow.log_artifact(path)
+        return str(run.info.run_id)
+
+
 def log_drift_report(
     drift_report: dict[str, Any],
     tracking_uri: str | None = None,

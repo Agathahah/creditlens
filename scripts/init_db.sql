@@ -6,6 +6,50 @@
 CREATE SCHEMA IF NOT EXISTS raw;
 CREATE SCHEMA IF NOT EXISTS staging;
 CREATE SCHEMA IF NOT EXISTS mart;
+CREATE SCHEMA IF NOT EXISTS monitoring;
+
+-- ============================================
+-- MONITORING LAYER: metrics consumed by Grafana dashboards
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS monitoring.model_metrics (
+    run_ts TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    model_name VARCHAR(100) NOT NULL,
+    roc_auc DOUBLE PRECISION,
+    pr_auc DOUBLE PRECISION,
+    ks_statistic DOUBLE PRECISION,
+    best_threshold DOUBLE PRECISION,
+    brier_score DOUBLE PRECISION,
+    ece DOUBLE PRECISION
+);
+
+CREATE TABLE IF NOT EXISTS monitoring.drift_runs (
+    run_ts TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    dataset_drift BOOLEAN NOT NULL,
+    drift_share DOUBLE PRECISION,
+    n_drifted INTEGER,
+    n_features INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS monitoring.feature_drift (
+    run_ts TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    feature VARCHAR(100) NOT NULL,
+    psi DOUBLE PRECISION,
+    ks_statistic DOUBLE PRECISION,
+    drifted BOOLEAN
+);
+
+CREATE TABLE IF NOT EXISTS monitoring.prediction_bins (
+    run_ts TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    model_name VARCHAR(100) NOT NULL,
+    bin_lo DOUBLE PRECISION,
+    bin_hi DOUBLE PRECISION,
+    count INTEGER
+);
+
+CREATE INDEX IF NOT EXISTS idx_model_metrics_run_ts ON monitoring.model_metrics(run_ts);
+CREATE INDEX IF NOT EXISTS idx_drift_runs_run_ts ON monitoring.drift_runs(run_ts);
+CREATE INDEX IF NOT EXISTS idx_feature_drift_run_ts ON monitoring.feature_drift(run_ts);
 
 -- Dedicated metadata database for the Apache Airflow orchestration services.
 -- (Runs on the same PostgreSQL instance; created once on first init.)

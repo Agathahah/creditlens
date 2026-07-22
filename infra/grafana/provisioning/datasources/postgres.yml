@@ -3,6 +3,7 @@ apiVersion: 1
 # CreditLens warehouse datasource for Grafana monitoring dashboards.
 datasources:
   - name: CreditLens PostgreSQL
+    uid: creditlens-postgres
     type: postgres
     access: proxy
     url: postgres:5432

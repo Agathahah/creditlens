@@ -32,13 +32,15 @@ with DAG(
         task_id="check_data_drift",
         bash_command=project_command(
             f"{PYTHON_BIN} scripts/run_drift_check.py "
-            f"--evidently-out reports/drift.html --track"
+            f"--evidently-out reports/drift.html --track --persist"
         ),
     )
 
     check_model_performance = BashOperator(
         task_id="check_model_performance",
-        bash_command=project_command(f"{PYTHON_BIN} src/ml/evaluate.py --output results/"),
+        bash_command=project_command(
+            f"{PYTHON_BIN} src/ml/evaluate.py --output results/ --artifacts --track --persist"
+        ),
     )
 
     check_data_drift >> check_model_performance
