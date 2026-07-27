@@ -42,6 +42,7 @@ dependencies = [
     "dbt-postgres>=1.8.0",
     "dice-ml>=0.10.0",
     "aif360>=0.6.0",
+    "lifelines>=0.27.0",
     "streamlit>=1.38.0",
     "tqdm>=4.66.0",
     "httpx>=0.27.0",
@@ -70,6 +71,12 @@ bonus = [
 # required only to run the DAG structure tests locally.
 airflow = [
     "apache-airflow>=2.9,<3.0",
+]
+# DeepSurv pulls the full torch stack (~2GB); optional so CI and the API
+# image stay lean. Cox PH (lifelines) works without it.
+deepsurv = [
+    "torch>=2.0",
+    "pycox>=0.2.3",
 ]
 
 [project.urls]

@@ -69,6 +69,23 @@ class ExplanationResponse(BaseModel):
     latency_ms: float = Field(..., ge=0, description="Server-side processing time in ms")
 
 
+class SurvivalResponse(BaseModel):
+    """Time-to-default prediction for one applicant."""
+
+    score_id: str = Field(..., description="Unique transaction ID for this evaluation")
+    median_survival_months: float | None = Field(
+        default=None,
+        description="Predicted median months until default; null when the "
+        "survival curve never drops below 0.5",
+    )
+    survival_probabilities: dict[int, float] = Field(
+        ...,
+        description="Probability the loan survives (no default) at each "
+        "horizon in months, e.g. {12: 0.95, 24: 0.90, 36: 0.85}",
+    )
+    latency_ms: float = Field(..., ge=0, description="Server-side processing time in ms")
+
+
 class HealthResponse(BaseModel):
     """Service health and model readiness."""
 
