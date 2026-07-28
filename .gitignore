@@ -74,3 +74,11 @@ Desktop.ini
 # Claude Code
 .claude/
 CLAUDE.local.md
+
+# Data files tambahan
+data/raw/*.csv.gz
+data/raw/*.log
+
+# Graphify artifacts
+graphify-out/
+.user.yml
