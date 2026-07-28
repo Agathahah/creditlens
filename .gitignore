@@ -81,3 +81,4 @@ data/raw/*.log
 
 # Graphify artifacts
 graphify-out/
+.user.yml
