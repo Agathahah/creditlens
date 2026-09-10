@@ -1,0 +1,19 @@
+{
+  "checked_at_utc": "2026-09-09T08:25:34.359533+00:00",
+  "mode": "read-only; no ingestion/training",
+  "source_rows_with_numeric_id_amount_and_issue": 2260668,
+  "source_distinct_ids": 2260668,
+  "source_duplicate_id_rows": 0,
+  "raw_distinct_ids": 1599982,
+  "source_ids_missing_from_raw": 660686,
+  "raw_ids_absent_from_source": 0,
+  "verified_final_example": {
+    "id": 68407277,
+    "loan_amnt": "3600.00",
+    "issue_d": "2015-12-01",
+    "installment_to_income_ratio": "0.02684290909090909091",
+    "revol_util_clean": "0.29700000000000000000",
+    "is_default": 0
+  },
+  "limits": "Exact loan-ID coverage against the currently available CSV for rows with basic fields present. This does not validate all cell values, labels, source license or prediction-time availability."
+}

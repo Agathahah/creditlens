@@ -1,0 +1,695 @@
+{
+  "audit_date": "2026-09-08",
+  "repo": "/Users/agathasilalahi/Documents/creditlens",
+  "head": "9f241445ae75066cabda444b6a339d792c54b034",
+  "branch": "chore/fix-gitignore-cleanup",
+  "status": "?? MART_LAYER_CONTEXT.md\n?? MART_LAYER_CONTEXT_2.md\n?? MIGRATION_CONTEXT.md\n?? ML_PIPELINE_CONTEXT_1.md",
+  "refs": {
+    "refs/codex/turn-diffs/captures/1788852136688/1dfa10d0-3309-4596-bbe6-e60d307f5795/base": "5351f88a0792e6c03dbdbbe6f9daeabca20fda3e",
+    "refs/heads/chore/fix-gitignore-cleanup": "9f241445ae75066cabda444b6a339d792c54b034",
+    "refs/heads/feature/foundation": "985e905dfcdaeaf414c6d63644360543cfdecca1",
+    "refs/heads/feature/ml-pipeline": "a6902bb0b56cc6c3a9c4270d039dabf0dd148d65",
+    "refs/heads/main": "9f241445ae75066cabda444b6a339d792c54b034",
+    "refs/remotes/origin/HEAD": "1a097c5e0254a09ddcaeebac8d7bd0fb4fe0093d",
+    "refs/remotes/origin/chore/fix-gitignore-cleanup": "9f241445ae75066cabda444b6a339d792c54b034",
+    "refs/remotes/origin/claude/alembic-import-conflict-mac-e6gw8x": "21a8227456c47d0b68862a401396aef179054b24",
+    "refs/remotes/origin/claude/explainability-fairness-16fto9": "fb2b713656013390abb161498f584b198c95a540",
+    "refs/remotes/origin/feature/api": "31c2f7c7c6a560d9006832e47772e90e8ae42093",
+    "refs/remotes/origin/feature/foundation": "985e905dfcdaeaf414c6d63644360543cfdecca1",
+    "refs/remotes/origin/feature/ml-pipeline": "a6902bb0b56cc6c3a9c4270d039dabf0dd148d65",
+    "refs/remotes/origin/feature/ml-pipeline-impl": "985e905dfcdaeaf414c6d63644360543cfdecca1",
+    "refs/remotes/origin/main": "1a097c5e0254a09ddcaeebac8d7bd0fb4fe0093d"
+  },
+  "summary": {
+    "HEAD": {
+      "ai_author": 12,
+      "ai_committer": 12,
+      "ai_trailer": 15,
+      "signature_present": 21,
+      "commits": 34,
+      "direct_metadata_candidates": 15,
+      "sha_change_candidates": 33,
+      "signed_sha_change_candidates": 21
+    },
+    "origin/main": {
+      "ai_author": 12,
+      "ai_committer": 12,
+      "ai_trailer": 15,
+      "signature_present": 22,
+      "commits": 35,
+      "direct_metadata_candidates": 15,
+      "sha_change_candidates": 34,
+      "signed_sha_change_candidates": 22
+    },
+    "--all": {
+      "ai_author": 17,
+      "ai_committer": 17,
+      "ai_trailer": 15,
+      "signature_present": 27,
+      "commits": 40,
+      "direct_metadata_candidates": 20,
+      "sha_change_candidates": 39,
+      "signed_sha_change_candidates": 27
+    }
+  },
+  "commits": [
+    {
+      "sha": "1a097c5e0254a09ddcaeebac8d7bd0fb4fe0093d",
+      "tree": "1463693dad7febe262f8da2fa2d7134f0f72547d",
+      "parents": [
+        "baffd620a3669eeb7efdf17692a1c8ff508fc2ec",
+        "9f241445ae75066cabda444b6a339d792c54b034"
+      ],
+      "author": "Agatha Silalahi <149786199+Agathahah@users.noreply.github.com> 1785230349 +0700",
+      "committer": "GitHub <noreply@github.com> 1785230349 +0700",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "Merge pull request #13 from Agathahah/chore/fix-gitignore-cleanup",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "9f241445ae75066cabda444b6a339d792c54b034",
+      "tree": "1463693dad7febe262f8da2fa2d7134f0f72547d",
+      "parents": [
+        "c8f485c66b74e5fb81e73ca38e142987fc063b66"
+      ],
+      "author": "Agatha Silalahi <silalahiagatha15@gmail.com> 1785227939 +0700",
+      "committer": "Agatha Silalahi <silalahiagatha15@gmail.com> 1785227939 +0700",
+      "co_authored_by": [],
+      "signature_present": false,
+      "subject": "chore: ignore .user.yml (local user config)",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "c8f485c66b74e5fb81e73ca38e142987fc063b66",
+      "tree": "004fa3c46a18622fefe606ad0162e5fb18995dde",
+      "parents": [
+        "baffd620a3669eeb7efdf17692a1c8ff508fc2ec"
+      ],
+      "author": "Agatha Silalahi <silalahiagatha15@gmail.com> 1785227869 +0700",
+      "committer": "Agatha Silalahi <silalahiagatha15@gmail.com> 1785227869 +0700",
+      "co_authored_by": [],
+      "signature_present": false,
+      "subject": "chore: update gitignore for csv.gz, log, graphify-out",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "baffd620a3669eeb7efdf17692a1c8ff508fc2ec",
+      "tree": "930aea4b9f2bc820fa34a2c988e778feba218237",
+      "parents": [
+        "3e67ba0d9af5fa329f81745e905e20e00ef8efac",
+        "ef479139d3abc4b7e5ab14ec7935d90f19874d6f"
+      ],
+      "author": "Agatha Silalahi <149786199+Agathahah@users.noreply.github.com> 1785124557 +0700",
+      "committer": "GitHub <noreply@github.com> 1785124557 +0700",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "Merge pull request #12 from Agathahah/feature/survival-analysis",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "ef479139d3abc4b7e5ab14ec7935d90f19874d6f",
+      "tree": "930aea4b9f2bc820fa34a2c988e778feba218237",
+      "parents": [
+        "94e77a4726f8bd2af50992b89997bfcf4acf400b"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784710325 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784710325 +0000",
+      "co_authored_by": [
+        "Claude Opus 4.8 <noreply@anthropic.com>"
+      ],
+      "signature_present": true,
+      "subject": "fix(types): use Any in fake __import__ wrapper signature",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": true
+    },
+    {
+      "sha": "94e77a4726f8bd2af50992b89997bfcf4acf400b",
+      "tree": "8583fe22dedf8c300ff67afd4e23884af68d2f06",
+      "parents": [
+        "3e67ba0d9af5fa329f81745e905e20e00ef8efac"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784710078 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784710078 +0000",
+      "co_authored_by": [
+        "Claude Opus 4.8 <noreply@anthropic.com>"
+      ],
+      "signature_present": true,
+      "subject": "feat(survival): add Cox PH + DeepSurv survival analysis with survival curve API",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": true
+    },
+    {
+      "sha": "3e67ba0d9af5fa329f81745e905e20e00ef8efac",
+      "tree": "7b85f8dc0479655fea50afb6abb9679be2599f2c",
+      "parents": [
+        "c93c4dc5d62d6430806969f40db0082821dde995",
+        "8654fd68f9a3b25ce4df2077e23213d4ebde1cac"
+      ],
+      "author": "Agatha Silalahi <149786199+Agathahah@users.noreply.github.com> 1784708655 +0700",
+      "committer": "GitHub <noreply@github.com> 1784708655 +0700",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "Merge pull request #11 from Agathahah/feature/mlops-enhancements",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "8654fd68f9a3b25ce4df2077e23213d4ebde1cac",
+      "tree": "7b85f8dc0479655fea50afb6abb9679be2599f2c",
+      "parents": [
+        "b0757d5d806f33d32c50f6d6bfbbb2f3ec26b37b"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784619116 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784619116 +0000",
+      "co_authored_by": [
+        "Claude Opus 4.8 <noreply@anthropic.com>"
+      ],
+      "signature_present": true,
+      "subject": "test(feast): gate live integration tests behind CREDITLENS_RUN_INTEGRATION",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": true
+    },
+    {
+      "sha": "b0757d5d806f33d32c50f6d6bfbbb2f3ec26b37b",
+      "tree": "f73011ee46539717ac57a13ba9f9cb56f9dc980e",
+      "parents": [
+        "a6dff9ac8c030a7b73e8563d58c5cbf103b5f187"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784616776 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784616776 +0000",
+      "co_authored_by": [
+        "Claude Opus 4.8 <noreply@anthropic.com>"
+      ],
+      "signature_present": true,
+      "subject": "fix(types): drop unused type-ignore in test_store via patch",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": true
+    },
+    {
+      "sha": "a6dff9ac8c030a7b73e8563d58c5cbf103b5f187",
+      "tree": "a96c1da4d4f25f1943bf186bd1b7c6def3ba0568",
+      "parents": [
+        "c93c4dc5d62d6430806969f40db0082821dde995"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784616535 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784616535 +0000",
+      "co_authored_by": [
+        "Claude Opus 4.8 <noreply@anthropic.com>"
+      ],
+      "signature_present": true,
+      "subject": "feat(mlops): MLflow eval logging, Grafana monitoring panels, incremental Feast materialize",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": true
+    },
+    {
+      "sha": "c93c4dc5d62d6430806969f40db0082821dde995",
+      "tree": "79d5229538d400ca6d3d84e7b0a2180aac8b3532",
+      "parents": [
+        "6c4799d5c72d57629947a792333e9fde3f9bfa2e",
+        "4d4c89000a1f46ec1e799d6dc49b8fbd2a54ba5f"
+      ],
+      "author": "Agatha Silalahi <149786199+Agathahah@users.noreply.github.com> 1784615260 +0700",
+      "committer": "GitHub <noreply@github.com> 1784615260 +0700",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "Merge pull request #10 from Agathahah/feature/monitoring",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "6c4799d5c72d57629947a792333e9fde3f9bfa2e",
+      "tree": "8db06f4537dcdefede11a99b82b104855585a755",
+      "parents": [
+        "47b012fc97455e490fd5349ecb9d6b1686969bee",
+        "060370371af83e47517b8e1ef06d9fe3d9c02db0"
+      ],
+      "author": "Agatha Silalahi <149786199+Agathahah@users.noreply.github.com> 1784615218 +0700",
+      "committer": "GitHub <noreply@github.com> 1784615218 +0700",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "Merge pull request #9 from Agathahah/feature/airflow",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "4d4c89000a1f46ec1e799d6dc49b8fbd2a54ba5f",
+      "tree": "79d5229538d400ca6d3d84e7b0a2180aac8b3532",
+      "parents": [
+        "e8d168830fb5792897f1bddc16b09b37b037a550"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784607093 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784607093 +0000",
+      "co_authored_by": [
+        "Claude Opus 4.8 <noreply@anthropic.com>"
+      ],
+      "signature_present": true,
+      "subject": "fix(types): resolve mypy strict errors in monitoring modules",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": true
+    },
+    {
+      "sha": "e8d168830fb5792897f1bddc16b09b37b037a550",
+      "tree": "395aa58dbdb66d8d4b1afb7ebfb3f01ddbfe5ce2",
+      "parents": [
+        "060370371af83e47517b8e1ef06d9fe3d9c02db0"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784606822 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784606822 +0000",
+      "co_authored_by": [
+        "Claude Opus 4.8 <noreply@anthropic.com>"
+      ],
+      "signature_present": true,
+      "subject": "feat(monitoring): add Evidently drift, MLflow tracking, and Grafana dashboards",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": true
+    },
+    {
+      "sha": "060370371af83e47517b8e1ef06d9fe3d9c02db0",
+      "tree": "8db06f4537dcdefede11a99b82b104855585a755",
+      "parents": [
+        "47b012fc97455e490fd5349ecb9d6b1686969bee"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784603203 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784603203 +0000",
+      "co_authored_by": [
+        "Claude Opus 4.8 <noreply@anthropic.com>"
+      ],
+      "signature_present": true,
+      "subject": "feat(airflow): add Airflow DAGs for ETL, dbt, feast materialize, retraining, and monitoring",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": true
+    },
+    {
+      "sha": "47b012fc97455e490fd5349ecb9d6b1686969bee",
+      "tree": "b49d0d44a01ffa2f64b5aedc37b505a41c564647",
+      "parents": [
+        "28c03bf431bcabd4d482c829060a91e195427932",
+        "6cf85e45d7b5287289f61dfc9db96d45e68de661"
+      ],
+      "author": "Agatha Silalahi <149786199+Agathahah@users.noreply.github.com> 1784602007 +0700",
+      "committer": "GitHub <noreply@github.com> 1784602007 +0700",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "Merge pull request #8 from Agathahah/feature/feast-store",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "6cf85e45d7b5287289f61dfc9db96d45e68de661",
+      "tree": "b49d0d44a01ffa2f64b5aedc37b505a41c564647",
+      "parents": [
+        "8fa29dc02b484c83b1eb1d85e77ca04b58d12565"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784539504 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784539504 +0000",
+      "co_authored_by": [
+        "Claude Fable 5 <noreply@anthropic.com>"
+      ],
+      "signature_present": true,
+      "subject": "fix(types): resolve mypy errors from feast extras dependency bump",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": true
+    },
+    {
+      "sha": "8fa29dc02b484c83b1eb1d85e77ca04b58d12565",
+      "tree": "008321b0c6618c61c5552067b9028b8f10bfa192",
+      "parents": [
+        "28c03bf431bcabd4d482c829060a91e195427932"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784539265 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784539265 +0000",
+      "co_authored_by": [
+        "Claude Fable 5 <noreply@anthropic.com>"
+      ],
+      "signature_present": true,
+      "subject": "feat(feast): add Feast feature store with Redis online and PostgreSQL offline",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": true
+    },
+    {
+      "sha": "28c03bf431bcabd4d482c829060a91e195427932",
+      "tree": "3156285b7dfb7e1999099b69a3c5c114e29f40ef",
+      "parents": [
+        "a86c28220a7b56c1aa16675d2734cc2a697a0d96",
+        "31c2f7c7c6a560d9006832e47772e90e8ae42093"
+      ],
+      "author": "Agatha Silalahi <149786199+Agathahah@users.noreply.github.com> 1784535800 +0700",
+      "committer": "GitHub <noreply@github.com> 1784535800 +0700",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "Merge pull request #7 from Agathahah/feature/api",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "a86c28220a7b56c1aa16675d2734cc2a697a0d96",
+      "tree": "0d8dcaf7c6f4fbebdbbe6440ec697ebcd332f96d",
+      "parents": [
+        "f627afcb606bf43cc1ad4dc74559e0d3b3c2c502",
+        "fb2b713656013390abb161498f584b198c95a540"
+      ],
+      "author": "Agatha Silalahi <149786199+Agathahah@users.noreply.github.com> 1784535785 +0700",
+      "committer": "GitHub <noreply@github.com> 1784535785 +0700",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "Merge pull request #6 from Agathahah/claude/explainability-fairness-16fto9",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "f627afcb606bf43cc1ad4dc74559e0d3b3c2c502",
+      "tree": "cce39d12aaf436d9f74c3fa9b5a90ee19a476acc",
+      "parents": [
+        "5d68b56da3f04338c2424d34f4a4044b7b44c034",
+        "a6902bb0b56cc6c3a9c4270d039dabf0dd148d65"
+      ],
+      "author": "Agatha Silalahi <149786199+Agathahah@users.noreply.github.com> 1784535719 +0700",
+      "committer": "GitHub <noreply@github.com> 1784535719 +0700",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "Merge pull request #5 from Agathahah/feature/ml-pipeline",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "31c2f7c7c6a560d9006832e47772e90e8ae42093",
+      "tree": "3156285b7dfb7e1999099b69a3c5c114e29f40ef",
+      "parents": [
+        "fb2b713656013390abb161498f584b198c95a540"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784531475 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784531475 +0000",
+      "co_authored_by": [
+        "Claude Fable 5 <noreply@anthropic.com>"
+      ],
+      "signature_present": true,
+      "subject": "feat(api): FastAPI endpoints for predict and explain",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": true
+    },
+    {
+      "sha": "fb2b713656013390abb161498f584b198c95a540",
+      "tree": "0d8dcaf7c6f4fbebdbbe6440ec697ebcd332f96d",
+      "parents": [
+        "a6902bb0b56cc6c3a9c4270d039dabf0dd148d65"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784528918 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784528918 +0000",
+      "co_authored_by": [
+        "Claude Fable 5 <noreply@anthropic.com>"
+      ],
+      "signature_present": true,
+      "subject": "feat(explainability): add SHAP, counterfactual (DiCE), and fairness audit (AIF360)",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": true
+    },
+    {
+      "sha": "a6902bb0b56cc6c3a9c4270d039dabf0dd148d65",
+      "tree": "cce39d12aaf436d9f74c3fa9b5a90ee19a476acc",
+      "parents": [
+        "5dc81bb1447acf335f046a96aa2ab445fe5a67ed"
+      ],
+      "author": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784519184 +0700",
+      "committer": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784519184 +0700",
+      "co_authored_by": [],
+      "signature_present": false,
+      "subject": "feat(ml-pipeline): add feature engineering and model training pipeline",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "5dc81bb1447acf335f046a96aa2ab445fe5a67ed",
+      "tree": "98a73abc24ad8823130596d14e35b19e80a8c75d",
+      "parents": [
+        "5d68b56da3f04338c2424d34f4a4044b7b44c034",
+        "985e905dfcdaeaf414c6d63644360543cfdecca1"
+      ],
+      "author": "Agatha Silalahi <149786199+Agathahah@users.noreply.github.com> 1784518902 +0700",
+      "committer": "GitHub <noreply@github.com> 1784518902 +0700",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "Merge pull request #3 from Agathahah/feature/foundation",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "985e905dfcdaeaf414c6d63644360543cfdecca1",
+      "tree": "98a73abc24ad8823130596d14e35b19e80a8c75d",
+      "parents": [
+        "a55cb11eac0b55ae0582821a062fd552d39a82fb"
+      ],
+      "author": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784273742 +0700",
+      "committer": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784273742 +0700",
+      "co_authored_by": [],
+      "signature_present": false,
+      "subject": "chore(build): add email-validator to dependencies required by pydantic EmailStr",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "a55cb11eac0b55ae0582821a062fd552d39a82fb",
+      "tree": "68ab14635e582c69dc4b98f5ea0d498287195ab3",
+      "parents": [
+        "10a12eaf907eae0591e6916c8c94a40fb3db9f87"
+      ],
+      "author": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784273130 +0700",
+      "committer": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784273130 +0700",
+      "co_authored_by": [],
+      "signature_present": false,
+      "subject": "chore(build): configure hatch wheel packages to support editable install in CI",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "10a12eaf907eae0591e6916c8c94a40fb3db9f87",
+      "tree": "caa2c5561306b6be82f8660a20fb35c046659595",
+      "parents": [
+        "6245310268e2505b22164bdff884ea1c0f0b0594"
+      ],
+      "author": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784272611 +0700",
+      "committer": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784272611 +0700",
+      "co_authored_by": [],
+      "signature_present": false,
+      "subject": "chore(ci): install dependencies in lint job and target python 3.12 for mypy/ruff",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "6245310268e2505b22164bdff884ea1c0f0b0594",
+      "tree": "246779de55b52f9ac1efa294ba828b1fe2a4a778",
+      "parents": [
+        "09c734de6a2c82bc71d4b05a68d0a39c6bbbd6d0"
+      ],
+      "author": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784272269 +0700",
+      "committer": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784272269 +0700",
+      "co_authored_by": [],
+      "signature_present": false,
+      "subject": "style(lint): format codebase, resolve mypy strict typing errors, and add README.md",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "09c734de6a2c82bc71d4b05a68d0a39c6bbbd6d0",
+      "tree": "7b06a03489ce66c1ef300320a4a09dd456cb4d98",
+      "parents": [
+        "b486e89e030f45ed54486ad1a18b9cc7dba1b119"
+      ],
+      "author": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784260652 +0700",
+      "committer": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784260652 +0700",
+      "co_authored_by": [],
+      "signature_present": false,
+      "subject": "feat(dbt): create and verify dbt mart layer models (loan_features, macro_features, final_features)",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "b486e89e030f45ed54486ad1a18b9cc7dba1b119",
+      "tree": "54b1dc28558a20b91d807357cf28fe9da926b800",
+      "parents": [
+        "67d073df5c2d9f38d48d87ae1bfb4c29700c727d"
+      ],
+      "author": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784259602 +0700",
+      "committer": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784259602 +0700",
+      "co_authored_by": [],
+      "signature_present": false,
+      "subject": "feat(dbt): commit foundation code, alembic migrations, and dbt staging layer models",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    },
+    {
+      "sha": "67d073df5c2d9f38d48d87ae1bfb4c29700c727d",
+      "tree": "b57e12d4daaa6876c8bb93603edbb8d5012aab99",
+      "parents": [
+        "76d09e6d68129161ff88eea363b14fe4dca218e7"
+      ],
+      "author": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784193125 +0700",
+      "committer": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784193125 +0700",
+      "co_authored_by": [
+        "Claude Opus 4.6 (1M context) <noreply@anthropic.com>"
+      ],
+      "signature_present": false,
+      "subject": "fix(ingestion): fix SEC EDGAR frames API column mapping and negative dti handling",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": true
+    },
+    {
+      "sha": "76d09e6d68129161ff88eea363b14fe4dca218e7",
+      "tree": "638517b586d1de6b728a14dd624073112ec7c9f5",
+      "parents": [
+        "91e96b6e6a4e17248b1e3d39991d278753d89af3"
+      ],
+      "author": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784175852 +0700",
+      "committer": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784175852 +0700",
+      "co_authored_by": [
+        "Claude Opus 4.6 (1M context) <noreply@anthropic.com>"
+      ],
+      "signature_present": false,
+      "subject": "feat(ingestion): add SEC EDGAR loader and batch insert optimisation",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": true
+    },
+    {
+      "sha": "91e96b6e6a4e17248b1e3d39991d278753d89af3",
+      "tree": "cd3a1ac12d387eb75c0fc8d81d81c18136efb70f",
+      "parents": [
+        "5d68b56da3f04338c2424d34f4a4044b7b44c034"
+      ],
+      "author": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784171185 +0700",
+      "committer": "Agatha Silalahi <silalahiagatha15@gmail.com> 1784171185 +0700",
+      "co_authored_by": [
+        "Claude Opus 4.6 (1M context) <noreply@anthropic.com>"
+      ],
+      "signature_present": false,
+      "subject": "feat(migration): create raw schema ORM models and initial migration",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": true
+    },
+    {
+      "sha": "21a8227456c47d0b68862a401396aef179054b24",
+      "tree": "17366d4df7474f6ed04a91e4039a55bf0d6e9561",
+      "parents": [
+        "1eb2c8accabde1eef8708563de7a7fa328338d55"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784106625 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784106625 +0000",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "[test] Add unit tests for src.common.config and src.common.database",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": false
+    },
+    {
+      "sha": "1eb2c8accabde1eef8708563de7a7fa328338d55",
+      "tree": "ee0bff1e5139f124d65b26c7b89125fa88ae6b8e",
+      "parents": [
+        "bb92ac8dcb38c81721eea495336994c64e5affbe"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784106260 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784106260 +0000",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "[fix] Fix pip editable install: drop dangling readme ref, add wheel packages config",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": false
+    },
+    {
+      "sha": "bb92ac8dcb38c81721eea495336994c64e5affbe",
+      "tree": "907f7e88954ec2da6506b767c07d8f5d1b6c8216",
+      "parents": [
+        "6afa17deec7e4e437f3f894c7a3b669c5d5fdbe3"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784106164 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784106164 +0000",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "[fix] Install project dependencies before mypy in CI lint job",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": false
+    },
+    {
+      "sha": "6afa17deec7e4e437f3f894c7a3b669c5d5fdbe3",
+      "tree": "0f8a1a560454bbd0fbc42e5651385bd56a3cb73a",
+      "parents": [
+        "716be1fd8c3f5952c1bedf011b4abc38e1c6ac4b"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784106096 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784106096 +0000",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "[chore] Add missing scripts/ directory referenced by CI lint job",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": false
+    },
+    {
+      "sha": "716be1fd8c3f5952c1bedf011b4abc38e1c6ac4b",
+      "tree": "0b451ea61bd0b33b559767a701d08ac68f6a8829",
+      "parents": [
+        "5d68b56da3f04338c2424d34f4a4044b7b44c034"
+      ],
+      "author": "Claude <noreply@anthropic.com> 1784105980 +0000",
+      "committer": "Claude <noreply@anthropic.com> 1784105980 +0000",
+      "co_authored_by": [],
+      "signature_present": true,
+      "subject": "[fix] Prevent Alembic env.py from importing a sibling project's src package",
+      "ai_author": true,
+      "ai_committer": true,
+      "ai_trailer": false
+    },
+    {
+      "sha": "5d68b56da3f04338c2424d34f4a4044b7b44c034",
+      "tree": "c5769f63e5e1bf1b7609d0bd7ba2f9e5c670552a",
+      "parents": [],
+      "author": "Agatha Silalahi <silalahiagatha15@gmail.com> 1783930157 +0700",
+      "committer": "Agatha Silalahi <silalahiagatha15@gmail.com> 1783930157 +0700",
+      "co_authored_by": [],
+      "signature_present": false,
+      "subject": "[init] CreditLens project scaffolding",
+      "ai_author": false,
+      "ai_committer": false,
+      "ai_trailer": false
+    }
+  ]
+}

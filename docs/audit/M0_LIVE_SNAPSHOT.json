@@ -1,0 +1,55 @@
+{
+  "checked_at_utc": "2026-09-09T07:58:44.690906+00:00",
+  "performed_by": "Codex; exercises deferred by user",
+  "target": {
+    "database": "creditlens",
+    "user": "creditlens",
+    "read_only": "on",
+    "port": 5432
+  },
+  "counts": {
+    "raw.lc_loans": 1599982,
+    "staging.lc_loans_clean": 1599982,
+    "mart.loan_features": 0,
+    "mart.final_features": 0,
+    "mart.macro_features": 954
+  },
+  "loan_status_counts": [
+    [
+      "Fully Paid",
+      730891
+    ],
+    [
+      "Current",
+      659918
+    ],
+    [
+      "Charged Off",
+      185294
+    ],
+    [
+      "Late (31-120 days)",
+      14812
+    ],
+    [
+      "In Grace Period",
+      6021
+    ],
+    [
+      "Late (16-30 days)",
+      3022
+    ],
+    [
+      "Default",
+      24
+    ]
+  ],
+  "availability_summary": {
+    "issue_date_min": "2014-01-01",
+    "issue_date_max": "2018-12-01",
+    "member_id_null_count": 1599982,
+    "last_pymnt_date_null_count": 1642,
+    "loaded_at_min": "2026-08-03 15:58:58.249996",
+    "loaded_at_max": "2026-08-03 16:43:41.036160"
+  }
+}

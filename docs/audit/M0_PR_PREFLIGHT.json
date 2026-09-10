@@ -1,0 +1,72 @@
+{
+  "checkpoint": "2026-09-10, publication preparation; no commits/push/PR performed by Codex",
+  "user_verification": {
+    "query": "SELECT COUNT(*) FROM mart.final_features;",
+    "result": 2260668,
+    "result_rows": 1,
+    "source": "output supplied by Agatha in this conversation"
+  },
+  "git": {
+    "branch": "codex/m0-mentoring",
+    "head": "9f241445ae75066cabda444b6a339d792c54b034",
+    "remote_main": "1a097c5e0254a09ddcaeebac8d7bd0fb4fe0093d",
+    "base_tree_equal": true,
+    "author_and_committer": "Agatha Silalahi <149786199+Agathahah@users.noreply.github.com>",
+    "github_login": "Agathahah",
+    "github_id": 149786199,
+    "existing_branch_prs": [],
+    "main_protection": {
+      "required_approving_review_count": 0,
+      "required_status_checks": null,
+      "enforce_admins": true
+    }
+  },
+  "validation": {
+    "application_suite": {
+      "tests": 128,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 4,
+      "passed": 124,
+      "warnings": 7,
+      "wall_time_seconds_reported": 18.23,
+      "skipped_cases": [
+        {
+          "test": "src.feature_store.tests.test_online_integration.test_apply_and_incremental_materialize",
+          "reason": "Set CREDITLENS_RUN_INTEGRATION=1 with the full stack up to run Feast integration tests"
+        },
+        {
+          "test": "src.feature_store.tests.test_online_integration.test_online_store_read_after_materialize",
+          "reason": "Set CREDITLENS_RUN_INTEGRATION=1 with the full stack up to run Feast integration tests"
+        },
+        {
+          "test": "src.ml.tests.test_survival.TestDeepSurv.test_survival_function_and_horizons",
+          "reason": "could not import 'pycox': No module named 'pycox'"
+        },
+        {
+          "test": "src.ml.tests.test_survival.TestDeepSurv.test_log_likelihood_none_for_deepsurv",
+          "reason": "could not import 'pycox': No module named 'pycox'"
+        }
+      ],
+      "mode": "CREDITLENS_RUN_INTEGRATION=0; DB/Redis test URLs point to unused localhost port 1, no development DB access",
+      "full_real_data_training": false
+    },
+    "black_isort_ruff": "passed on src/ tests/ scripts/",
+    "mypy": "passed on src/, 73 source files",
+    "prior_ingestion_postgres_checks": 8,
+    "prior_post_recovery_dbt_tests": 9,
+    "secret_pattern_scan": "No token/private-key/credential-URL matches in proposed docs at check; heuristic, not a guarantee",
+    "ignored_not_tracked": [
+      ".env",
+      "data/raw/accepted_2007_to_2018Q4.csv.gz",
+      ".local-backups/"
+    ]
+  },
+  "limits": [
+    "Local results are not GitHub CI results",
+    "No coverage percentage measured this run",
+    "Live Feast/optional dependency cases skipped",
+    "Migration/dbt fixture scripts are not wired into CI in this change",
+    "M0 label/provenance unresolved; no claim of production readiness"
+  ]
+}

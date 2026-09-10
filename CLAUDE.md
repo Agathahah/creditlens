@@ -1,5 +1,15 @@
 # CreditLens — Project Memory
 
+> Transisi mentoring, 2026-09-08: aturan aktif lintas-agent ada di
+> [AGENTS.md](AGENTS.md), persetujuan dan checkpoint ada di
+> [PROJECT_STATUS.md](PROJECT_STATUS.md). Arah v0.2 dan M0 telah disetujui;
+> training penuh, deployment dan rewrite riwayat belum disetujui.
+> Konteks di bawah dipertahankan sebagai catatan historis. Klaim production-grade
+> dan daftar komponen tidak membuktikan runtime sudah siap. Aturan session/model
+> routing khusus Claude di bawah digantikan workflow mentoring AGENTS.md.
+> Commit baru memakai identitas manusia yang dikonfirmasi, tanpa author/co-author
+> AI otomatis; bantuan AI tetap dicatat jujur di [LEARNING_LOG.md](LEARNING_LOG.md).
+
 ## Overview
 Production-grade explainable credit scoring engine untuk fintech lending.
 Membantu lender menilai risiko kredit dengan transparansi penuh — setiap
