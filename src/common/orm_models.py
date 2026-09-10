@@ -16,6 +16,7 @@ from sqlalchemy import (
     Integer,
     Numeric,
     String,
+    Text,
     func,
 )
 from sqlalchemy.orm import Mapped, mapped_column
@@ -58,7 +59,7 @@ class LcLoan(Base):
     annual_inc: Mapped[Decimal | None] = mapped_column(Numeric(15, 2))
     verification_status: Mapped[str | None] = mapped_column(String(50))
     issue_date: Mapped[date | None] = mapped_column(Date)
-    loan_status: Mapped[str | None] = mapped_column(String(50))
+    loan_status: Mapped[str | None] = mapped_column(Text)
     purpose: Mapped[str | None] = mapped_column(String(100))
     title: Mapped[str | None] = mapped_column(String(255))
     zip_code: Mapped[str | None] = mapped_column(String(20))
