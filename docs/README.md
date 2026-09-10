@@ -1,10 +1,10 @@
 # CreditLens — paket review awal
 
-Versi 0.2 · diperbarui 9 September 2026 · **Arah dan M0 disetujui; M0 sedang berjalan**.
+Versi 0.2 · diperbarui 11 September 2026 · **Arah dan M0 disetujui; M0 sedang berjalan**.
 
-Audit awal dilakukan baca-saja dan hasilnya disimpan di luar repo. Setelah persetujuan Agatha, dokumen dipasang di repo, identitas Git repo-local diterapkan, dan branch codex/m0-mentoring dibuat. AGENTS.md sekarang menjadi aturan aktif. Belum ada commit/push, instalasi, training, deployment atau rewrite. Reproduksi dbt dan dua tes baru lulus; setelah disk dilonggarkan, recovery dua mart development sukses dengan 9 tes pass. Snapshot audit dibedakan dari bukti terbaru.
+Audit awal dilakukan baca-saja. Setelah persetujuan Agatha, dokumen dipasang, identitas Git repo-local diterapkan dan M0 dijalankan. Ingestion/mart telah dipulihkan dengan backup/restore teruji. Agatha membuat tiga commit, push dan draft PR #14; CI pada 7a859fe lulus lint/typecheck serta 124 tes, dengan 4 tes dilewati. Evaluasi model/build Docker dilewati sesuai workflow PR. AGENTS.md adalah aturan aktif; training penuh, deployment dan rewrite belum dilakukan.
 
-CreditLens belum siap pilot ujung ke ujung: staging dan kedua mart kini berisi 1.599.982 pinjaman, tetapi 660.686 ID kandidat CSV belum dimuat ke raw. Artefak model standar belum ada; preprocessing, kontrak fitur, dan jalur rilis belum memenuhi bukti kesiapan. Klaim README lama “production-grade” bukan hasil verifikasi; README kini menyatakan status M0.
+CreditLens belum siap pilot ujung ke ujung: raw, staging dan kedua mart kini masing-masing berisi 2.260.668 pinjaman dan seluruh ID kandidat CSV tercakup. Provenance/as-of/label belum diputuskan, artefak model standar belum ada, preprocessing/kontrak fitur/jalur rilis belum memenuhi bukti kesiapan. Status M0 dan hasil lama selalu dibaca bersama tanggalnya.
 
 Versi 0.2 memperbarui rencana berdasarkan tujuan proyek mandiri; snapshot audit v0.1 dipisahkan dari hasil M0 terkini. Salinan v0.1 dipertahankan.
 
@@ -43,3 +43,5 @@ HTML latihan awal adalah draft; paket latihan akhir akan mengikuti implementasi 
 Pembaruan M0 10 September: [pemulihan ingestion](M0_INGESTION_RECOVERY.md), [draft keputusan target](M0_LABEL_DECISION_DRAFT.md), [pemeriksaan terminal terbaru](M0_TERMINAL_CHECK.md), [catatan langkah](WORKLOG.md).
 
 Publikasi bersama: [perintah commit/push/draft PR](M0_GIT_PUBLISH.md) dan [deskripsi PR siap review](M0_PR_BODY.md).
+
+Sesudah PR dibuat: [catatan Git/PR pemula dan langkah berikutnya](GIT_PR_CATATAN_PEMULA.md), [bukti Git dan CI PR #14](audit/M0_PR14_CI_REPORT.json). Catatan ini mencakup pager (END), staging Git, commit/push, PR, CI, serta batas menuju produksi.

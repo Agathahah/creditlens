@@ -86,3 +86,17 @@ Pelaksana perubahan kode, SQL migration, tes, backup/restore, ingestion, dbt dan
 | 7 | Codex menulis panduan tiga commit, push branch dan draft PR beserta body | Setiap blok menjelaskan lokasi/tujuan/dampak/expected output; belum dieksekusi pengguna pada checkpoint ini |
 
 Bukti: audit/M0_PR_PREFLIGHT.json. Isi raw/PostgreSQL tidak ikut git push; hasil recovery lokal tetap bukti lokal. Belum ada merge, deployment, rewrite atau persetujuan M1 baru. URL PR dan commit akan dicatat setelah output Agatha diterima.
+
+## 11 September 2026 — PR #14 terverifikasi, catatan Git pemula
+
+| Langkah | Pelaksana/tindakan | Hasil / alasan |
+|---|---|---|
+| 1 | Agatha menyelesaikan tiga commit, push dan draft PR | a37fcbd, 79c7618, 7a859fe; PR https://github.com/Agathahah/creditlens/pull/14 |
+| 2 | Codex memeriksa status lokal dan pesan/identitas commit | Hanya empat konteks lama untracked pada awal sesi; author/committer noreply Agatha, tanpa trailer Co-authored-by |
+| 3 | Codex membaca status PR/run dan ringkasan log CI | Head sama 7a859fe, OPEN/draft, tidak ada konflik merge terdeteksi; lint/test success, eval/build skipped |
+| 4 | Codex membedakan cakupan CI dari bukti lokal | 124 passed, 4 skipped, 8 warnings; coverage total 91% termasuk tes, ingestion 54%; runner PostgreSQL lokal belum masuk CI |
+| 5 | Codex membuat catatan Git/PR pemula | Definisi, perintah/opsi/dampak, pager, alur PR yang sama, CI per commit, batas merge/produksi |
+| 6 | Codex memperbarui status, indeks docs dan learning log | Memperbaiki ringkasan usang 1.599.982/belum push; mempertahankan laporan audit lama sebagai snapshot bertanggal |
+| 7 | Codex menyiapkan instruksi commit/push catatan oleh Agatha | Enam file dokumentasi/evidence, tanpa mutation database/aplikasi; perubahan baru perlu CI untuk commit baru |
+
+Hasil run 34504952839 tercatat dalam audit/M0_PR14_CI_REPORT.json. Repo belum merged/deployed; GitHub hanya dibaca oleh Codex pada sesi ini. Tidak menjalankan ulang tes aplikasi untuk perubahan dokumentasi saja; diff dan validitas JSON diperiksa. Pemberitahuan update gh bukan error atau prasyarat PR.

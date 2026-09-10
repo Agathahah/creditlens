@@ -1,6 +1,6 @@
 # PROJECT_STATUS
 
-Versi 0.2 · diperbarui 2026-09-10 · M0 AKTIF. Pemilik: Agatha Silalahi / Agathahah.
+Versi 0.2 · diperbarui 2026-09-11 · M0 AKTIF. Pemilik: Agatha Silalahi / Agathahah.
 
 ## Klarifikasi tujuan setelah audit
 
@@ -10,7 +10,9 @@ Agatha menyatakan proyek dikerjakan sendiri, tidak mempunyai reviewer staging, d
 
 Arahan terbaru Agatha: lanjutkan pekerjaan teknis, catat setiap langkah/alasan, jelaskan dalam tabel, dan tunda latihan HTML sampai akhir. Agatha mengirim output `SELECT COUNT(*) FROM mart.final_features;` dengan hasil `2260668` (1 row); verifikasi query mandiri tercatat. Persetujuan training penuh, deployment dan rewrite Git tetap terpisah.
 
-Branch `codex/m0-mentoring`, HEAD `9f241445ae75066cabda444b6a339d792c54b034`, belum ada commit/push. Identitas efektif lokal diperiksa ulang: `Agatha Silalahi <149786199+Agathahah@users.noreply.github.com>`. Empat dokumen konteks untracked pengguna dipertahankan.
+Branch `codex/m0-mentoring`, HEAD yang sudah dipush `7a859fe3c26d0791b4d049e2fd3437f5e02105ee`. Agatha membuat tiga commit (a37fcbd, 79c7618, 7a859fe), push dan [draft PR #14](https://github.com/Agathahah/creditlens/pull/14). Author/committer ketiganya memakai `Agatha Silalahi <149786199+Agathahah@users.noreply.github.com>`; tidak ada trailer Co-authored-by. Empat dokumen konteks untracked pengguna dipertahankan.
+
+Verifikasi CI 11 September: [run 34504952839](https://github.com/Agathahah/creditlens/actions/runs/34504952839) untuk HEAD tersebut sukses. Lint/typecheck pass; 124 tes pass, 4 skipped, 8 warnings. Gate evaluasi model dan build Docker skipped sesuai kondisi workflow. Coverage laporan total 91% (scope mencakup tes), modul ingestion 54%; delapan pemeriksaan PostgreSQL terisolasi masih bukti lokal, belum dijalankan CI. PR tetap draft/open dan belum merged. Bukti: [M0_PR14_CI_REPORT](docs/audit/M0_PR14_CI_REPORT.json).
 
 | Bukti terkini, 10 September | Hasil |
 |---|---|
@@ -93,7 +95,7 @@ Tabel di atas adalah keadaan sebelum recovery. Log historis kemudian membuktikan
 | Cakupan | Status |
 |---|---|
 | Audit baca-saja dan draft | Diminta pengguna; selesai |
-| Memasang AGENTS/docs repo | Disetujui; sudah dipasang dan belum di-commit |
+| Memasang AGENTS/docs repo | Disetujui; paket awal dicommit/dipush Agatha pada 7a859fe; catatan Git/CI tambahan 11 September disiapkan lokal |
 | M0 reproduksi/baseline | Disetujui; pemulihan ingestion/mart dan restore scoped selesai; provenance/as-of/label masih terbuka |
 | M1–M5 implementasi | Belum disetujui masing-masing |
 | Mengatur identitas Git lokal | Disetujui dan diterapkan: Agatha Silalahi / noreply Agathahah; author+committer efektif terverifikasi |
@@ -106,4 +108,4 @@ Suite aplikasi src/tests sudah dijalankan saat persiapan PR: 124 passed, 4 skipp
 
 Langkah berikutnya: review draft target/fitur dan lengkapi provenance/as-of → tutup M0 → sepakati desain M1 sebelum implementasi preprocessing/evaluasi. [Panduan terminal](docs/M0_TERMINAL_CHECK.md) tersedia untuk verifikasi opsional; bukan gate latihan. Tidak perlu memanggil task Codex baru.
 
-Persiapan publikasi 10 September: akun gh Agathahah dan main GitHub diverifikasi; belum ada PR untuk branch M0. Agatha meminta ikut menjalankan commit/push/PR; panduan lengkap di [M0_GIT_PUBLISH](docs/M0_GIT_PUBLISH.md), deskripsi siap review di [M0_PR_BODY](docs/M0_PR_BODY.md), bukti pra-publikasi di [M0_PR_PREFLIGHT](docs/audit/M0_PR_PREFLIGHT.json). Codex belum melakukan commit/push/PR.
+Publikasi awal sudah dilakukan Agatha: PR #14 dan tiga commit terverifikasi. Panduan awal [M0_GIT_PUBLISH](docs/M0_GIT_PUBLISH.md) dan bukti [M0_PR_PREFLIGHT](docs/audit/M0_PR_PREFLIGHT.json) tetap snapshot sebelum publikasi. [Catatan Git/PR untuk pemula](docs/GIT_PR_CATATAN_PEMULA.md) menjelaskan hasil CI, fungsi perintah dan cara menambahkan catatan baru ke PR yang sama. Langkah operasional berikutnya: Agatha review/commit/push enam file dokumentasi sesi ini, periksa CI untuk commit barunya, lalu review diff dan batas PR sebelum keputusan ready/merge. Review label/provenance M0 tetap diperlukan untuk masuk M1.

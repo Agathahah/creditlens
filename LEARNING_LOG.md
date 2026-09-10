@@ -101,3 +101,11 @@ Bahan latihan akhir: membaca semicolon/prompt psql; membedakan raw/view/mart; me
 Agatha mengirim output nyata `SELECT COUNT(*) FROM mart.final_features;` → `2260668`, satu row hasil. Ini bukti ia menjalankan query verifikasi hasil pemulihan. COUNT menghitung record, bukan membuktikan semua fitur/label benar atau bahwa model valid.
 
 Arahan terbaru: Agatha ingin ikut menjalankan operasi dan menerima perintah terminal untuk commit/push/PR. Codex menyiapkan perubahan, review, bukti tes dan panduan; operasi commit/push/pembuatan PR disisakan untuk dijalankan Agatha. Ini pembagian pekerjaan yang diminta, bukan gate persetujuan baru. Latihan konsep/HTML lengkap tetap di akhir; tidak ada merge/deployment otomatis.
+
+## 11 September 2026 — publikasi Agatha dan membaca CI
+
+Agatha menjalankan panduan, sempat menemui pager `(END)` pada diff --stat, lalu menerima penjelasan keluar dengan q dan melanjutkan --check/commit. Tiga commit aktual terverifikasi: a37fcbd (tes dbt), 79c7618 (ingestion), 7a859fe (dokumentasi). Agatha push branch dan membuat draft PR #14, lalu mengirim output PR OPEN/draft serta CI masih pending pada waktu ia memeriksa. Author dan committer ketiganya adalah Agatha/noreply; tidak ada trailer AI otomatis.
+
+Codex memeriksa ulang GitHub: CI selesai sukses pada 7a859fe, 124 passed/4 skipped/8 warnings. Evaluasi model dan image build skipped. Modul ingestion memiliki coverage CI 54%; pemeriksaan transaksi database privat tetap bukti lokal terpisah. Pending berarti belum selesai; skipped bukan pass; CI software bukan bukti kualitas model. Catatan pemula memetakan git/gh/GitHub, working tree/staging/commit/remote/PR, opsi perintah, pager, dan push tambahan ke PR yang sama.
+
+Kontribusi mandiri Agatha yang terbukti bertambah: mengikuti operasi commit terpisah, push, membuat PR dan membaca status awal checks. Implementasi sumber/tes dan penyusunan panduan tetap bantuan Codex; pemahaman end-to-end belum disimpulkan dari keberhasilan menjalankan perintah. Latihan HTML menyeluruh tetap di akhir. Catatan baru belum dicommit/push saat ditulis; langkah itu disisakan untuk Agatha. Tidak ada merge atau perubahan aturan branch.
