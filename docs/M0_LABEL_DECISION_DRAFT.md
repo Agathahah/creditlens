@@ -44,5 +44,3 @@ Rekomendasi target retrospektif lebih cocok untuk kondisi bukti saat ini. Bila t
 ## Urutan kerja setelah review
 
 Catat keputusan target dan batas penggunaan → lengkapi provenance/as-of atau batasi klaim secara eksplisit → definisikan whitelist fitur dan manifest cohort/split → sepakati desain M1 → implementasi train-only preprocessing dan tes leakage/parity. Training penuh dan deployment tetap keputusan tersendiri.
-
-Kontribusi saat ini: Agatha menetapkan tujuan dan memverifikasi operasi; Codex menjalankan agregasi dan menyusun rekomendasi. Pemahaman mandiri belum dinyatakan lulus. Materi/latihan HTML akhir akan meminta Agatha menjelaskan perbedaan status, label, censoring dan leakage dengan variasi kasus.

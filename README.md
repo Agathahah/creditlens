@@ -1,15 +1,17 @@
 # CreditLens
 
-> **Status 10 September 2026:** pemulihan data M0 berhasil. Raw → staging → mart masing-masing 2.260.668 pinjaman; backup/restore scoped dan 9 tes dbt lulus. Target/evaluasi, bundle/API dan deployment belum siap. Lihat [status](PROJECT_STATUS.md) dan [catatan langkah](docs/WORKLOG.md).
+CreditLens is a public-data credit-risk project covering PostgreSQL/dbt transformations, model evaluation, explainability, and a scoring API.
 
-An explainable credit-risk project using public loan data, developed through
-hands-on learning in data science and ML engineering.
+## Current status
 
-The project is currently in **M0: data diagnosis and reproducibility**. Production
-readiness has not been demonstrated. The initial scope is a public-data demo;
-outputs are not used for real lending decisions.
+M0 data recovery is implemented locally: raw, staging, and both loan marts each contain 2,260,668 records. Ingestion preserves full source statuses and can resume missing records without overwriting existing rows. Scoped backup/restore and targeted dbt checks passed.
 
-- [Project status and approvals](PROJECT_STATUS.md)
-- [Documentation and learning plan](docs/README.md)
-- [Contribution and mentoring rules](AGENTS.md)
-- [Learning and AI-assistance log](LEARNING_LOG.md)
+Production readiness has not been demonstrated. Label/feature-availability contracts, leakage-free evaluation, a versioned preprocessing/model bundle, API readiness, release gates, and operational monitoring remain open. Outputs are not intended for real lending decisions.
+
+- [Project status](PROJECT_STATUS.md)
+- [Technical documentation](docs/README.md)
+- [Data design](docs/DATA_DESIGN.md)
+- [Evaluation and release plan](docs/EVALUATION_RELEASE_PLAN.md)
+- [Engineering rules](AGENTS.md)
+
+Development has used AI assistance, including Claude and Codex. Technical claims are tied to source, tests, and recorded validation.

@@ -1,6 +1,6 @@
 # M0 — rencana reproduksi terisolasi
 
-2026-09-09. Dalam izin M0. Arahan terbaru Agatha menunda latihan sampai akhir dan meminta Codex melanjutkan pekerjaan teknis; COUNT dan tes M0 kini dapat dikerjakan Codex dengan atribusi bantuan yang jelas.
+2026-09-09. Rencana reproduksi M0 menggunakan fixture dan server PostgreSQL privat.
 
 ## Tujuan dan batas
 

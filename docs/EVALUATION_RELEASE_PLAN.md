@@ -42,18 +42,18 @@ Quality gate lama PR-AUC>=0.25 tetap dicatat. Usulan release gate menambahkan ba
 
 ## Matriks verifikasi yang bermakna
 
-| Tes | Kegagalan yang harus ditangkap | Pemilik latihan |
+| Tes | Kegagalan yang harus ditangkap | Milestone |
 |---|---|---|
-| Mart nonempty + row reconciliation | Tabel kosong yang lolos unique/not_null | Agatha M0 |
-| Test-only distribution perturbation | Median/category train berubah karena test | Agatha M1 |
-| Outcome availability / late-label boundary | Label dari masa depan atau Late dianggap default tanpa kontrak | Agatha M1 |
-| Raw record → saved bundle → reload → HTTP parity | Encoding, feature order, version mismatch | Agatha bagian assert/schema M2; Codex wiring |
-| Missing/unseen/invalid features | Kolom di-drop diam-diam, nan/inf/kategori unknown tak terkendali | Agatha satu kasus M2 |
-| Model absent/corrupt/incompatible | Healthy padahal score tidak tersedia | Agatha readiness test M2 |
-| Real SQL→Feast→score | id vs loan_id, dtype kategori, data kosong, entitas tidak ada/expired | Codex integration setelah Agatha mengerjakan key contract |
-| Gate negative case | Candidate invalid lolos build/release | Agatha M3 |
-| Rollback + identical fixture score | Kombinasi model/image lama tidak kompatibel | Agatha smoke assertion M3 |
-| Traffic and delayed-label join | Dashboard menghitung issue date, drift membuang unlabeled | Agatha SQL/test M4 |
+| Mart nonempty + row reconciliation | Tabel kosong yang lolos unique/not_null | M0 |
+| Test-only distribution perturbation | Median/category train berubah karena test | M1 |
+| Outcome availability / late-label boundary | Label dari masa depan atau Late dianggap default tanpa kontrak | M1 |
+| Raw record → saved bundle → reload → HTTP parity | Encoding, feature order, version mismatch | M2 |
+| Missing/unseen/invalid features | Kolom di-drop diam-diam, nan/inf/kategori unknown tak terkendali | M2 |
+| Model absent/corrupt/incompatible | Healthy padahal score tidak tersedia | M2 |
+| Real SQL→Feast→score | id vs loan_id, dtype kategori, data kosong, entitas tidak ada/expired | M2, setelah validasi key contract |
+| Gate negative case | Candidate invalid lolos build/release | M3 |
+| Rollback + identical fixture score | Kombinasi model/image lama tidak kompatibel | M3 |
+| Traffic and delayed-label join | Dashboard menghitung issue date, drift membuang unlabeled | M4 |
 
 Tidak menjalankan tes yang melatih model secara diam-diam pada audit ini. Dalam M0 lingkungan isolasi baru boleh menjalankan subset tes yang disepakati dan hasilnya disimpan. Tes yang skipped bukan pass integrasi. Coverage agregat tidak menggantikan pengujian kontrak.
 
@@ -63,7 +63,7 @@ Usulan benchmark lokal awal: warmup 100 request; 1.000 score request dengan conc
 
 CI software: lint + unit + SQL tests pada fixture kecil + artifact roundtrip + readiness. CI model: data/artefak yang versioned dan aksesnya tersedia secara eksplisit; evaluation report/checksum di-upload. Synthetic fixture membuktikan software, bukan kualitas model real data. Gate model tidak mengandalkan DB dev laptop.
 
-Penerimaan mandiri: Agatha menjalankan checklist dan memutuskan release; Codex membantu review diff/hasil, bukan pengganti seluruh validasi. Sediakan failure injection terbatas di staging (misalnya bundle hilang/tidak cocok), hasil negative tests, latihan restore/rollback, dan bukti operasi berulang. Reviewer eksternal bukan prasyarat. Scope beban, exposure, biaya dan toleransi kegagalan disepakati sebelum deployment.
+Penerimaan rilis memerlukan review diff/hasil, negative tests, failure injection terbatas di staging, restore/rollback dan bukti operasi. Scope beban, exposure, biaya dan toleransi kegagalan ditetapkan sebelum deployment.
 
 Release: candidate bundle → eval report → human approval → image digest+bundle checksum → staging/local smoke → pilot. Tag build wajib mengacu manifest gate yang sama; model yang berbeda dari evaluasi ditolak. Deployment target, akses pengguna demo, retention, biaya bulanan dan durasi pilot masih keputusan terbuka.
 

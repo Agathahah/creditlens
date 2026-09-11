@@ -1,6 +1,6 @@
 # Mengapa model ini dipertimbangkan?
 
-2026-09-09. Catatan keputusan kandidat; belum ada model pemenang dari evaluasi sah versi perbaikan. Update M0: mart sudah pulih, tetapi perbandingan set ID menunjukkan 660.686 ID kandidat CSV belum ada di raw; lihat [DATA_PROVENANCE.md](DATA_PROVENANCE.md). Pemilihan cohort masih harus dibuat eksplisit sebelum evaluasi.
+2026-09-11. Kandidat model belum dibandingkan melalui evaluasi versi perbaikan; belum ada model pemenang. Ingestion lengkap terhadap 2.260.668 kandidat CSV, tetapi cohort/label/as-of masih harus ditetapkan.
 
 ## Tujuan prediksi terlebih dahulu
 
@@ -34,14 +34,8 @@ Pemisahan sebelum fit sesuai [scikit-learn: data leakage](https://scikit-learn.o
 
 ## Temuan feasibility M0 yang memengaruhi keputusan
 
-Snapshot 9 September menunjukkan raw berisi 1.599.982 loan dengan issue_date 2014-01-01–2018-12-01; cakupan lebih sempit daripada rentang 2007–2018 yang disebut dokumentasi sumber lama. Kelengkapan ingestion terhadap CSV perlu direkonsiliasi sebelum memakai kata seluruh dataset.
+Snapshot sesudah recovery berisi 2.260.668 loan dengan issue_date Juni 2007–Desember 2018. Seluruh member_id NULL dan 2.427 last_pymnt_date kosong. Waktu pembayaran terakhir bukan waktu default atau bukti as-of; loaded_at mencatat ingestion.
 
-Seluruh member_id NULL: pemisahan berdasarkan borrower tidak dapat dijamin dari kolom ini. Last payment date kosong pada 1.642 loan; tanggal pembayaran terakhir juga bukan otomatis tanggal outcome/label tersedia. loaded_at 2026 mencatat ingestion, bukan kapan hasil pinjaman diketahui oleh pemberi pinjaman.
+Fully Paid 1.076.751, Charged Off 268.559 dan Default 40 menghasilkan 1.345.350 kandidat resolved-outcome sebelum aturan waktu/eligibility. Current dan status keterlambatan/grace tidak otomatis menjadi negatif. SQL lama masih memasukkan Late (31–120 days) sebagai positif. Lihat M0_LABEL_DECISION_DRAFT.md dan audit/M0_LABEL_FEASIBILITY.json.
 
-Fully Paid 730.891, Charged Off 185.294, Default 24. Jika usulan label terminal memakai tiga status itu saja, tersedia 916.209 loan kandidat dengan 185.318 adverse outcomes (sekitar 20,23%). Ini hitungan feasibility sebelum aturan maturity/eligibility final, bukan jumlah training yang sudah disahkan. Current 659.918 dan status keterlambatan/grace tidak boleh otomatis diberi label non-default. Kode lama memasukkan Late 31–120 sebagai positif; perubahan definisi harus dicatat sebelum evaluasi.
-
-## Narasi interview yang boleh dibangun
-
-“Saya mengevaluasi baseline sederhana sebelum memilih model lebih kompleks, menjaga preprocessing agar tidak belajar dari test, dan membandingkan kualitas prediksi dengan biaya operasional.” Kalimat ini baru menjadi klaim kontribusi setelah eksperimen/perubahan dan penjelasan mandiri benar-benar ada. Saat ini yang terbukti adalah audit, diagnosis pipeline, tes M0 dan verifikasi koneksi pengguna. Bantuan Codex dalam penulisan kode dan eksekusi dicatat terpisah di learning log.
-
-Ops Copilot/RAG merupakan usulan tambahan setelah core stabil; LLM tidak ditambahkan ke jalur scoring hanya demi label AI Engineer. Desain dan evaluasinya harus menjawab kebutuhan operasional tersendiri.
+Ops Copilot/RAG merupakan perluasan terpisah setelah core stabil; desain dan evaluasinya harus menjawab kebutuhan operasional yang terukur.

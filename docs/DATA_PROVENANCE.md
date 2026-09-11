@@ -31,6 +31,6 @@ Jumlah 2,9 juta dalam komentar historis tidak cocok dengan CSV ini. Rejected tid
 
 ## Yang belum diketahui
 
-Asal unduhan, izin penggunaan dan tanggal snapshot outcome belum terverifikasi. Pertanyaan asal data telah diajukan kepada Agatha. Last payment maksimum Maret 2019 hanya isi kolom; bukan bukti tanggal snapshot atau tanggal default. loaded_at adalah waktu ingestion, bukan tanggal outcome diketahui. Seluruh member_id NULL: evaluasi berbasis orang dan jaminan tidak ada borrower overlap belum dapat dibuat.
+Asal unduhan, izin penggunaan dan tanggal snapshot outcome belum terverifikasi. Last payment maksimum Maret 2019 hanya isi kolom; bukan bukti tanggal snapshot atau tanggal default. loaded_at adalah waktu ingestion, bukan tanggal outcome diketahui. Seluruh member_id NULL: evaluasi berbasis orang dan jaminan tidak ada borrower overlap belum dapat dibuat.
 
 Keputusan berikutnya: [draft target/eligibility](M0_LABEL_DECISION_DRAFT.md), lalu manifest cohort/split setelah batas klaim dan ketersediaan waktu jelas. [Rekonsiliasi sebelum recovery](audit/M0_ID_RECONCILIATION_BEFORE_INGESTION.json) tetap disimpan agar sejarah diagnosis tidak ditimpa.

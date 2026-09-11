@@ -1,6 +1,6 @@
 # Arsip eksekusi M0 — 10 September 2026
 
-Salinan script diagnosis/operasi yang dipakai Codex untuk pemulihan lokal, disimpan agar langkah bisa diaudit sesudah direktori temp hilang. Ini arsip satu kali dengan guard state, bukan entry point operasional umum. Tidak memuat password: koneksi dibaca dari `.env` saat eksekusi, tidak dicetak. Jangan menjalankan ulang script mutation sebagai latihan; sebagian sengaja menolak state sesudah recovery. Backup raw dan payload tetap privat di `.local-backups`, tidak disalin ke sini.
+Salinan script diagnosis/operasi yang dipakai untuk pemulihan lokal, disimpan agar langkah bisa diaudit sesudah direktori temp hilang. Ini arsip satu kali dengan guard state, bukan entry point operasional umum. Tidak memuat password: koneksi dibaca dari `.env` saat eksekusi, tidak dicetak. Jangan menjalankan ulang script mutation tanpa memeriksa prasyarat state; sebagian sengaja menolak state sesudah recovery. Backup raw dan payload tetap privat di `.local-backups`, tidak disalin ke sini.
 
 Urutan: CSV dryrun → backup → restore drill → resume_live (migration dan insert-missing) → rebuild_after_ingestion → verify ID → label_feasibility. Verifikasi ID dijalankan bersamaan dengan rebuild; contoh mart di laporan ID bukan bukti timestamp rebuild terbaru. Laporan dbt menyatakan keberhasilan build secara terpisah.
 

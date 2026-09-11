@@ -1,19 +1,11 @@
 # CreditLens — Project Memory
 
-> Transisi mentoring, 2026-09-08: aturan aktif lintas-agent ada di
-> [AGENTS.md](AGENTS.md), persetujuan dan checkpoint ada di
-> [PROJECT_STATUS.md](PROJECT_STATUS.md). Arah v0.2 dan M0 telah disetujui;
-> training penuh, deployment dan rewrite riwayat belum disetujui.
-> Konteks di bawah dipertahankan sebagai catatan historis. Klaim production-grade
-> dan daftar komponen tidak membuktikan runtime sudah siap. Aturan session/model
-> routing khusus Claude di bawah digantikan workflow mentoring AGENTS.md.
-> Commit baru memakai identitas manusia yang dikonfirmasi, tanpa author/co-author
-> AI otomatis; bantuan AI tetap dicatat jujur di [LEARNING_LOG.md](LEARNING_LOG.md).
+> Current engineering rules are in [AGENTS.md](AGENTS.md); implementation status is in [PROJECT_STATUS.md](PROJECT_STATUS.md). The remaining material is historical context. Vendor-specific session/model-routing rules below are superseded by AGENTS.md. Component lists and architectural intent do not establish production readiness.
 
 ## Overview
-Production-grade explainable credit scoring engine untuk fintech lending.
-Membantu lender menilai risiko kredit dengan transparansi penuh — setiap
-keputusan bisa dijelaskan kepada applicant dan regulator.
+Explainable credit-risk pipeline using public loan data. Production readiness,
+model validity and operational integration remain subject to the current
+project status and acceptance criteria.
 
 ## Data Sources (SQL-First)
 - Lending Club: 2.9M loan records, 150+ kolom (Kaggle)

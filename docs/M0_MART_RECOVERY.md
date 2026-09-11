@@ -1,6 +1,6 @@
 # M0 — pemulihan mart development
 
-2026-09-09. Melanjutkan pekerjaan M0 setelah pengguna menunda latihan sampai akhir. Bukan deployment, training penuh, atau perubahan metadata Git.
+2026-09-09. Runbook dan hasil pemulihan mart development; lihat M0_INGESTION_RECOVERY.md untuk pemulihan sumber berikutnya.
 
 ## Dasar tindakan
 
@@ -25,4 +25,4 @@ Perbaikan ini memulihkan materialisasi dan menambahkan deteksi kegagalan. Ia tid
 
 Percobaan pertama: state sesuai rencana, tetapi preflight disk gagal pada sekitar 1,9 GiB, di bawah guard konservatif 2 GiB. Berhenti sebelum backup/dbt build. Bukti historis: audit/M0_MART_RECOVERY_PREFLIGHT_REPORT.json.
 
-Setelah Agatha melonggarkan disk, preflight 7,129 GiB lulus. Backup dua mart kosong dibuat (4.707 byte), daftar isi/checksum diverifikasi, lalu dua model dibangun dan 9 tes pass. Staging/loan/final masing-masing 1.599.982 baris; disk sesudah run 5,954 GiB. Backup disalin ke direktori privat .local-backups yang diabaikan Git; path/checksum ada di audit/M0_MART_RECOVERY_REPORT.json. Raw, macro dan definisi fitur/label tidak diubah. Restore drill terhadap archive belum dijalankan; jangan menyebutnya teruji hanya karena dump/TOC valid.
+Setelah kapasitas disk tersedia, preflight 7,129 GiB lulus. Backup dua mart kosong dibuat (4.707 byte), daftar isi/checksum diverifikasi, lalu dua model dibangun dan 9 tes pass. Staging/loan/final masing-masing 1.599.982 baris; disk sesudah run 5,954 GiB. Backup disalin ke direktori privat .local-backups yang diabaikan Git; path/checksum ada di audit/M0_MART_RECOVERY_REPORT.json. Raw, macro dan definisi fitur/label tidak diubah. Restore drill terhadap archive belum dijalankan; jangan menyebutnya teruji hanya karena dump/TOC valid.

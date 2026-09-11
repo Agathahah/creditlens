@@ -13,27 +13,6 @@
     "mergeable": "MERGEABLE",
     "mergeStateStatus": "CLEAN"
   },
-  "commits": [
-    {
-      "sha": "a37fcbd23f405021c668959dd64ab925976c12d5",
-      "subject": "test(dbt): detect empty and inconsistent loan marts"
-    },
-    {
-      "sha": "79c76186c5fefb85810575d34b21eede2d0aa6a0",
-      "subject": "fix(ingestion): preserve loan statuses and resume missing records"
-    },
-    {
-      "sha": "7a859fe3c26d0791b4d049e2fd3437f5e02105ee",
-      "subject": "docs: record M0 recovery and mentoring evidence"
-    }
-  ],
-  "attribution": {
-    "all_three_author_and_committer": "Agatha Silalahi <149786199+Agathahah@users.noreply.github.com>",
-    "github_author_login": "Agathahah",
-    "co_authored_by_trailers": [],
-    "user_contribution": "Agatha ran the three commits, push and draft PR creation and supplied outputs; prior independent SQL COUNT was 2260668",
-    "ai_assistance": "Codex prepared implementation, tests, documentation and publication guidance; verified Git/CI and prepared these new notes"
-  },
   "ci": {
     "run_id": 34504952839,
     "url": "https://github.com/Agathahah/creditlens/actions/runs/34504952839",
@@ -41,13 +20,37 @@
     "status": "completed",
     "conclusion": "success",
     "jobs": [
-      {"name": "Lint & Type Check", "job_id": 102964713457, "conclusion": "success"},
-      {"name": "Unit & Integration Tests", "job_id": 102965629599, "conclusion": "success"},
-      {"name": "Model Evaluation Gate", "job_id": 102966535926, "conclusion": "skipped"},
-      {"name": "Build Docker Image", "job_id": 102966536392, "conclusion": "skipped"}
+      {
+        "name": "Lint & Type Check",
+        "job_id": 102964713457,
+        "conclusion": "success"
+      },
+      {
+        "name": "Unit & Integration Tests",
+        "job_id": 102965629599,
+        "conclusion": "success"
+      },
+      {
+        "name": "Model Evaluation Gate",
+        "job_id": 102966535926,
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Build Docker Image",
+        "job_id": 102966536392,
+        "conclusion": "skipped"
+      }
     ],
-    "pytest": {"passed": 124, "skipped": 4, "warnings": 8, "duration_seconds": 21.28},
-    "skipped_test_groups": {"live_feast": 2, "optional_deepsurv": 2},
+    "pytest": {
+      "passed": 124,
+      "skipped": 4,
+      "warnings": 8,
+      "duration_seconds": 21.28
+    },
+    "skipped_test_groups": {
+      "live_feast": 2,
+      "optional_deepsurv": 2
+    },
     "reported_coverage": {
       "total_percent": 91,
       "total_statements": 2413,
@@ -63,5 +66,15 @@
     "No merge, PR readiness change, deployment, real-data training or history rewrite performed in this verification",
     "PR workflow skips model evaluation and image build; a push to main would trigger the existing model evaluation gate",
     "Model artifacts and valid evaluation remain unfinished; software CI success does not establish production readiness"
-  ]
+  ],
+  "latest_check": {
+    "head_sha": "745dd28c2bd5cfe6e5b13d288bbc0d3b76d6de9d",
+    "run_id": 34506955747,
+    "url": "https://github.com/Agathahah/creditlens/actions/runs/34506955747",
+    "lint_and_type_check": "success",
+    "unit_and_integration_tests": "success",
+    "model_evaluation_gate": "skipped",
+    "build_docker_image": "skipped",
+    "note": "The detailed counts/coverage in ci belong to the earlier 7a859fe run and are not inferred for this run."
+  }
 }

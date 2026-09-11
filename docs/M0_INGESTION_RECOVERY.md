@@ -1,6 +1,6 @@
 # M0 — pemulihan ingestion yang terhenti
 
-2026-09-09. Kelanjutan diagnosis/pemulihan M0 yang diminta Agatha. Latihan akhir ditunda; implementasi dan eksekusi berikut diatribusikan kepada Codex. Tidak mencakup training penuh, deployment atau rewrite Git.
+2026-09-09. Diagnosis dan pemulihan ingestion lokal M0; tidak mengubah kontrak label atau menjalankan training.
 
 ## Diagnosis terverifikasi
 

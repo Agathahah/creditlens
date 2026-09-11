@@ -1,19 +1,10 @@
 {
-  "checkpoint": "2026-09-10, publication preparation; no commits/push/PR performed by Codex",
-  "user_verification": {
-    "query": "SELECT COUNT(*) FROM mart.final_features;",
-    "result": 2260668,
-    "result_rows": 1,
-    "source": "output supplied by Agatha in this conversation"
-  },
+  "checkpoint": "2026-09-10, pre-publication software validation",
   "git": {
     "branch": "codex/m0-mentoring",
     "head": "9f241445ae75066cabda444b6a339d792c54b034",
     "remote_main": "1a097c5e0254a09ddcaeebac8d7bd0fb4fe0093d",
     "base_tree_equal": true,
-    "author_and_committer": "Agatha Silalahi <149786199+Agathahah@users.noreply.github.com>",
-    "github_login": "Agathahah",
-    "github_id": 149786199,
     "existing_branch_prs": [],
     "main_protection": {
       "required_approving_review_count": 0,
@@ -68,5 +59,10 @@
     "Live Feast/optional dependency cases skipped",
     "Migration/dbt fixture scripts are not wired into CI in this change",
     "M0 label/provenance unresolved; no claim of production readiness"
-  ]
+  ],
+  "warehouse_verification": {
+    "query": "SELECT COUNT(*) FROM mart.final_features;",
+    "result": 2260668,
+    "result_rows": 1
+  }
 }

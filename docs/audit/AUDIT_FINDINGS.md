@@ -1,6 +1,6 @@
 # Temuan audit
 
-> Status pemasangan 2026-09-08: arah v0.2 dan M0 disetujui. Dokumen ini adalah snapshot audit/rencana atribusi historis, bukan persetujuan rewrite.
+> Historical source/database audit, 2026-09-08. Later M0 recovery evidence supersedes the initial empty-mart state.
 
 v0.1 · DRAFT · 2026-09-08. P0 = menghambat validitas/core; P1 = menghambat pilot/release; P2 = kelengkapan atau perluasan. “Source” berarti perilaku terbaca dari kode, belum direproduksi melalui aplikasi. “DB” dan “CI” adalah bukti langsung pada target/waktu yang dicatat.
 
@@ -29,6 +29,6 @@ Staging saat audit: Fully Paid 730.891; Current 659.918; Charged Off 185.294; La
 
 ## Interpretasi batas audit
 
-Belum ada metrik model valid yang direproduksi dalam sesi ini. Alasan mart kosong, riwayat deployment, isi Redis, serta sumber setting identitas pada sesi Claude lama belum dibuktikan. Tidak mengasumsikan semua source gagal; tes CI membuktikan sejumlah komponen berjalan pada environment CI historis.
+Belum ada metrik model valid yang direproduksi dalam sesi ini. Alasan mart kosong, riwayat deployment, isi Redis belum dibuktikan. Tidak mengasumsikan semua source gagal; tes CI membuktikan sejumlah komponen berjalan pada environment CI historis.
 
 Prinsip fit transform hanya pada train dan menggunakan transform yang sama saat serving mengikuti [panduan scikit-learn](https://scikit-learn.org/1.8/common_pitfalls.html#data-leakage). Mengukur besarnya bias memerlukan eksperimen setelah desain disetujui.

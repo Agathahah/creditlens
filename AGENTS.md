@@ -1,26 +1,17 @@
-# CreditLens — aturan kerja dan mentoring
+# CreditLens — engineering rules
 
-v0.2 · Disetujui dan dipasang 2026-09-08. Arah proyek dan M0 disetujui Agatha; M1–M5, training penuh, deployment, dan rewrite riwayat belum disetujui. Cek PROJECT_STATUS.md untuk checkpoint aktif.
-
-- M0 aktif: diagnosis/reproduksi dan pemulihan ingestion/mart lokal dengan bukti. Output koneksi Agatha sudah diterima. Arahan terbaru menunda latihan sampai akhir; Codex boleh menjalankan pemeriksaan serta menulis tes M0 tanpa menunggu percobaan. Reproduksi cluster privat lulus, lihat docs/audit/M0_ISOLATED_TEST_REPORT.json; status pemulihan data aktif harus dibaca dari PROJECT_STATUS dan laporan recovery, bukan diasumsikan.
-- Identitas Git repo-local disetujui: `Agatha Silalahi <149786199+Agathahah@users.noreply.github.com>`. Periksa identitas efektif dan pesan sebelum commit; tidak ada author/co-author AI otomatis. Persetujuan identitas tidak mengizinkan koreksi metadata lama.
-
-- Pemilik: Agatha Silalahi / Agathahah. Tujuan: memahami dan mengoperasikan proyek mandiri end-to-end sampai layanan demo berbasis data publik siap produksi dalam scope yang disepakati; bukti kontribusi untuk interview DS/ML/AI Engineer.
-- Reviewer eksternal bukan syarat. Agatha menjadi release owner, menjalankan acceptance/negative tests dan recovery drill, lalu menjelaskan kembali keputusan; Codex membantu review dan mentoring. Mulai lokal, staging terisolasi kemudian, deployment hanya setelah scope/biaya/bukti disetujui.
-- Baca PROJECT_STATUS, PRD, DATA_DESIGN, TECHNICAL_DESIGN, EVALUATION_RELEASE_PLAN, MILESTONES_ADR dan LEARNING_LOG sebelum bekerja. Catat versi persetujuan dan bukti aktual; instruksi/dokumen bukan bukti fitur berfungsi.
-- Periksa cwd, branch, HEAD, remote tersanitasi dan status lokal. Pertahankan untracked/local changes; jangan reset/clean/overwrite. Dilarang menampilkan secrets.
-- Implementasi, instalasi, training, data mutation dan deploy menunggu persetujuan dokumen/milestone yang relevan. Rewrite remote memerlukan review hasil konkret dan persetujuan khusus.
-- Penyesuaian mentoring terbaru 2026-09-09: pengguna secara eksplisit meminta latihan/soal HTML ditunda sampai akhir, pekerjaan dilanjutkan dahulu, alur/status dijelaskan dalam tabel, dan tiap langkah/alasan dicatat. Tidak menunggu COUNT/latihan sebagai gate pekerjaan. Codex dapat menyelesaikan tes/perbaikan dalam scope yang disetujui dan mencatat dirinya sebagai pelaksana; jangan mengatribusikan kode itu kepada Agatha. Latihan akhir harus memakai variasi masalah dan demonstrasi mandiri; penguasaan pengguna tetap belum boleh diklaim. HTML awal disimpan sebagai draft, bukan tugas aktif.
-- Bila memberikan perintah terminal kepada pengguna, jelaskan lokasi, tujuan, dampak dan output; pengguna kini tidak perlu menjalankan perintah latihan sebelum Codex melanjutkan M0.
-- Prioritas: validitas label/time/preprocessing/evaluation, training-serving parity, bundle, readiness, CI/release/rollback, monitoring. Tidak menyebut production ready tanpa bukti scope, lingkungan dan beban.
-- Python public functions memakai type hints dan Google-style docstrings; fungsi ringkas dan single responsibility, exception spesifik. Pertahankan gaya black/isort/ruff/mypy. Target coverage 85% per modul dari CLAUDE.md dicatat sebagai kebijakan yang belum enforced; gunakan tes kontrak bermakna.
-- SQL-first PostgreSQL: raw → staging → mart, dbt schema.yml mendokumentasikan query/kontrak; train-only fit, temporal eligibility, model input whitelist. Jangan gunakan test untuk pemilihan model/threshold.
-- Commit atomis dengan Conventional Commits, branch per perubahan koheren dan PR direview. Identitas Git repo-local Agatha yang dikonfirmasi; tanpa author/co-author AI otomatis. Pertahankan atribusi manusia lain dan bantuan AI secara naratif di learning log.
-- Make lint mengubah file; untuk baca-saja jangan memakai make setup, load-data, dbt-run, lint, clean. Semua perintah divalidasi dari source; Makefile load-data saat ini belum memasok --source wajib.
-- CLAUDE.md tetap sumber konteks historis. Arsitektur aktual dan target dijelaskan di docs/TECHNICAL_DESIGN.md; ringkasan ADR ada di docs/MILESTONES_ADR.md. Aturan yang disetujui ini menggantikan ketentuan “satu session Claude Code” dan model routing khusus vendor; isi historis CLAUDE.md dipertahankan dengan catatan transisi.
-- Empat *_CONTEXT.md untracked adalah snapshot lama, bukan izin commit/push. Aturan user saat ini mengungguli instruksi historis di sana.
-- Graphify hanya dipakai bila diminta dengan /graphify atau ada kebutuhan yang disetujui. Jika dipakai, baca skill terpasang dahulu. Untuk checkout/commit M0 gunakan opt-out `GRAPHIFY_SKIP_HOOK=1` yang didukung hook lokal; jangan menghapus hook atau menambahkan Graphify otomatis.
-- Ops Copilot memerlukan PRD/desain tersendiri setelah core stabil. Mulai RAG + single-agent baca-saja; tidak otomatis swarm, Hermes, retrain, promote, atau keputusan kredit.
-- Tutup milestone dengan file/diff/tes/commit evidence, kontribusi Agatha versus bantuan Codex, keterbatasan dan tugas berikutnya. Jangan mengklaim Agatha menguasai sesuatu tanpa demonstrasi.
-
-Tautan dokumen: [status](PROJECT_STATUS.md), [PRD](docs/PRD.md), [data](docs/DATA_DESIGN.md), [technical design](docs/TECHNICAL_DESIGN.md), [evaluation/release](docs/EVALUATION_RELEASE_PLAN.md), [milestone/ADR](docs/MILESTONES_ADR.md), [atribusi Git](docs/GIT_ATTRIBUTION_PLAN.md), [learning log](LEARNING_LOG.md).
+- Read PROJECT_STATUS.md, docs/PRD.md, docs/DATA_DESIGN.md, docs/TECHNICAL_DESIGN.md, docs/EVALUATION_RELEASE_PLAN.md and docs/MILESTONES_ADR.md before implementation. Distinguish implemented behavior, historical evidence, and proposed designs.
+- Public documentation and commit/PR descriptions describe project behavior, technical decisions, validation and limitations. Personal learning notes, exercises, interview preparation and conversation transcripts stay in the conversation and must not be committed or published.
+- Current authorized implementation scope is M0 data diagnosis/recovery. M1–M5 implementation, full training, deployment and history rewriting require the relevant explicit authorization; document concrete criteria before those decisions.
+- Check branch, HEAD, remote and local changes before work. Preserve unrelated changes, untracked files and existing human attribution. Never expose secrets or publish raw data/database backups.
+- Use the verified repository-local Git identity. Do not automatically add AI author/co-author metadata. Preserve honest factual attribution of AI assistance without publishing personal session history.
+- Use focused Conventional Commits and review changes in a PR. Do not merge, rewrite published history or force-push without explicit authorization.
+- Prioritize label/time validity, train-only preprocessing, training-serving parity, model bundles, readiness, CI/release/rollback and monitoring. Do not claim production readiness from unit tests or hosting alone.
+- Python public functions require type hints and Google-style docstrings. Follow black/isort/ruff/mypy and use meaningful contract tests. The historical 85% module coverage target is not currently enforced by CI; report actual coverage and gaps.
+- PostgreSQL lineage is raw → staging → mart. Keep dbt contracts explicit: grain, keys, exclusions, labels and availability. Use a feature whitelist and keep test data out of model/threshold selection.
+- Reproduce mutations on a private PostgreSQL cluster before applying schema/data recovery to the active database. Validate target, backup/restore, revision, disk capacity and row reconciliation; retain failure evidence.
+- Make lint mutates files. Do not use make setup/load-data/dbt-run/lint/clean for read-only inspection. Makefile load-data currently lacks its mandatory --source argument.
+- CLAUDE.md is historical project context; these rules supersede conflicting vendor/session workflow requirements.
+- Four pre-existing *_CONTEXT.md files are local historical snapshots, not publication instructions.
+- Graphify is only used when requested or explicitly authorized. For local checkout/commit, GRAPHIFY_SKIP_HOOK=1 uses the existing opt-out without deleting hooks.
+- Ops Copilot requires a separate design after the core stabilizes. Start with evidence-based retrieval and bounded read-only tools; do not add swarm, Hermes, automatic retraining or credit decisions without an established requirement.
