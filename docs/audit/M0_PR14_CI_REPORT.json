@@ -1,0 +1,80 @@
+{
+  "checked_on_local_date": "2026-09-11",
+  "timezone": "Asia/Jakarta",
+  "mode": "Read-only local Git and GitHub CLI verification; documentation updated locally",
+  "pr": {
+    "number": 14,
+    "url": "https://github.com/Agathahah/creditlens/pull/14",
+    "state": "OPEN",
+    "isDraft": true,
+    "headRefName": "codex/m0-mentoring",
+    "baseRefName": "main",
+    "headRefOid": "7a859fe3c26d0791b4d049e2fd3437f5e02105ee",
+    "mergeable": "MERGEABLE",
+    "mergeStateStatus": "CLEAN"
+  },
+  "ci": {
+    "run_id": 34504952839,
+    "url": "https://github.com/Agathahah/creditlens/actions/runs/34504952839",
+    "head_sha": "7a859fe3c26d0791b4d049e2fd3437f5e02105ee",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "Lint & Type Check",
+        "job_id": 102964713457,
+        "conclusion": "success"
+      },
+      {
+        "name": "Unit & Integration Tests",
+        "job_id": 102965629599,
+        "conclusion": "success"
+      },
+      {
+        "name": "Model Evaluation Gate",
+        "job_id": 102966535926,
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Build Docker Image",
+        "job_id": 102966536392,
+        "conclusion": "skipped"
+      }
+    ],
+    "pytest": {
+      "passed": 124,
+      "skipped": 4,
+      "warnings": 8,
+      "duration_seconds": 21.28
+    },
+    "skipped_test_groups": {
+      "live_feast": 2,
+      "optional_deepsurv": 2
+    },
+    "reported_coverage": {
+      "total_percent": 91,
+      "total_statements": 2413,
+      "total_missed": 209,
+      "ingestion_module_percent": 54,
+      "ingestion_module_statements": 100,
+      "ingestion_module_missed": 46,
+      "limits": "Coverage scope includes test files under src. Private PostgreSQL fixture checks run separately on the laptop and are not in this CI run."
+    }
+  },
+  "limitations": [
+    "Results apply to the recorded head commit; subsequent documentation commits require a new CI result",
+    "No merge, PR readiness change, deployment, real-data training or history rewrite performed in this verification",
+    "PR workflow skips model evaluation and image build; a push to main would trigger the existing model evaluation gate",
+    "Model artifacts and valid evaluation remain unfinished; software CI success does not establish production readiness"
+  ],
+  "latest_check": {
+    "head_sha": "745dd28c2bd5cfe6e5b13d288bbc0d3b76d6de9d",
+    "run_id": 34506955747,
+    "url": "https://github.com/Agathahah/creditlens/actions/runs/34506955747",
+    "lint_and_type_check": "success",
+    "unit_and_integration_tests": "success",
+    "model_evaluation_gate": "skipped",
+    "build_docker_image": "skipped",
+    "note": "The detailed counts/coverage in ci belong to the earlier 7a859fe run and are not inferred for this run."
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "checked_at_utc": "2026-09-09T08:35:09.955706+00:00",
+  "mode": "read-only CSV and database",
+  "raw_count": 1599982,
+  "valid_rows_in_first_16_csv_chunks": 1599982,
+  "prefix_ids_absent_from_raw": 0,
+  "raw_ids_outside_prefix": 0,
+  "db_character_limits": {
+    "term": 20,
+    "grade": 1,
+    "sub_grade": 5,
+    "emp_title": 255,
+    "emp_length": 50,
+    "home_ownership": 50,
+    "verification_status": 50,
+    "loan_status": 50,
+    "purpose": 100,
+    "title": 255,
+    "zip_code": 20,
+    "addr_state": 2,
+    "application_type": 50
+  },
+  "max_csv_lengths": {
+    "term": 10,
+    "grade": 1,
+    "sub_grade": 2,
+    "emp_title": 78,
+    "emp_length": 9,
+    "home_ownership": 8,
+    "verification_status": 15,
+    "loan_status": 51,
+    "purpose": 18,
+    "title": 80,
+    "zip_code": 5,
+    "addr_state": 2,
+    "application_type": 10
+  },
+  "length_violations": {
+    "loan_status": 761
+  },
+  "first_violating_chunk_1_based": {
+    "loan_status": 17
+  },
+  "overlength_loan_status_counts": {
+    "Does not meet the credit policy. Status:Charged Off": 761
+  },
+  "historical_log": {
+    "path": "data/raw/lc_load.log",
+    "sha256": "b3c7f9f94d3563dd6bf800c9472afc8d55f9f4e4fc88e9da0ebb5cd597711b5c",
+    "completed_chunks": 16,
+    "error_line": 21,
+    "error": "StringDataRightTruncation: value too long for type character varying(50)",
+    "logged_date": "2026-07-16"
+  },
+  "limits": "No personal string values printed; only loan_status values. Log date differs from raw loaded_at in August; exact source prefix match and schema violation support the mechanism, but do not bind the historical run to the current database instance."
+}
