@@ -1,9 +1,11 @@
 # CreditLens — Project Memory
 
+> Current engineering rules are in [AGENTS.md](AGENTS.md); implementation status is in [PROJECT_STATUS.md](PROJECT_STATUS.md). The remaining material is historical context. Vendor-specific session/model-routing rules below are superseded by AGENTS.md. Component lists and architectural intent do not establish production readiness.
+
 ## Overview
-Production-grade explainable credit scoring engine untuk fintech lending.
-Membantu lender menilai risiko kredit dengan transparansi penuh — setiap
-keputusan bisa dijelaskan kepada applicant dan regulator.
+Explainable credit-risk pipeline using public loan data. Production readiness,
+model validity and operational integration remain subject to the current
+project status and acceptance criteria.
 
 ## Data Sources (SQL-First)
 - Lending Club: 2.9M loan records, 150+ kolom (Kaggle)

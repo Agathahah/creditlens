@@ -1,0 +1,172 @@
+{
+  "started_at_utc": "2026-09-09T08:22:38.773413+00:00",
+  "workspace": "/private/tmp/creditlens-m0-recovery-3fbgz_dl",
+  "steps": [
+    {
+      "step": "backup",
+      "exit_code": 0
+    },
+    {
+      "step": "backup_list",
+      "exit_code": 0
+    },
+    {
+      "step": "dbt_build",
+      "exit_code": 0
+    }
+  ],
+  "status": "passed",
+  "before": {
+    "staging.lc_loans_clean": 1599982,
+    "mart.loan_features": 0,
+    "mart.final_features": 0
+  },
+  "free_disk_gib_before": 7.129,
+  "backup": {
+    "path": "/Users/agathasilalahi/Documents/creditlens/.local-backups/m0-recovery-ju2ubrx8/marts-before.dump",
+    "sha256": "91dc6585bc033aaff3dd2d8431637ae975dd79e9b8e333d2f6463d44a675ca93",
+    "bytes": 4707,
+    "scope": [
+      "mart.loan_features",
+      "mart.final_features"
+    ],
+    "restore_tested": false,
+    "temporary_path": "/private/tmp/creditlens-m0-recovery-3fbgz_dl/marts-before.dump",
+    "durable_local_copy_verified": true,
+    "git_ignored": true
+  },
+  "source_sha256": {
+    "models/staging/schema.yml": "737004def5b13b3f7eacc125169e13af742b04a08d5eeaa2f15112755e964bd0",
+    "models/staging/lc_loans_clean.sql": "6237a91f88f651619d2667060ecbfa70f4cfbef9791e2d08cc2d2ba286d32b11",
+    "models/staging/fred_macro_clean.sql": "54c7f85a5106c306d17da5ef86cee174338f23713341b55543da3f1b2cca0b7a",
+    "models/staging/sources.yml": "41fc37f843ef646ebf638f8ce4f5573a7714de13c7c82c86c9a42d120f931560",
+    "models/mart/schema.yml": "ca3a349c43332a9facce15565d5deb192e18e190c283ca0aaef342721acd72a9",
+    "models/mart/final_features.sql": "702169155ee4cad880286e2938bdeca545fcd2cbcc38936d86cb2e60dd65617e",
+    "models/mart/loan_features.sql": "b80edb49d2e4ef1d375f2846c9683c60f8b9eda0739e500b83c53df5986eec7f",
+    "models/mart/macro_features.sql": "9ebedef9f07acc63846259955d685300776e98a82766f1a85a8a7c4a27cee840",
+    "macros/generate_schema_name.sql": "1f4dfc70df10b892cdeead85c3d2b33807c0f922b495369207763407e4453073",
+    "tests/dbt/reconcile_loan_counts.sql": "9b16a9e543d644c5f821922d78d13fb32057761bf364fc4fa76fd978a6d83deb",
+    "tests/dbt/nonempty_required_models.sql": "41048fe768fe6e05d56bc5dfd08ede40619fa95159db56d9980219f800a75955"
+  },
+  "mutation_started": true,
+  "dbt_results": [
+    {
+      "unique_id": "model.creditlens.loan_features",
+      "status": "success",
+      "failures": null,
+      "adapter_response": {
+        "_message": "SELECT 1599982",
+        "code": "SELECT",
+        "rows_affected": 1599982
+      }
+    },
+    {
+      "unique_id": "test.creditlens.accepted_values_loan_features_is_default__0__1.ec342397f9",
+      "status": "pass",
+      "failures": 0,
+      "adapter_response": {
+        "_message": "SELECT 1",
+        "code": "SELECT",
+        "rows_affected": 1
+      }
+    },
+    {
+      "unique_id": "test.creditlens.not_null_loan_features_id.8e39b8e782",
+      "status": "pass",
+      "failures": 0,
+      "adapter_response": {
+        "_message": "SELECT 1",
+        "code": "SELECT",
+        "rows_affected": 1
+      }
+    },
+    {
+      "unique_id": "test.creditlens.not_null_loan_features_installment_to_income_ratio.2db3bc5379",
+      "status": "pass",
+      "failures": 0,
+      "adapter_response": {
+        "_message": "SELECT 1",
+        "code": "SELECT",
+        "rows_affected": 1
+      }
+    },
+    {
+      "unique_id": "test.creditlens.unique_loan_features_id.5544512f92",
+      "status": "pass",
+      "failures": 0,
+      "adapter_response": {
+        "_message": "SELECT 1",
+        "code": "SELECT",
+        "rows_affected": 1
+      }
+    },
+    {
+      "unique_id": "model.creditlens.final_features",
+      "status": "success",
+      "failures": null,
+      "adapter_response": {
+        "_message": "SELECT 1599982",
+        "code": "SELECT",
+        "rows_affected": 1599982
+      }
+    },
+    {
+      "unique_id": "test.creditlens.accepted_values_final_features_is_default__0__1.7521f57ca0",
+      "status": "pass",
+      "failures": 0,
+      "adapter_response": {
+        "_message": "SELECT 1",
+        "code": "SELECT",
+        "rows_affected": 1
+      }
+    },
+    {
+      "unique_id": "test.creditlens.nonempty_required_models",
+      "status": "pass",
+      "failures": 0,
+      "adapter_response": {
+        "_message": "SELECT 1",
+        "code": "SELECT",
+        "rows_affected": 1
+      }
+    },
+    {
+      "unique_id": "test.creditlens.not_null_final_features_id.c45e496212",
+      "status": "pass",
+      "failures": 0,
+      "adapter_response": {
+        "_message": "SELECT 1",
+        "code": "SELECT",
+        "rows_affected": 1
+      }
+    },
+    {
+      "unique_id": "test.creditlens.reconcile_loan_counts",
+      "status": "pass",
+      "failures": 0,
+      "adapter_response": {
+        "_message": "SELECT 1",
+        "code": "SELECT",
+        "rows_affected": 1
+      }
+    },
+    {
+      "unique_id": "test.creditlens.unique_final_features_id.fabb277f88",
+      "status": "pass",
+      "failures": 0,
+      "adapter_response": {
+        "_message": "SELECT 1",
+        "code": "SELECT",
+        "rows_affected": 1
+      }
+    }
+  ],
+  "after": {
+    "staging.lc_loans_clean": 1599982,
+    "mart.loan_features": 1599982,
+    "mart.final_features": 1599982
+  },
+  "free_disk_gib_after": 5.954,
+  "finished_at_utc": "2026-09-09T08:23:11.661505+00:00",
+  "documentation_updated_at_utc": "2026-09-09T08:24:05.145456+00:00"
+}

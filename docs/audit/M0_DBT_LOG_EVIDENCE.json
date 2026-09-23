@@ -1,0 +1,101 @@
+{
+  "recorded_at_utc": "2026-09-09T07:35:06.854150+00:00",
+  "source": "logs/dbt.log",
+  "sha256": "887547b98263330f6af31158ce22c22c36b84ce010543b29a402eb5d174652d7",
+  "line_count": 6959,
+  "warning": "Historical log. Lines contain time of day, no calendar date or server identity. Do not equate this with a current database snapshot.",
+  "excerpts": [
+    {
+      "line": 3410,
+      "text": "============================== 10:44:30.788038 | 9268b70a-74f9-4ab7-b6a6-c121502748ce =============================="
+    },
+    {
+      "line": 3718,
+      "text": "10:44:54.999445 [info ] [Thread-1 (]: 1 of 3 OK created sql table model mart.loan_features ........................... [SELECT 1599982 in 23.33s]"
+    },
+    {
+      "line": 3786,
+      "text": "10:45:02.600443 [info ] [Thread-4 (]: 3 of 3 OK created sql table model mart.final_features .......................... [SELECT 1599982 in 7.60s]"
+    },
+    {
+      "line": 5406,
+      "text": "============================== 15:55:02.126459 | b783edf8-7fbf-4963-9cb2-6f13a934a93a =============================="
+    },
+    {
+      "line": 5412,
+      "text": "15:55:02.331814 [debug] [MainThread]: checksum: 5bd6babce9bca2546212daa29e2ba7d4f14f97af9dbc9591f215ebca335f64db, vars: {}, profile: creditlens, target: dev, version: 1.12.0rc3"
+    },
+    {
+      "line": 5604,
+      "text": "  create  table \"creditlens\".\"mart\".\"loan_features__dbt_tmp\""
+    },
+    {
+      "line": 5612,
+      "text": "WITH source AS ("
+    },
+    {
+      "line": 5613,
+      "text": "    SELECT * FROM \"creditlens\".\"staging\".\"lc_loans_clean\""
+    },
+    {
+      "line": 5614,
+      "text": "),"
+    },
+    {
+      "line": 5673,
+      "text": "15:55:02.662733 [debug] [Thread-1 (]: SQL status: SELECT 0 in 0.009 seconds"
+    },
+    {
+      "line": 5676,
+      "text": "alter table \"creditlens\".\"mart\".\"loan_features__dbt_tmp\" rename to \"loan_features\""
+    },
+    {
+      "line": 5678,
+      "text": "15:55:02.675057 [debug] [Thread-1 (]: On model.creditlens.loan_features: COMMIT"
+    },
+    {
+      "line": 5686,
+      "text": "15:55:02.677562 [debug] [Thread-1 (]: SQL status: COMMIT in 0.001 seconds"
+    },
+    {
+      "line": 5703,
+      "text": "15:55:02.687443 [info ] [Thread-1 (]: 1 of 3 OK created sql table model mart.loan_features ........................... [SELECT 0 in 0.06s]"
+    },
+    {
+      "line": 5707,
+      "text": "15:55:02.688865 [info ] [Thread-2 (]: 2 of 3 OK created sql table model mart.macro_features .......................... [SELECT 954 in 0.06s]"
+    },
+    {
+      "line": 5775,
+      "text": "15:55:02.709036 [info ] [Thread-4 (]: 3 of 3 OK created sql table model mart.final_features .......................... [SELECT 0 in 0.02s]"
+    },
+    {
+      "line": 5797,
+      "text": "15:55:02.746591 [info ] [MainThread]: Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=3"
+    },
+    {
+      "line": 5806,
+      "text": "============================== 15:55:12.991987 | 9fe064ea-f8f2-474c-ab85-d03a66ccbf2f =============================="
+    },
+    {
+      "line": 6954,
+      "text": "15:55:13.736092 [info ] [MainThread]: Done. PASS=24 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=24"
+    }
+  ],
+  "target/run_results.json": {
+    "sha256": "77cb415e2c50d0fbe5d3753b86de185ef58ffffd978df1568c036a64e7382f1f",
+    "metadata": {
+      "generated_at": "2026-08-03T08:55:13.706930Z",
+      "dbt_version": "1.12.0rc3",
+      "invocation_id": "9fe064ea-f8f2-474c-ab85-d03a66ccbf2f"
+    }
+  },
+  "target/manifest.json": {
+    "sha256": "ec27de4c36b03c4f9af709c912fe6a4d999cbc18e60d873493c0d2efe1e3d444",
+    "metadata": {
+      "generated_at": "2026-08-03T08:55:13.246915Z",
+      "dbt_version": "1.12.0rc3",
+      "invocation_id": "9fe064ea-f8f2-474c-ab85-d03a66ccbf2f"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "started_at_utc": "2026-09-09T08:04:51.404606+00:00",
+  "workspace": "/private/tmp/creditlens-m0-recovery-l_0cagky",
+  "steps": [],
+  "status": "failed",
+  "before": {
+    "staging.lc_loans_clean": 1599982,
+    "mart.loan_features": 0,
+    "mart.final_features": 0
+  },
+  "error_type": "AssertionError",
+  "finished_at_utc": "2026-09-09T08:04:52.952041+00:00",
+  "diagnostic_follow_up": {
+    "failed_guard": "free disk > 2 GiB",
+    "free_disk_gib_checked_after_failure": 1.903,
+    "backup_created": false,
+    "dbt_rebuild_started": false,
+    "database_mutation_started": false,
+    "explanation": "Before counts satisfied expected state. Disk preflight failed before any subprocess/backup/build."
+  }
+}

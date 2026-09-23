@@ -1,0 +1,16 @@
+{
+  "versions": [
+    "e9827ae898f0"
+  ],
+  "loan_status_type": [
+    "character varying",
+    50
+  ],
+  "raw_count": 1599982,
+  "sizes_raw_loan_final_bytes": [
+    606937088,
+    371253248,
+    470204416
+  ],
+  "disk_free_gib": 5.073
+}

@@ -1,0 +1,24 @@
+{
+  "started_at_utc": "2026-09-10T07:20:00.206301+00:00",
+  "status": "backup_verified",
+  "backup_dir": "/Users/agathasilalahi/Documents/creditlens/.local-backups/m0-ingestion-7oisy9lt",
+  "scope": [
+    "raw.lc_loans",
+    "staging.lc_loans_clean",
+    "mart.loan_features",
+    "mart.final_features"
+  ],
+  "restore_tested": true,
+  "before_counts": {
+    "raw.lc_loans": 1599982,
+    "staging.lc_loans_clean": 1599982,
+    "mart.loan_features": 1599982,
+    "mart.final_features": 1599982
+  },
+  "sha256": "d797044aa5b887d9b91666194b27a32d15327304297f04e8723769db6ce6c567",
+  "backup_path": "/Users/agathasilalahi/Documents/creditlens/.local-backups/m0-ingestion-7oisy9lt/before.dump",
+  "bytes": 293338379,
+  "disk_free_gib": 4.649,
+  "finished_at_utc": "2026-09-10T07:20:37.232798+00:00",
+  "restore_report": "docs/audit/M0_INGESTION_RESTORE_REPORT.json"
+}

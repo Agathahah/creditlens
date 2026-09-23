@@ -1,0 +1,46 @@
+{
+  "checked_at_utc": "2026-09-22T07:51:47Z",
+  "status": "artifact_identified_acquisition_and_rights_open",
+  "local_file": {
+    "relative_path": "data/raw/accepted_2007_to_2018Q4.csv.gz",
+    "bytes": 392582231,
+    "sha256": "55c16f75120f897683f02e7aabcf080d0e4a20c4832feb1d592cfa941bd62a2d",
+    "csv_columns": 151,
+    "csv_rows_from_prior_profile": 2260701,
+    "gzip_embedded_name": "accepted_2007_to_2018Q4.csv",
+    "gzip_header_time_utc": "2019-04-10T17:08:31+00:00",
+    "first_10000_rows_format": {
+      "int_rate_with_percent_symbol": 0,
+      "int_rate_numeric": 10000,
+      "revol_util_with_percent_symbol": 0,
+      "revol_util_numeric": 9995,
+      "revol_util_empty": 5
+    }
+  },
+  "independent_published_artifact": {
+    "source": "King's College London research repository provenance diagram",
+    "url": "https://kclpure.kcl.ac.uk/portal/files/138842417/provenance_loan_pipeline.pdf",
+    "filename_size_sha256_columns_rows_match": true,
+    "meaning": "The local compressed file is byte-identical to the artifact recorded in this public research document; the document does not establish how this Mac obtained the file or its usage rights."
+  },
+  "likely_distribution": {
+    "source": "Kaggle: All Lending Club loan data, Nathan George",
+    "url": "https://www.kaggle.com/datasets/wordsforthewise/lending-club",
+    "uploader_preprocessing_code": "https://github.com/nateGeorge/preprocess_lending_club_data",
+    "evidence": "Filename and displayed size match; local rate columns have no percent symbols, consistent with the uploader's described transformation.",
+    "direct_local_download_record_found": false,
+    "kaggle_byte_hash_published_on_dataset_page": false
+  },
+  "rights": {
+    "kaggle_page_label": "CC0: Public Domain",
+    "uploader_notes_provider_terms_concern": true,
+    "original_provider_redistribution_rights_verified": false,
+    "public_demo_use_decision": "open"
+  },
+  "outcome_snapshot_as_of_verified": false,
+  "limits": [
+    "File modification time and gzip header time are artifact timestamps, not verified outcome snapshot times.",
+    "A Kaggle license badge does not by itself establish rights to all data originally obtained from LendingClub.",
+    "No raw rows or archive were copied into this report."
+  ]
+}
