@@ -26,6 +26,7 @@ from sklearn.dummy import DummyClassifier
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
+    auc,
     average_precision_score,
     brier_score_loss,
     confusion_matrix,
@@ -381,7 +382,7 @@ def evaluation_metrics(
         "adverse": int(truth.sum()),
         "prevalence": float(truth.mean()),
         "average_precision": float(average_precision_score(truth, probability)),
-        "trapezoidal_pr_auc": float(np.trapz(precision_curve[::-1], recall_curve[::-1])),
+        "trapezoidal_pr_auc": float(auc(recall_curve[::-1], precision_curve[::-1])),
         "roc_auc": float(roc_auc_score(truth, probability)),
         "ks_statistic": ks,
         "brier_score": float(brier_score_loss(truth, probability)),
