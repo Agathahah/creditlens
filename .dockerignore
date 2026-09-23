@@ -1,0 +1,18 @@
+# The API Dockerfile copies only package metadata and source code.
+# Keep raw data, local backups, credentials, model artifacts, and Git history
+# out of the build context, including when they are ignored by Git.
+**
+!pyproject.toml
+!README.md
+!src/
+!src/**
+!infra/
+!infra/docker/
+!infra/docker/Dockerfile.api
+
+# Generated files inside the allowed source tree are not needed at runtime.
+src/**/__pycache__/
+src/**/*.pyc
+src/**/*.pyo
+src/**/.env
+src/**/.env.*
