@@ -1,6 +1,6 @@
 # CreditLens technical documentation
 
-Updated 2026-09-11. Documentation records implemented behavior, decisions, validation evidence and remaining work.
+Updated 2026-09-23. Documentation records implemented behavior, decisions, validation evidence and remaining work.
 
 | Document | Purpose |
 |---|---|
@@ -9,6 +9,8 @@ Updated 2026-09-11. Documentation records implemented behavior, decisions, valid
 | [Data design](DATA_DESIGN.md) | Lineage, grain, features and temporal constraints |
 | [Technical design](TECHNICAL_DESIGN.md) | Pipeline, bundle, serving and integration boundaries |
 | [Evaluation/release plan](EVALUATION_RELEASE_PLAN.md) | Validation, quality gates and release evidence |
+| [Next holdout decision](M1_NEXT_HOLDOUT_DECISION.md) | Approved prediction horizon, timing, source and holdout direction |
+| [Next experiment scope](M1_NEXT_EXPERIMENT_SCOPE.md) | Source intake, temporal split and evaluation gates before new training |
 | [Milestones/ADRs](MILESTONES_ADR.md) | Delivery sequence and decision status |
 | [Decisions](DECISIONS.md) | Adopted and proposed technical choices |
 | [Project walkthrough](PROJECT_WALKTHROUGH.md) | End-to-end record flow and implemented gaps |

@@ -7,6 +7,11 @@
 > Frozen test 2015 sudah terpakai dan perubahan berikutnya memerlukan holdout independen baru.
 > Lihat [laporan M1 lokal](audit/M1_LOCAL_EVALUATION_2026-09-23.md).
 
+> Keputusan 23 September 2026: eksperimen berikutnya menargetkan outcome 36 bulan untuk pinjaman
+> tenor 36 bulan pada prediction time saat aplikasi. Holdout harus berasal dari dataset/snapshot baru
+> yang lolos audit provenance, hak penggunaan, as-of dan timing outcome. Karena penggunaan saat ini
+> adalah demo pendidikan/portfolio, tidak ada threshold keputusan kredit sampai biaya FP/FN disetujui.
+
 > Pembaruan 22 September 2026: kontrak label retrospektif sudah diterapkan pada tiga layer pinjaman aktif dan diverifikasi; [bukti penerapan](audit/M0_LABEL_ACTIVE_ROLLOUT_REPORT.json). Kelayakan waktu/fitur, split dan protokol evaluasi tetap menunggu keputusan. Catatan bertanggal lebih lama di bawah dipertahankan sebagai riwayat.
 
 > Status kontrak 11 September 2026: mapping label retrospektif sudah disetujui untuk SQL dan tes terisolasi, yang telah lulus. Database aktif belum direbuild. Kelayakan waktu/fitur, split, protokol evaluasi dan penerapan aktif tetap menunggu keputusan masing-masing.

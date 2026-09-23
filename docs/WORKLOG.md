@@ -129,3 +129,17 @@ memasang dependency proyek lengkap, termasuk dependency transitive besar; ini me
 dependency set API yang dipin sebelum release. Container, image smoke dan 3,705 GB build cache yang
 dapat dibuat ulang kemudian dihapus. Volume Docker tidak dihapus. Ruang host kembali sekitar 7,7 GiB.
 Lihat `audit/M1_DOCKER_SMOKE_2026-09-23.md` dan `LOCAL_DOCKER_GUIDE.md`.
+
+## 2026-09-23 — keputusan holdout M1 berikutnya
+
+Pemilik proyek menyetujui arah eksperimen berikutnya: penggunaan demo pendidikan/portfolio,
+prediction time saat aplikasi sebelum grade/pricing, target outcome buruk 36 bulan untuk tenor 36
+bulan, dan satu holdout independen dari dataset/snapshot baru yang provenance, hak penggunaan,
+as-of dan timing outcome-nya dapat diaudit. Tahun split belum ditetapkan karena harus diturunkan dari
+maturity sumber baru tanpa membuka test.
+
+Karena belum ada biaya false positive/false negative untuk keputusan kredit nyata, demo hanya
+melaporkan probabilitas dan kurva operating point validation dengan minimum support. Threshold
+approve/reject ditunda. Disusun `M1_NEXT_EXPERIMENT_SCOPE.md` sebagai gerbang intake, outcome/fitur,
+split, evaluasi dan bukti. Tidak ada training baru, pembukaan ulang frozen test 2015, perubahan API,
+deployment atau data mentah yang dipublikasikan pada tahap ini.

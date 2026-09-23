@@ -1,7 +1,26 @@
 # Keputusan sebelum eksperimen model berikutnya
 
-Status 23 September 2026: **menunggu keputusan pengguna**. Dokumen ini bukan izin training baru.
-Frozen test 2015 sudah terpakai dan tidak boleh digunakan untuk memilih fitur, model atau threshold.
+Status 23 September 2026: **arah eksperimen berikutnya disetujui pemilik proyek**. Persetujuan ini
+mencakup audit/intake sumber baru dan penyusunan scope eksperimen; training baru tetap menunggu
+sumber lolos intake dan persetujuan scope eksekusi. Frozen test 2015 sudah terpakai dan tidak boleh
+digunakan untuk memilih fitur, model atau threshold.
+
+## Keputusan yang disetujui
+
+| Area | Keputusan |
+|---|---|
+| Penggunaan produk | Demo pendidikan/portfolio berbasis data publik; tidak untuk keputusan kredit nyata |
+| Prediction time | Saat aplikasi, sebelum grade, pricing dan keputusan kredit |
+| Target | Outcome buruk dalam 36 bulan untuk pinjaman tenor 36 bulan |
+| Sumber evaluasi | Dataset/snapshot baru dengan as-of, hak penggunaan dan outcome timing yang dapat diaudit |
+| Pemilihan model | Train-only preprocessing; Logistic Regression sebagai baseline; XGBoost hanya dipertahankan bila peningkatan validation konsisten dan terukur |
+| Validation | Model, calibration dan analisis operating point hanya menggunakan validation temporal yang sudah dikunci |
+| Threshold | Demo melaporkan probabilitas dan kurva operating point. Tidak ada threshold keputusan kredit sebelum biaya false positive/false negative disetujui; setiap ringkasan threshold wajib memenuhi minimum support |
+| Test | Satu holdout temporal independen baru, membership/checksum dikunci sebelum training dan dibuka satu kali setelah seluruh keputusan terkunci |
+
+Tahun split konkret belum ditetapkan. Tahun tersebut hanya boleh ditentukan setelah snapshot baru
+lolos pemeriksaan maturity, outcome availability dan rekonsiliasi ID. Rencana eksekusi ada di
+`M1_NEXT_EXPERIMENT_SCOPE.md`.
 
 ## Mengapa holdout baru diperlukan
 
@@ -48,13 +67,13 @@ belum membuktikan bahwa informasi tersebut lengkap. Perlu audit kolom dan proven
 Gunakan train/validation temporal pada periode lama untuk pengembangan software dan analisis error.
 Hasil harus disebut validation research; tidak dapat menggantikan release gate atau bukti production.
 
-## Keputusan yang memerlukan keterlibatan pemilik proyek
+## Pertanyaan yang sudah dijawab oleh keputusan
 
-1. **Tujuan prediksi:** outcome buruk dalam 12, 24 atau 36 bulan, atau lifetime observed outcome?
-2. **Prediction time:** saat aplikasi diajukan, saat pinjaman disetujui, atau setelah pricing ditetapkan?
-3. **Sumber holdout:** memperoleh snapshot/dataset baru, merekonstruksi history, atau tetap pada riset internal?
-4. **Tujuan threshold:** biaya false negative dan false positive, serta minimum jumlah keputusan yang harus didukung?
-5. **Penggunaan produk:** demo pendidikan, portfolio, atau persiapan pilot terbatas?
+1. **Tujuan prediksi:** outcome buruk dalam 36 bulan untuk tenor 36 bulan.
+2. **Prediction time:** saat aplikasi diajukan, sebelum pricing.
+3. **Sumber holdout:** memperoleh snapshot/dataset baru yang dapat diaudit.
+4. **Tujuan threshold:** belum ada threshold keputusan; biaya FP/FN wajib diputuskan sebelum pilot.
+5. **Penggunaan produk:** demo pendidikan/portfolio.
 
 ## Rekomendasi teknis awal
 
@@ -66,4 +85,4 @@ Hasil harus disebut validation research; tidak dapat menggantikan release gate a
   hanya didukung sedikit kasus.
 - Test: satu holdout independen baru, dibuka setelah seluruh keputusan dikunci.
 
-Setelah keputusan di atas disetujui, buat scope eksperimen baru sebelum training atau M2 API bundle.
+Scope eksperimen berikutnya harus lulus intake sumber sebelum training atau M2 API bundle dimulai.

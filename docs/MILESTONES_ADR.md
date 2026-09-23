@@ -1,6 +1,6 @@
 # Delivery milestones and architecture decisions
 
-v0.2 · Updated 2026-09-11. M0 recovery is implemented; subsequent implementation contracts are pending.
+v0.2 · Updated 2026-09-23. M0 recovery and one bounded M1 experiment are complete; the next M1 holdout direction is approved and awaits source intake.
 
 | Milestone | Deliverables | Exit criteria |
 |---|---|---|
@@ -17,10 +17,10 @@ M0 evidence: 2,260,668 rows per required loan layer; source/raw ID differences z
 
 | ADR | State | Decision / tradeoff |
 |---|---|---|
-| ADR-008 | Proposed | Public-data retrospective demonstration, local then isolated staging; no real lending decisions |
+| ADR-008 | Accepted product scope | Public-data educational/portfolio demonstration, local then isolated staging; no real lending decisions |
 | ADR-009 | Mapping disetujui; SQL/tes terisolasi selesai | Charged Off/Default vs Fully Paid; status lain NULL. Kelayakan cohort/waktu belum final; database aktif belum direbuild |
-| ADR-010 | Proposed | Train-only pipeline and immutable bundle instead of batch-specific transforms |
-| ADR-011 | Proposed | Validation-only selection/calibration/threshold with frozen temporal test |
+| ADR-010 | Train-only pipeline implemented locally; bundle pending M2 | Fit preprocessing on train only and use an immutable versioned bundle for serving parity |
+| ADR-011 | Next direction approved; source intake pending | Application-time 36-month target for 36-month loans; validation-only selection and a new frozen temporal test from an auditable snapshot |
 | ADR-012 | Proposed | Inline raw-feature serving first; Feast only after key/type/parity validation |
 | ADR-013 | Proposed | Separate liveness/readiness; release fails closed on model/schema incompatibility |
 | ADR-014 | Proposed | Versioned inference monitoring and delayed-label evaluation; human review of drift |

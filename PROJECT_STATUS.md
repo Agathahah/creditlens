@@ -1,7 +1,8 @@
 # CreditLens project status
 
 Updated 2026-09-23. M0 data recovery is implemented and the approved bounded M1 local
-experiment has completed. The candidate failed release gates; the project is not production ready.
+experiment has completed. The candidate failed release gates. The next holdout direction is approved,
+but a new auditable dataset/snapshot has not been admitted; the project is not production ready.
 
 ## Verified implementation
 
@@ -19,6 +20,7 @@ experiment has completed. The candidate failed release gates; the project is not
 | M0 feature profile | 1,345,350 labeled candidates inspected read-only; 376 missing source DTI values and 361 nonpositive annual incomes are hidden by current zero-valued derivations; eligibility and availability remain open |
 | M1 local cohort/split | Approved and implemented for accepted 36-month loans issued 2011–2015. Eligible rows: train 2011–2013 = 157,993; validation 2014 = 162,570; frozen test 2015 = 283,024. Exclusions: 147 unresolved outcomes and 2 invalid incomes. The 2015 test is now consumed |
 | M1 local evaluation | Constant, Logistic Regression and one bounded XGBoost candidate used train-only preprocessing. XGBoost validation AP was 0.2046 and frozen-test AP was 0.2197 (row-bootstrap 95% interval 0.2164–0.2221), below the historical 0.25 gate. The locked threshold predicted no test positives, so the operating point also failed |
+| Next holdout decision | Approved for an educational/portfolio demo: application-time prediction before pricing, 36-month outcome for 36-month loans, and one new auditable dataset/snapshot. Concrete years remain unset until maturity and outcome timing pass intake; no new training has started |
 | Docker packaging smoke | Allowlist `.dockerignore` reduced context to 221.13 kB; arm64 image built, `/health` reported no model, `/predict` returned 503; temporary image/container/cache cleaned |
 | Recovery validation | 7 parsing tests; 8 private PostgreSQL checks; two dbt models built and 9 selected tests passed |
 | Backup | Scoped raw/view/mart archive restored on a private server; owner/ACL recovery outside the drill |
@@ -35,7 +37,7 @@ The earlier detailed run on 7a859fe reported 124 passed, 4 skipped, 8 warnings. 
 | Priority | Required work |
 |---|---|
 | P0 | Decide data usage rights and outcome as-of; then establish cohort eligibility and feature availability. Artifact identity is corroborated, but local acquisition path is not recorded |
-| P0 | Define a valid outcome-as-of/horizon and identify a new independent holdout; frozen test 2015 has been consumed |
+| P0 | Obtain and admit a new dataset/snapshot with verifiable rights, outcome as-of and event timing; the approved 36-month protocol cannot assign concrete split years before this audit |
 | P0 | Redesign threshold selection with minimum support and an approved false-positive/false-negative objective; the initial precision-80% rule was degenerate |
 | P0 | Align training, evaluation and serving through one versioned bundle/schema |
 | P1 | Fail readiness when the model bundle is missing, corrupt or incompatible |
@@ -52,5 +54,10 @@ September 2026. Full training, M2–M5, deployment, merge, push and history rewr
 that authorization. PR success and the local experiment do not establish model validity or production
 readiness. See [M1 local evidence](docs/audit/M1_LOCAL_EVALUATION_2026-09-23.md),
 [milestones](docs/MILESTONES_ADR.md) and [technical worklog](docs/WORKLOG.md).
+
+The next M1 holdout direction was approved on 23 September 2026. It authorizes source intake and
+scope preparation, not training on the consumed 2015 test. The active gate is a new private
+dataset/snapshot with auditable provenance, rights, as-of and outcome timing. See the
+[decision](docs/M1_NEXT_HOLDOUT_DECISION.md) and [next experiment scope](docs/M1_NEXT_EXPERIMENT_SCOPE.md).
 
 Backup label berhasil dipulihkan dan rollback diuji pada PostgreSQL 14.22 terisolasi; lihat [laporan restore](docs/audit/M0_LABEL_RESTORE_REPORT.json). Setelah kapasitas pulih, preflight database aktif mencocokkan backup, source, migrasi, baseline baris/label, input dan metadata. Penerapan 22 September 2026 lulus tiga model/12 tes; jumlah dan ID tetap, SHA-256 atas baris berurutan tanpa label cocok pada ketiga layer, dan raw/macro tidak berubah menurut sidik agregat. Rollback aktif tidak diperlukan. Pemeriksaan awal yang tertahan kapasitas tetap dicatat sebagai [bukti historis](docs/audit/M0_LABEL_2026-09-22_BLOCKER.json); hasil akhir ada pada [laporan penerapan](docs/audit/M0_LABEL_ACTIVE_ROLLOUT_REPORT.json). Ini belum memvalidasi cohort/as-of, training, CI atau kesiapan produksi.

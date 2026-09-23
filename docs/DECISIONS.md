@@ -1,6 +1,6 @@
 # Technical decisions
 
-Updated 2026-09-11. Implemented decisions are distinguished from proposed contracts.
+Updated 2026-09-23. Implemented decisions are distinguished from proposed contracts.
 
 | Decision | Status | Rationale / consequence |
 |---|---|---|
@@ -14,8 +14,13 @@ Updated 2026-09-11. Implemented decisions are distinguished from proposed contra
 | No macro/SEC baseline enrichment initially | Proposed | FRED vintage timing and SEC borrower linkage are not established |
 | Train-only preprocessing + versioned bundle | Proposed M1/M2 | Prevent distribution leakage and training-serving mismatch |
 | Validation for selection/calibration/threshold, frozen test | Proposed M1 | Prevent test-set tuning; temporal availability must be explicit |
+| Next independent M1 holdout | Direction approved; source intake pending | Educational/portfolio demo; prediction at application before pricing; 36-month outcome for 36-month loans; use one new auditable snapshot and keep its frozen test closed until the protocol is locked |
+| Decision threshold | Deferred for credit decisions | Report probabilities and validation operating curves for the demo; require minimum support and an approved FP/FN cost objective before any approve/reject policy |
 | Separate readiness from liveness | Proposed M2 | Process health must not imply scoring availability |
 | Gate-bound artifacts and rollback | Proposed M3 | Deploy the evaluated bundle/image combination and retain recovery evidence |
 | Inference events + delayed labels | Proposed M4 | Monitor real request behavior and delayed outcome quality |
 
-Next decisions: dataset provenance/as-of and eligibility, feature whitelist, split protocol, calibration/threshold rules, bundle/API contract, resource envelope and deployment exposure. Detailed target alternatives are in M0_LABEL_DECISION_DRAFT.md. Technical validation supports each milestone; full training and deployment remain separate authorizations.
+Next decisions: admit a new dataset/snapshot, derive concrete mature split years, lock calibration and
+model gates, then decide whether evidence supports an M2 bundle proposal. Feature availability,
+resource envelope and deployment exposure remain open. Full training and deployment remain separate
+authorizations.
