@@ -1,12 +1,14 @@
-"""Reproduce empty marts using real dbt models in a private PostgreSQL cluster.
+"""Verify mart recovery and the label contract in a private PostgreSQL cluster.
 
 Run from the repository: .venv/bin/python scripts/verify_m0_dbt.py
-Requires existing PostgreSQL 16 binaries and the project's dbt installation.
+Defaults to PostgreSQL 16; --pg-bin selects another installed PostgreSQL version.
+Requires the project's dbt installation.
 Never connects to the development database or loads the project's credentials.
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import shutil
@@ -14,6 +16,7 @@ import subprocess
 import sys
 import tempfile
 from datetime import UTC, datetime
+from hashlib import sha256
 from pathlib import Path
 from typing import Any
 
@@ -22,6 +25,19 @@ import psycopg2
 ROOT = Path(__file__).resolve().parents[1]
 PG_BIN = Path("/opt/homebrew/opt/postgresql@16/bin")
 NEW_TESTS = ["nonempty_required_models", "reconcile_loan_counts"]
+LABEL_CASES: list[tuple[str | None, int | None]] = [
+    ("Fully Paid", 0),
+    ("Charged Off", 1),
+    ("Default", 1),
+    ("Current", None),
+    ("Late (31-120 days)", None),
+    ("In Grace Period", None),
+    ("Late (16-30 days)", None),
+    ("Does not meet the credit policy. Status:Fully Paid", None),
+    ("Does not meet the credit policy. Status:Charged Off", None),
+    (None, None),
+    ("Unrecognized status", None),
+]
 
 
 def main() -> int:
@@ -30,8 +46,11 @@ def main() -> int:
     Returns:
         Zero when every expected outcome and cluster shutdown succeeds.
     """
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--pg-bin", type=Path, default=PG_BIN)
+    pg_bin = parser.parse_args().pg_bin.resolve()
     dbt = Path(sys.executable).parent / "dbt"
-    for binary in [PG_BIN / "initdb", PG_BIN / "pg_ctl", PG_BIN / "createdb", dbt]:
+    for binary in [pg_bin / "initdb", pg_bin / "pg_ctl", pg_bin / "createdb", dbt]:
         if not binary.is_file():
             raise FileNotFoundError(f"Required installed binary missing: {binary}")
     work = Path(tempfile.mkdtemp(prefix="creditlens-m0-", dir="/private/tmp"))
@@ -54,12 +73,31 @@ def main() -> int:
         for key, value in os.environ.items()
         if not key.startswith(("PG", "POSTGRES", "DBT_"))
     }
-    env.update(DBT_SEND_ANONYMOUS_USAGE_STATS="false", DBT_USE_COLORS="false")
+    # initdb --locale configures the database, not the environment of pg_ctl/postgres.
+    # macOS PostgreSQL startup must not inherit an unset/invalid terminal locale.
+    env.update(
+        LC_ALL="C",
+        LANG="C",
+        DBT_SEND_ANONYMOUS_USAGE_STATS="false",
+        DBT_USE_COLORS="false",
+    )
     report: dict[str, Any] = {
         "started_at_utc": datetime.now(UTC).isoformat(),
         "workspace": str(work),
         "database": "creditlens_m0",
         "transport": "private Unix socket; TCP disabled",
+        "subprocess_locale": {"LC_ALL": env["LC_ALL"], "LANG": env["LANG"]},
+        "postgres_bin": str(pg_bin),
+        "source_sha256": {
+            name: sha256((ROOT / name).read_bytes()).hexdigest()
+            for name in [
+                "models/staging/lc_loans_clean.sql",
+                "models/mart/loan_features.sql",
+                "models/mart/final_features.sql",
+                "tests/dbt/loan_label_contract.sql",
+                "scripts/verify_m0_dbt.py",
+            ]
+        },
         "steps": [],
     }
     started = False
@@ -78,7 +116,10 @@ def main() -> int:
         report["steps"].append({"step": name, "exit_code": result.returncode})
         print(f"{name}: exit={result.returncode} expected={expected}", flush=True)
         if result.returncode != expected:
-            raise RuntimeError(f'{name} failed; inspect {work / (name + ".log")}')
+            logs = str(work / (name + ".log"))
+            if name == "start":
+                logs += f" and {work / 'postgres.log'}"
+            raise RuntimeError(f"{name} failed; inspect {logs}")
 
     def dbt_step(name: str, args: list[str], failures: dict[str, int] | None = None) -> None:
         run(name, [str(dbt), *args, "--profiles-dir", str(project)], 1 if failures else 0)
@@ -117,7 +158,7 @@ def main() -> int:
         run(
             "initdb",
             [
-                str(PG_BIN / "initdb"),
+                str(pg_bin / "initdb"),
                 "-D",
                 str(work / "pgdata"),
                 "-U",
@@ -130,7 +171,7 @@ def main() -> int:
         run(
             "start",
             [
-                str(PG_BIN / "pg_ctl"),
+                str(pg_bin / "pg_ctl"),
                 "-D",
                 str(work / "pgdata"),
                 "-l",
@@ -145,7 +186,7 @@ def main() -> int:
         run(
             "createdb",
             [
-                str(PG_BIN / "createdb"),
+                str(pg_bin / "createdb"),
                 "-h",
                 str(socket),
                 "-p",
@@ -163,6 +204,8 @@ def main() -> int:
             cursor.execute("SHOW data_directory")
             if Path(cursor.fetchone()[0]).resolve() != (work / "pgdata").resolve():
                 raise RuntimeError("Refusing mutation: cluster path mismatch")
+            cursor.execute("SHOW server_version")
+            report["server_version"] = cursor.fetchone()[0]
             cursor.execute("CREATE SCHEMA raw; CREATE SCHEMA staging; CREATE SCHEMA mart")
             # Reuse raw DDL; omit earlier monitoring/Airflow setup intentionally.
             ddl = (ROOT / "scripts/init_db.sql").read_text()
@@ -202,6 +245,87 @@ def main() -> int:
         )
         dbt_step("restore_final", ["build", "--select", "final_features"])
         counts("restored_counts", [2, 2, 2])
+        expected_labels = [(1, "Fully Paid", 0), (2, "Charged Off", 1)] + [
+            (index, status, label) for index, (status, label) in enumerate(LABEL_CASES, 100)
+        ]
+        with connection.cursor() as cursor:
+            cursor.executemany(
+                """INSERT INTO raw.lc_loans
+                    (loan_id, loan_amnt, term, installment, annual_inc,
+                     issue_date, loan_status, loaded_at)
+                    VALUES (%s, 1000, '36 months', 35, 24000,
+                            '2015-01-01', %s, '2020-01-01')""",
+                [(index, status) for index, status, _ in expected_labels[2:]],
+            )
+            cursor.execute("SELECT * FROM raw.lc_loans ORDER BY loan_id")
+            raw_before = cursor.fetchall()
+
+        def verify_labels(name: str) -> None:
+            """Check exact IDs, preserved statuses and labels through all loan layers."""
+            assert connection is not None
+            for relation, key in [
+                ("staging.lc_loans_clean", "loan_id"),
+                ("mart.loan_features", "id"),
+                ("mart.final_features", "id"),
+            ]:
+                with connection.cursor() as cursor:
+                    # Relation/key are fixed internal identifiers, never external input.
+                    cursor.execute(
+                        f"SELECT {key}, loan_status, is_default FROM {relation} ORDER BY {key}"
+                    )
+                    if cursor.fetchall() != expected_labels:
+                        raise RuntimeError(f"Label/ID/status mismatch in {relation}")
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM raw.lc_loans ORDER BY loan_id")
+                if cursor.fetchall() != raw_before:
+                    raise RuntimeError("Label build changed raw records")
+            report["steps"].append(
+                {"step": name, "rows_per_layer": len(expected_labels), "raw_unchanged": True}
+            )
+
+        dbt_step("label_fixture_build", ["run"])
+        dbt_step("label_contract_all_statuses", ["test", "--select", "loan_label_contract"])
+        verify_labels("label_ids_statuses_and_nulls_preserved")
+        report["label_cases"] = [
+            {"status": status, "expected_label": label} for status, label in LABEL_CASES
+        ]
+        with connection.cursor() as cursor:
+            cursor.execute("""UPDATE mart.final_features
+                SET is_default = CASE WHEN loan_status = 'Current' THEN 0 ELSE 1 END
+                WHERE loan_status IN ('Current', 'Late (31-120 days)')""")
+        dbt_step(
+            "label_contract_rejects_current_and_late_labels",
+            ["test", "--select", "loan_label_contract"],
+            {"loan_label_contract": 2},
+        )
+        dbt_step("restore_label_final", ["build", "--select", "final_features"])
+        with connection.cursor() as cursor:
+            cursor.execute("UPDATE mart.final_features SET is_default = NULL WHERE id = 1")
+        dbt_step(
+            "label_contract_rejects_missing_paid_label",
+            ["test", "--select", "loan_label_contract"],
+            {"loan_label_contract": 1},
+        )
+        dbt_step("restore_labels_with_null_fixture", ["run"])
+        verify_labels("null_status_preserved_without_invented_label")
+        dbt_step(
+            "source_guard_rejects_null_status",
+            ["test"],
+            {"source_not_null_raw_lc_loans_loan_status": 1},
+        )
+        # NULL mapping is safe, but missing source status still fails the existing quality gate.
+        # Remove only that deliberately invalid synthetic input before the full healthy build.
+        with connection.cursor() as cursor:
+            cursor.executemany(
+                "DELETE FROM raw.lc_loans WHERE loan_id = %s",
+                [(index,) for index, status, _ in expected_labels if status is None],
+            )
+            cursor.execute("SELECT * FROM raw.lc_loans ORDER BY loan_id")
+            raw_before = cursor.fetchall()
+        expected_labels = [row for row in expected_labels if row[1] is not None]
+        report["steps"].append({"step": "remove_null_source_fixture", "removed_rows": 1})
+        dbt_step("restore_label_all_and_tests", ["build"])
+        verify_labels("final_label_contract_and_raw_preserved")
         report["status"] = "passed"
     except (OSError, ValueError, RuntimeError, subprocess.SubprocessError, psycopg2.Error) as exc:
         report["status"] = "failed"
@@ -215,7 +339,7 @@ def main() -> int:
                 run(
                     "stop",
                     [
-                        str(PG_BIN / "pg_ctl"),
+                        str(pg_bin / "pg_ctl"),
                         "-D",
                         str(work / "pgdata"),
                         "-m",
