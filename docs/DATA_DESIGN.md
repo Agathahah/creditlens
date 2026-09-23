@@ -1,5 +1,7 @@
 # ERD dan data dictionary
 
+> Status kontrak 11 September 2026: mapping retrospektif Fully Paid=0, Charged Off/Default=1, status lain=NULL disetujui dan diterapkan pada SQL lokal; tes terisolasi lulus. Database aktif belum direbuild. Catatan mapping dan data di bawah adalah snapshot audit historis; detail aktif ada di M0_LABEL_DECISION_DRAFT.md.
+
 > Pembaruan operasional 10 September 2026: ingestion dan rebuild lokal selesai; raw/staging/loan/final masing-masing 2.260.668, schema loan_status TEXT. Snapshot audit lama di bawah dipertahankan sebagai konteks; status aktif ada di PROJECT_STATUS.md. Kontrak label/M1 masih draft: lihat M0_LABEL_DECISION_DRAFT.md.
 
 

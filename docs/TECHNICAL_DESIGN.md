@@ -1,5 +1,7 @@
 # Technical design dan walkthrough
 
+> Status kontrak 11 September 2026: SQL label lokal sudah mengikuti kontrak retrospektif yang disetujui dan lulus tes terisolasi. Database aktif belum direbuild. Walkthrough di bawah mempertahankan bukti audit historis; M1 dan rancangan rilis tetap draft.
+
 > Pembaruan operasional 10 September 2026: ingestion dan rebuild lokal selesai; raw/staging/loan/final masing-masing 2.260.668, schema loan_status TEXT. Snapshot audit lama di bawah dipertahankan sebagai konteks; status aktif ada di PROJECT_STATUS.md. Kontrak label/M1 masih draft: lihat M0_LABEL_DECISION_DRAFT.md.
 
 

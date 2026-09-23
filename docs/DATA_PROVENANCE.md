@@ -31,6 +31,8 @@ Jumlah 2,9 juta dalam komentar historis tidak cocok dengan CSV ini. Rejected tid
 
 ## Yang belum diketahui
 
+Penelusuran lokal lanjutan: pencarian pada README, docs, scripts dan konfigurasi yang diperiksa belum menemukan tautan unduhan asal. File gzip ada, tetapi pemeriksaan Spotlight (mdls) tidak mengembalikan metadata file; daftar extended attributes hanya memuat com.apple.provenance, tanpa com.apple.metadata:kMDItemWhereFroms. Hasil ini belum mengidentifikasi platform sumber, izin penggunaan atau waktu snapshot. Tanggal modifikasi file tidak digunakan sebagai pengganti tanggal snapshot outcome.
+
 Asal unduhan, izin penggunaan dan tanggal snapshot outcome belum terverifikasi. Last payment maksimum Maret 2019 hanya isi kolom; bukan bukti tanggal snapshot atau tanggal default. loaded_at adalah waktu ingestion, bukan tanggal outcome diketahui. Seluruh member_id NULL: evaluasi berbasis orang dan jaminan tidak ada borrower overlap belum dapat dibuat.
 
 Keputusan berikutnya: [draft target/eligibility](M0_LABEL_DECISION_DRAFT.md), lalu manifest cohort/split setelah batas klaim dan ketersediaan waktu jelas. [Rekonsiliasi sebelum recovery](audit/M0_ID_RECONCILIATION_BEFORE_INGESTION.json) tetap disimpan agar sejarah diagnosis tidak ditimpa.

@@ -10,7 +10,7 @@ Updated 2026-09-11. Implemented decisions are distinguished from proposed contra
 | Transactional staging view recreation | Implemented M0 | PostgreSQL prevents type changes while the view depends on the column; RESTRICT and metadata guards prevent silent loss |
 | Bulk insertion and insert-missing mode | Implemented M0 | Resume partial ingestion while preserving existing rows and reporting exclusions |
 | Scoped backup and private restore rehearsal | Verified M0 | Demonstrate recoverability before active mutation; owner/ACL restoration remains outside the drill |
-| Fully Paid vs Charged Off/Default | Proposed | Separate resolved adverse outcomes from current/late states; maturity/as-of still required |
+| Fully Paid vs Charged Off/Default | Disetujui; SQL lokal dan tes terisolasi selesai | Label 0=Fully Paid, 1=Charged Off/Default, lainnya NULL; klaim retrospektif. Database aktif belum direbuild; maturity/as-of tetap terbuka |
 | No macro/SEC baseline enrichment initially | Proposed | FRED vintage timing and SEC borrower linkage are not established |
 | Train-only preprocessing + versioned bundle | Proposed M1/M2 | Prevent distribution leakage and training-serving mismatch |
 | Validation for selection/calibration/threshold, frozen test | Proposed M1 | Prevent test-set tuning; temporal availability must be explicit |
@@ -18,4 +18,4 @@ Updated 2026-09-11. Implemented decisions are distinguished from proposed contra
 | Gate-bound artifacts and rollback | Proposed M3 | Deploy the evaluated bundle/image combination and retain recovery evidence |
 | Inference events + delayed labels | Proposed M4 | Monitor real request behavior and delayed outcome quality |
 
-Next decisions: dataset provenance/as-of, target and eligibility, feature whitelist, split protocol, calibration/threshold rules, bundle/API contract, resource envelope and deployment exposure. Detailed target alternatives are in M0_LABEL_DECISION_DRAFT.md. Technical validation supports each milestone; full training and deployment remain separate authorizations.
+Next decisions: dataset provenance/as-of and eligibility, feature whitelist, split protocol, calibration/threshold rules, bundle/API contract, resource envelope and deployment exposure. Detailed target alternatives are in M0_LABEL_DECISION_DRAFT.md. Technical validation supports each milestone; full training and deployment remain separate authorizations.

@@ -24,7 +24,7 @@ Start locally, then validate in an isolated staging environment before an approv
 
 Use accepted Lending Club records after provenance and usage rights are established. Rejected applications are not observed negative/default labels. Accepted-only data produces selection bias.
 
-The proposed target is observed Fully Paid versus Charged Off/Default; current, late/grace and out-of-policy statuses remain separate. This is not yet the implemented label contract. Without defensible event/as-of data, do not claim a fixed-horizon probability of default or a prospective backtest.
+The approved retrospective target maps Fully Paid to zero and Charged Off/Default to one; all other statuses map to NULL and remain in the warehouse. The local SQL change passed isolated validation; the active warehouse has not been rebuilt. Cohort eligibility and feature availability remain draft. Without defensible event/as-of data, do not claim a fixed-horizon probability of default or a prospective backtest.
 
 Grade, sub_grade, int_rate, installment and verification_status require explicit availability at the intended scoring stage. FRED is excluded from the proposed baseline until publication/vintage timing is supported. SEC has no valid implemented borrower join.
 

@@ -1,5 +1,16 @@
 # Evaluation dan release plan
 
+> Pembaruan 23 September 2026: implementasi M1 lokal berbatas sumber daya telah dijalankan pada
+> cohort 36 bulan 2011–2015 dengan preprocessing train-only. Kandidat XGBoost kecil mencapai AP
+> validation 0,2046 dan frozen-test 0,2197, sehingga gagal gate historis 0,25. Ambang precision 80%
+> hanya memiliki satu predicted-positive pada validation dan nol pada test; ambang itu ditolak.
+> Frozen test 2015 sudah terpakai dan perubahan berikutnya memerlukan holdout independen baru.
+> Lihat [laporan M1 lokal](audit/M1_LOCAL_EVALUATION_2026-09-23.md).
+
+> Pembaruan 22 September 2026: kontrak label retrospektif sudah diterapkan pada tiga layer pinjaman aktif dan diverifikasi; [bukti penerapan](audit/M0_LABEL_ACTIVE_ROLLOUT_REPORT.json). Kelayakan waktu/fitur, split dan protokol evaluasi tetap menunggu keputusan. Catatan bertanggal lebih lama di bawah dipertahankan sebagai riwayat.
+
+> Status kontrak 11 September 2026: mapping label retrospektif sudah disetujui untuk SQL dan tes terisolasi, yang telah lulus. Database aktif belum direbuild. Kelayakan waktu/fitur, split, protokol evaluasi dan penerapan aktif tetap menunggu keputusan masing-masing.
+
 > Pembaruan operasional 10 September 2026: ingestion dan rebuild lokal selesai; raw/staging/loan/final masing-masing 2.260.668, schema loan_status TEXT. Snapshot audit lama di bawah dipertahankan sebagai konteks; status aktif ada di PROJECT_STATUS.md. Kontrak label/M1 masih draft: lihat M0_LABEL_DECISION_DRAFT.md.
 
 

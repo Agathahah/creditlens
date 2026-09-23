@@ -1,6 +1,7 @@
 # CreditLens project status
 
-Updated 2026-09-11. M0 data recovery is implemented; the data/evaluation contract is not yet closed.
+Updated 2026-09-23. M0 data recovery is implemented and the approved bounded M1 local
+experiment has completed. The candidate failed release gates; the project is not production ready.
 
 ## Verified implementation
 
@@ -13,13 +14,19 @@ Updated 2026-09-11. M0 data recovery is implemented; the data/evaluation contrac
 | Existing data | Count and aggregate row fingerprint unchanged, including loaded_at |
 | ID reconciliation | Zero source IDs missing from raw and zero raw IDs outside source candidates |
 | Raw / staging / loan / final | Each contains 2,260,668 rows; raw issue dates June 2007–December 2018 |
+| Retrospective label rollout | Active staging and two loan marts rebuilt on 22 September 2026; 3 models/12 tests passed, row and ID counts preserved, non-label SHA-256 streams matched baseline |
+| Dataset artifact identity | Local gzip SHA-256, byte size, 151 columns and 2,260,701 rows match an independently published research artifact; the local download path, upstream rights and outcome snapshot date remain open |
+| M0 feature profile | 1,345,350 labeled candidates inspected read-only; 376 missing source DTI values and 361 nonpositive annual incomes are hidden by current zero-valued derivations; eligibility and availability remain open |
+| M1 local cohort/split | Approved and implemented for accepted 36-month loans issued 2011–2015. Eligible rows: train 2011–2013 = 157,993; validation 2014 = 162,570; frozen test 2015 = 283,024. Exclusions: 147 unresolved outcomes and 2 invalid incomes. The 2015 test is now consumed |
+| M1 local evaluation | Constant, Logistic Regression and one bounded XGBoost candidate used train-only preprocessing. XGBoost validation AP was 0.2046 and frozen-test AP was 0.2197 (row-bootstrap 95% interval 0.2164–0.2221), below the historical 0.25 gate. The locked threshold predicted no test positives, so the operating point also failed |
+| Docker packaging smoke | Allowlist `.dockerignore` reduced context to 221.13 kB; arm64 image built, `/health` reported no model, `/predict` returned 503; temporary image/container/cache cleaned |
 | Recovery validation | 7 parsing tests; 8 private PostgreSQL checks; two dbt models built and 9 selected tests passed |
 | Backup | Scoped raw/view/mart archive restored on a private server; owner/ACL recovery outside the drill |
-| Local resources | 3.747 GiB free after the recorded rebuild; not a full-training capacity benchmark |
+| Local resources | About 14 GiB free after temporary Docker build cleanup on 22 September; not a full-training capacity benchmark |
 
 ## Pull request and CI
 
-[PR #14](https://github.com/Agathahah/creditlens/pull/14) is open and draft. At verification its head was 745dd28c2bd5cfe6e5b13d288bbc0d3b76d6de9d. [Run 34506955747](https://github.com/Agathahah/creditlens/actions/runs/34506955747) passed lint/typecheck and application tests; model evaluation and Docker build were skipped under the workflow conditions.
+[PR #14](https://github.com/Agathahah/creditlens/pull/14) is open and draft. At verification its head was 0acd49a9aefc22c4facd73b78a00d5b329d36a33, matching the local checkout, and GitHub reported MERGEABLE. [Run 34556669746](https://github.com/Agathahah/creditlens/actions/runs/34556669746) passed lint/typecheck and application tests; model evaluation and Docker build were skipped under the workflow conditions. MERGEABLE indicates no merge conflict, not release acceptance. See [M0 review](docs/audit/M0_PR14_REVIEW.md) for the unresolved main-branch evaluation dependency and M0 exit criteria.
 
 The earlier detailed run on 7a859fe reported 124 passed, 4 skipped, 8 warnings. Reported total coverage was 91% including test files under src; the ingestion module was 54%. Private PostgreSQL migration/transaction checks are local evidence and are not yet CI jobs. See [CI evidence](docs/audit/M0_PR14_CI_REPORT.json).
 
@@ -27,14 +34,23 @@ The earlier detailed run on 7a859fe reported 124 passed, 4 skipped, 8 warnings. 
 
 | Priority | Required work |
 |---|---|
-| P0 | Establish source/license/as-of, target definition, cohort eligibility and feature availability |
-| P0 | Split before fitting preprocessing; persist transforms and freeze validation/test protocol |
+| P0 | Decide data usage rights and outcome as-of; then establish cohort eligibility and feature availability. Artifact identity is corroborated, but local acquisition path is not recorded |
+| P0 | Define a valid outcome-as-of/horizon and identify a new independent holdout; frozen test 2015 has been consumed |
+| P0 | Redesign threshold selection with minimum support and an approved false-positive/false-negative objective; the initial precision-80% rule was degenerate |
 | P0 | Align training, evaluation and serving through one versioned bundle/schema |
 | P1 | Fail readiness when the model bundle is missing, corrupt or incompatible |
 | P1 | Supply explicit model/data inputs to evaluation gates and bind them to release artifacts |
 | P1 | Verify parity, load limits, deployment smoke tests and rollback |
 | P1 | Monitor actual inference events and delayed labels rather than historical issue-date volume |
 
-The legacy label still maps Late (31–120 days) to one. The proposed outcome contract remains a draft. All member_id values are missing; label availability and borrower overlap cannot be established from that column.
+Kontrak label retrospektif sudah diterapkan pada database aktif: Fully Paid=0, Charged Off/Default=1, status lain=NULL. Pada masing-masing staging dan dua mart pinjaman, label 0=1.076.751, label 1=268.599, NULL=915.318; 21.467 record Late (31–120 days) kini NULL. Bukti: [laporan penerapan aktif](docs/audit/M0_LABEL_ACTIVE_ROLLOUT_REPORT.json). Asal/as-of, kelayakan cohort dan fitur tetap terbuka. Seluruh member_id kosong sehingga pemisahan peminjam tidak dapat dijamin dari kolom tersebut.
 
-M1–M5, full training, deployment and history rewriting are not authorized by this status document. PR success does not establish model validity or production readiness. See [milestones](docs/MILESTONES_ADR.md), [target draft](docs/M0_LABEL_DECISION_DRAFT.md) and [technical worklog](docs/WORKLOG.md).
+Identitas byte dataset kini cocok dengan [artefak riset yang dipublikasikan](docs/audit/M0_DATA_SOURCE_RESEARCH_2026-09-22.json). Kaggle merupakan kandidat distribusi yang kuat, tetapi jalur unduh lokal, hak penggunaan data asal dan waktu snapshot outcome belum terverifikasi. File mentah tetap privat; keputusan penggunaan demo publik masih terbuka.
+
+Bounded M1 local implementation and evaluation were explicitly authorized and executed on 23
+September 2026. Full training, M2–M5, deployment, merge, push and history rewriting remain outside
+that authorization. PR success and the local experiment do not establish model validity or production
+readiness. See [M1 local evidence](docs/audit/M1_LOCAL_EVALUATION_2026-09-23.md),
+[milestones](docs/MILESTONES_ADR.md) and [technical worklog](docs/WORKLOG.md).
+
+Backup label berhasil dipulihkan dan rollback diuji pada PostgreSQL 14.22 terisolasi; lihat [laporan restore](docs/audit/M0_LABEL_RESTORE_REPORT.json). Setelah kapasitas pulih, preflight database aktif mencocokkan backup, source, migrasi, baseline baris/label, input dan metadata. Penerapan 22 September 2026 lulus tiga model/12 tes; jumlah dan ID tetap, SHA-256 atas baris berurutan tanpa label cocok pada ketiga layer, dan raw/macro tidak berubah menurut sidik agregat. Rollback aktif tidak diperlukan. Pemeriksaan awal yang tertahan kapasitas tetap dicatat sebagai [bukti historis](docs/audit/M0_LABEL_2026-09-22_BLOCKER.json); hasil akhir ada pada [laporan penerapan](docs/audit/M0_LABEL_ACTIVE_ROLLOUT_REPORT.json). Ini belum memvalidasi cohort/as-of, training, CI atau kesiapan produksi.
