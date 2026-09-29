@@ -40,7 +40,7 @@ def main() -> None:
         st.subheader("Vintage: kelompok pinjaman menurut tahun penerbitan")
         cohorts = pd.DataFrame(evidence["cohorts"])
         cohorts["prevalence_pct"] = 100 * cohorts["adverse"] / cohorts["eligible"]
-        st.dataframe(cohorts, hide_index=True, use_container_width=True)
+        st.dataframe(cohorts, hide_index=True, width="stretch")
         split = st.selectbox("Lihat distribusi outcome", cohorts["split"].tolist())
         selected = cohorts.loc[cohorts["split"] == split].iloc[0]
         counts = pd.DataFrame(
@@ -65,7 +65,7 @@ def main() -> None:
     with model_tab:
         st.subheader("Model dipilih menggunakan validation")
         validation = pd.DataFrame(evidence["validation"])
-        st.dataframe(validation, hide_index=True, use_container_width=True)
+        st.dataframe(validation, hide_index=True, width="stretch")
         st.bar_chart(validation.set_index("candidate")[["average_precision"]])
         st.markdown(
             "**Average precision (AP):** merangkum kemampuan menemukan kasus adverse saat "
@@ -96,13 +96,22 @@ def main() -> None:
         st.dataframe(
             pd.DataFrame(
                 [
-                    {"Tahap": "Sumber & waktu outcome", "Status": "Tertahan: audit belum lengkap"},
-                    {"Tahap": "Model & holdout baru", "Status": "Tertahan: kandidat lama gagal"},
+                    {
+                        "Tahap": "Sumber & waktu outcome",
+                        "Status": "Tertahan: audit belum lengkap",
+                    },
+                    {
+                        "Tahap": "Model & holdout baru",
+                        "Status": "Tertahan: kandidat lama gagal",
+                    },
                     {
                         "Tahap": "Bundle/API",
                         "Status": "Persiapan lokal; parity/manifest belum selesai",
                     },
-                    {"Tahap": "Docker", "Status": "Smoke packaging historis; belum rilis model"},
+                    {
+                        "Tahap": "Docker",
+                        "Status": "Smoke packaging historis; belum rilis model",
+                    },
                     {
                         "Tahap": "Monitoring & rollback",
                         "Status": "Belum dibuktikan pada layanan aktif",
@@ -110,7 +119,7 @@ def main() -> None:
                 ]
             ),
             hide_index=True,
-            use_container_width=True,
+            width="stretch",
         )
         st.write(
             "API /live memeriksa proses. /ready menolak model yang belum memiliki bundle "
