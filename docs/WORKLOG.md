@@ -161,3 +161,29 @@ header CSV atau gzip. File hilang dan header ambigu menghasilkan status eksplisi
 ditandai dan semua hasil tetap ready_for_training=false. Script tidak mengakses database, memuat
 record ke model atau membaca skor test. Tes memakai fixture sintetis kecil; laporan lokal tetap
 privat. Persyaratan gap label availability dan independensi terhadap membership historis diperjelas.
+
+
+## 2026-09-29 — push verification, local readiness and aggregate dashboard
+
+Verified GitHub PR #14 head f1f430a and CI run 36519072615: lint/typecheck and application tests
+passed, evaluation and Docker skipped. Added process liveness and fail-closed readiness; predictor
+access now rejects missing/unverified/incomplete bundles. The legacy loader leaves verification
+false. Existing API tests explicitly inject verified synthetic fixtures. API Docker HEALTHCHECK
+now checks /ready. This is preparatory software protection; full manifest validation, runtime
+compatibility, quality evidence and raw-to-HTTP parity remain unfinished.
+
+Added a read-only Streamlit research dashboard with dated public aggregates, cohort distributions,
+validation comparisons, recorded failed frozen-test results and limitations. No new training,
+raw data access or test-set selection was performed. Added a separate non-root dashboard Dockerfile
+and directly pinned UI dependencies; transitive lock and base-image digest remain open.
+
+In an isolated temporary Python environment, 20 API/dashboard tests passed; one existing Feast
+wiring test was deselected because Feast was not installed. Three Starlette deprecation warnings
+were reported. Black, Ruff and isort checks passed for changed Python files. Targeted mypy with
+follow-imports=silent passed; unrestricted local import checking encountered seven pre-existing
+NumPy generic annotation errors in ML/explanation modules with local NumPy 1.26.4. New remote CI
+is still required. Streamlit preview rendered and was inspected in the browser.
+
+About 4.8 GiB free was observed before preparation, so Docker images were not rebuilt. No active
+database mutation, model admission, full training, deployment, merge, commit or push was performed
+in this preparation. Release prerequisites are recorded in PRODUCTION_READINESS_ROADMAP.md.

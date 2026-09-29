@@ -4,18 +4,29 @@ Status 23 September 2026: panduan ini memvalidasi packaging API tanpa menyatakan
 production. Kandidat M1 gagal gate rilis dan tidak boleh dipasang sebagai model API. Tanpa model,
 `/health` tetap merespons HTTP 200 dengan `model_loaded=false`, sementara `/predict` harus 503.
 
+## Pembaruan 29 September 2026 — readiness
+
+API sekarang menyediakan `/live` untuk proses dan `/ready` untuk bundle scoring terverifikasi.
+Tanpa bundle, `/live` dan `/health` merespons 200, sedangkan `/ready` serta scoring merespons 503.
+Docker HEALTHCHECK memakai `/ready`, sehingga smoke API tanpa bundle akan menjadi **unhealthy**
+secara sengaja. Model joblib legacy saja tetap tidak memenuhi kontrak; jangan memasang kandidat
+M1 yang gagal. Perubahan ini belum dibuild ulang karena ruang host sekitar 4,8 GiB.
+
+Dashboard agregat memiliki Dockerfile terpisah; langkah lengkap di
+[roadmap kesiapan](PRODUCTION_READINESS_ROADMAP.md).
+
 ## 1. Prasyarat
 
 Jalankan dari root proyek:
 
 ```bash
-cd /path/to/creditlens
+cd /Users/agathasilalahi/Documents/creditlens
 docker info --format '{{.ServerVersion}}'
 df -h .
 ```
 
 Jika koneksi Docker gagal, buka Docker Desktop, tunggu status engine siap, lalu ulangi `docker info`.
-Sisakan sedikitnya 8 GiB untuk smoke build. Kondisi terakhir menunjukkan sekitar 12 GiB kosong.
+Sisakan sedikitnya 8 GiB untuk smoke build. Periksa ulang kapasitas; kondisi 29 September hanya sekitar 4,8 GiB kosong.
 
 PostgreSQL Homebrew aktif memakai port 5432. Jangan menjalankan service `postgres` dari
 `docker-compose.yml` secara bersamaan karena port akan bentrok. Stack lengkap juga memuat Airflow,
@@ -59,6 +70,8 @@ docker run --rm -d \
 
 docker logs creditlens-api-smoke
 curl -sS http://localhost:8000/health | python -m json.tool
+curl -i http://localhost:8000/live
+curl -i http://localhost:8000/ready
 ```
 
 Hasil yang diharapkan saat ini:
@@ -80,7 +93,8 @@ curl -i -sS -X POST http://localhost:8000/predict \
 ```
 
 Respons yang benar adalah HTTP 503 dengan pesan bahwa model belum dimuat. HTTP 200 dari `/health`
-belum merupakan readiness model; perbaikan readiness adalah bagian desain M2/M3.
+belum merupakan readiness model. `/ready` harus 503 pada smoke tanpa bundle; Docker unhealthy
+pada kondisi ini adalah hasil yang benar. Validator bundle lengkap masih pekerjaan M2.
 
 ## 4. Hentikan dan bersihkan smoke test
 

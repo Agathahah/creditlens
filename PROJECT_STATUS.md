@@ -1,6 +1,6 @@
 # CreditLens project status
 
-Updated 2026-09-23. M0 data recovery is implemented and the approved bounded M1 local
+Updated 2026-09-29. M0 data recovery is implemented and the approved bounded M1 local
 experiment has completed. The candidate failed release gates. The next holdout direction is approved,
 but a new auditable dataset/snapshot has not been admitted; the project is not production ready.
 
@@ -28,7 +28,12 @@ but a new auditable dataset/snapshot has not been admitted; the project is not p
 
 ## Pull request and CI
 
-[PR #14](https://github.com/Agathahah/creditlens/pull/14) is open and draft. At verification its head was 0acd49a9aefc22c4facd73b78a00d5b329d36a33, matching the local checkout, and GitHub reported MERGEABLE. [Run 34556669746](https://github.com/Agathahah/creditlens/actions/runs/34556669746) passed lint/typecheck and application tests; model evaluation and Docker build were skipped under the workflow conditions. MERGEABLE indicates no merge conflict, not release acceptance. See [M0 review](docs/audit/M0_PR14_REVIEW.md) for the unresolved main-branch evaluation dependency and M0 exit criteria.
+[PR #14](https://github.com/Agathahah/creditlens/pull/14) is open and draft. Verification on
+29 September 2026 found remote head `f1f430a8787b20beaabd128b69fc06053edbc10f`, matching the main
+local checkout. [Run 36519072615](https://github.com/Agathahah/creditlens/actions/runs/36519072615)
+passed lint/typecheck and application tests; model evaluation and Docker build were skipped.
+This verification precedes the new local readiness/dashboard changes; those changes still require
+commit/push and CI. Neither skipped jobs nor PR success establish release acceptance.
 
 The earlier detailed run on 7a859fe reported 124 passed, 4 skipped, 8 warnings. Reported total coverage was 91% including test files under src; the ingestion module was 54%. Private PostgreSQL migration/transaction checks are local evidence and are not yet CI jobs. See [CI evidence](docs/audit/M0_PR14_CI_REPORT.json).
 
@@ -61,3 +66,19 @@ dataset/snapshot with auditable provenance, rights, as-of and outcome timing. Se
 [decision](docs/M1_NEXT_HOLDOUT_DECISION.md) and [next experiment scope](docs/M1_NEXT_EXPERIMENT_SCOPE.md).
 
 Backup label berhasil dipulihkan dan rollback diuji pada PostgreSQL 14.22 terisolasi; lihat [laporan restore](docs/audit/M0_LABEL_RESTORE_REPORT.json). Setelah kapasitas pulih, preflight database aktif mencocokkan backup, source, migrasi, baseline baris/label, input dan metadata. Penerapan 22 September 2026 lulus tiga model/12 tes; jumlah dan ID tetap, SHA-256 atas baris berurutan tanpa label cocok pada ketiga layer, dan raw/macro tidak berubah menurut sidik agregat. Rollback aktif tidak diperlukan. Pemeriksaan awal yang tertahan kapasitas tetap dicatat sebagai [bukti historis](docs/audit/M0_LABEL_2026-09-22_BLOCKER.json); hasil akhir ada pada [laporan penerapan](docs/audit/M0_LABEL_ACTIVE_ROLLOUT_REPORT.json). Ini belum memvalidasi cohort/as-of, training, CI atau kesiapan produksi.
+
+
+## 2026-09-29 — bounded local release preparation
+
+The request to continue toward production authorizes local readiness protection, a read-only
+research dashboard and concrete release criteria. `/live` reports process availability; `/ready`,
+`/predict` and `/explain` reject missing/unverified bundles. The legacy loader never marks a bundle
+verified. Synthetic test fixtures can exercise the ready path; no real model has been admitted.
+
+A Streamlit dashboard displays only the published, dated M1 research aggregates and failed gates.
+It performs no source download, database query, training, prediction or test-set reselection.
+Complete bundle validation/parity, independent model evaluation, release CI, deployment and actual
+monitoring remain open. The old M1 authorization did not itself cover those steps; the new request
+covers the local preparation described here. Hosting target/cost and release acceptance remain
+unset. About 4.8 GiB free was observed, so no new Docker build was run.
+See [the roadmap](docs/PRODUCTION_READINESS_ROADMAP.md).

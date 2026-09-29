@@ -28,3 +28,7 @@ Updated 2026-09-23. Documentation records implemented behavior, decisions, valid
 - [Ingestion results](audit/M0_INGESTION_RECOVERY_REPORT.json), [post-ingestion dbt results](audit/M0_POST_INGESTION_DBT_REPORT.json), [ID reconciliation](audit/M0_ID_RECONCILIATION.json), [CI results](audit/M0_PR14_CI_REPORT.json).
 
 Raw data, credentials and backup archives are not repository deliverables. Historical reports retain their recorded counts and dates; current status is maintained in PROJECT_STATUS.md.
+
+## Local demo and release preparation
+
+- [Production readiness roadmap](PRODUCTION_READINESS_ROADMAP.md): dated research dashboard, fail-closed API probes, and remaining model/release gates.
