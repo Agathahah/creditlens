@@ -4,7 +4,8 @@ FastAPI app exposing credit scoring (POST /predict), explanation
 (POST /explain), and health (GET /health) endpoints. Model artifacts are
 loaded once at startup via the lifespan handler and shared through
 ``app.state.registry``; the service starts even when no artifact is
-present so that /health can report readiness.
+present so that /health can report artifact status and /ready can reject scoring.
+The legacy loader does not verify release bundles and cannot enable real scoring.
 """
 
 from __future__ import annotations

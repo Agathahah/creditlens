@@ -30,6 +30,18 @@ class ModelRegistry:
     expected_features: list[str] = field(default_factory=list)
     feature_fetcher: Callable[[str], dict[str, Any] | None] | None = None
     survival_model: SurvivalAnalysis | None = None
+    bundle_verified: bool = False
+
+    @property
+    def scoring_ready(self) -> bool:
+        """Whether a verified bundle and its feature contract are available.
+
+        The legacy artifact loader does not verify bundle provenance, schema,
+        or release evidence and therefore leaves ``bundle_verified`` false.
+        Tests can inject verified synthetic fixtures. A future bundle loader
+        must perform verification before setting this internal flag.
+        """
+        return self.model_loaded and self.bundle_verified and bool(self.expected_features)
 
     @property
     def model_loaded(self) -> bool:
@@ -43,12 +55,12 @@ class ModelRegistry:
             The loaded CreditPredictor.
 
         Raises:
-            HTTPException: 503 if no model is loaded.
+            HTTPException: 503 if a verified scoring bundle is unavailable.
         """
-        if self.predictor is None or self.predictor.model is None:
+        if not self.scoring_ready or self.predictor is None:
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                detail="No scoring model is loaded.",
+                detail="A verified scoring bundle is not available.",
             )
         return self.predictor
 
