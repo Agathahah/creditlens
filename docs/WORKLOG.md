@@ -187,3 +187,22 @@ is still required. Streamlit preview rendered and was inspected in the browser.
 About 4.8 GiB free was observed before preparation, so Docker images were not rebuilt. No active
 database mutation, model admission, full training, deployment, merge, commit or push was performed
 in this preparation. Release prerequisites are recorded in PRODUCTION_READINESS_ROADMAP.md.
+
+
+## 2026-09-29 — dashboard packaging CI and pilot preparation
+
+Verified pushed head 61c960c and run 36535113262: lint/types pass, 146 passed / 4 skipped / 7
+warnings; reported coverage 89% includes src test files. Added a separate Dashboard Docker Smoke
+job after lint/tests, with read-only repository permissions and an image/revision-bound artifact.
+The job checks healthy/non-root runtime, HTTP and absence of data/model/secret/backup paths.
+A failed-health command fixture test verifies that smoke cannot report success and cleans only
+its own container. Bash syntax and workflow parsing/dependencies passed. Actual image build
+awaits new CI execution; laptop disk about 7.2 GiB does not meet the local 8 GiB smoke rule.
+
+Added an entrypoint-level dependency file for the aggregate-only Streamlit pilot, reusing the UI
+requirements and avoiding full project ML dependencies. Dependency include resolution dry-run
+passed. Replaced deprecated dataframe width option; two rendered dashboard tests passed locally.
+Added a technical pilot runbook with actual-URL verification and explicit rollback limits.
+Community Cloud is a proposed free dashboard host, not an operated scoring service. No deployment,
+new model fit/evaluation, database mutation, commit or push was performed in this preparation.
+Personal storytelling/CV/publication notes remain in ignored private storage.

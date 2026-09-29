@@ -32,3 +32,5 @@ Raw data, credentials and backup archives are not repository deliverables. Histo
 ## Local demo and release preparation
 
 - [Production readiness roadmap](PRODUCTION_READINESS_ROADMAP.md): dated research dashboard, fail-closed API probes, and remaining model/release gates.
+
+- [Dashboard packaging and pilot runbook](DASHBOARD_RELEASE_RUNBOOK.md): dedicated Docker smoke, isolated cloud dependencies, public checks and rollback boundaries.

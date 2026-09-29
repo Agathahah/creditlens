@@ -29,11 +29,12 @@ but a new auditable dataset/snapshot has not been admitted; the project is not p
 ## Pull request and CI
 
 [PR #14](https://github.com/Agathahah/creditlens/pull/14) is open and draft. Verification on
-29 September 2026 found remote head `f1f430a8787b20beaabd128b69fc06053edbc10f`, matching the main
-local checkout. [Run 36519072615](https://github.com/Agathahah/creditlens/actions/runs/36519072615)
-passed lint/typecheck and application tests; model evaluation and Docker build were skipped.
-This verification precedes the new local readiness/dashboard changes; those changes still require
-commit/push and CI. Neither skipped jobs nor PR success establish release acceptance.
+29 September 2026 found remote head `61c960c`, matching the main local checkout (ahead/behind 0/0).
+[Run 36535113262](https://github.com/Agathahah/creditlens/actions/runs/36535113262) passed
+lint/typecheck and application tests: 146 passed, 4 skipped, 7 warnings; reported aggregate coverage
+was 89% including test files under src. Model Evaluation Gate and the API Docker job were skipped.
+This verification precedes the new dashboard packaging job/cloud preparation; those changes still
+require commit/push and CI. Neither skipped jobs nor PR success establish model release acceptance.
 
 The earlier detailed run on 7a859fe reported 124 passed, 4 skipped, 8 warnings. Reported total coverage was 91% including test files under src; the ingestion module was 54%. Private PostgreSQL migration/transaction checks are local evidence and are not yet CI jobs. See [CI evidence](docs/audit/M0_PR14_CI_REPORT.json).
 
@@ -82,3 +83,14 @@ monitoring remain open. The old M1 authorization did not itself cover those step
 covers the local preparation described here. Hosting target/cost and release acceptance remain
 unset. About 4.8 GiB free was observed, so no new Docker build was run.
 See [the roadmap](docs/PRODUCTION_READINESS_ROADMAP.md).
+
+
+## Dashboard packaging and pilot preparation
+
+A dedicated PR job builds only the research dashboard and checks Docker health, HTTP, non-root
+runtime, absent data/model/backup/credential paths, and reconciled failure disclosures. Its report
+binds the image ID to code revision. The unhealthy-container negative test passed locally; actual
+Docker execution awaits the new CI run because host capacity was about 7.2 GiB, below the 8 GiB local
+smoke rule. Community Cloud dependency discovery is prepared in the UI entrypoint directory.
+No cloud app or public URL has been created. Source admission for new M1 remains MISSING_SOURCE.
+See [dashboard pilot runbook](docs/DASHBOARD_RELEASE_RUNBOOK.md).

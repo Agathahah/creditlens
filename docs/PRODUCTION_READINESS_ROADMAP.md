@@ -6,11 +6,12 @@ model valid atau layanan sudah dioperasikan. Eksperimen M1 baru mengikuti scope 
 
 ## Status push yang diverifikasi
 
-GitHub PR #14 menerima head `f1f430a8787b20beaabd128b69fc06053edbc10f` pada branch
-`codex/m0-mentoring`. [Run 36519072615](https://github.com/Agathahah/creditlens/actions/runs/36519072615)
-meluluskan Lint & Type Check dan Unit & Integration Tests. Model Evaluation Gate dan Build Docker
-Image dilewati sesuai kondisi workflow. PR tetap open/draft. Pemeriksaan ini mendahului perubahan
-readiness/dashboard pada dokumen ini; CI untuk perubahan baru perlu dijalankan setelah push berikutnya.
+GitHub PR #14 menerima head `61c960c` dan checkout lokal cocok (0/0). Pada
+[run 36535113262](https://github.com/Agathahah/creditlens/actions/runs/36535113262), lint/typecheck
+lulus dan application tests melaporkan 146 passed, 4 skipped, 7 warnings. Coverage agregat 89%
+termasuk file tes src. Model Evaluation Gate dan Build Docker Image lama skipped. PR tetap
+draft/open. Penambahan job Docker dashboard selanjutnya belum dipush/diuji remote.
+Runbook pilot: [DASHBOARD_RELEASE_RUNBOOK.md](DASHBOARD_RELEASE_RUNBOOK.md).
 
 ## Produk yang dapat ditampilkan sekarang
 
