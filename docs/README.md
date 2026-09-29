@@ -11,6 +11,7 @@ Updated 2026-09-23. Documentation records implemented behavior, decisions, valid
 | [Evaluation/release plan](EVALUATION_RELEASE_PLAN.md) | Validation, quality gates and release evidence |
 | [Next holdout decision](M1_NEXT_HOLDOUT_DECISION.md) | Approved prediction horizon, timing, source and holdout direction |
 | [Next experiment scope](M1_NEXT_EXPERIMENT_SCOPE.md) | Source intake, temporal split and evaluation gates before new training |
+| [M1 source intake](M1_SOURCE_INTAKE_GUIDE.md) | Source screening evidence and bounded file inspection commands |
 | [Milestones/ADRs](MILESTONES_ADR.md) | Delivery sequence and decision status |
 | [Decisions](DECISIONS.md) | Adopted and proposed technical choices |
 | [Project walkthrough](PROJECT_WALKTHROUGH.md) | End-to-end record flow and implemented gaps |

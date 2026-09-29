@@ -143,3 +143,21 @@ melaporkan probabilitas dan kurva operating point validation dengan minimum supp
 approve/reject ditunda. Disusun `M1_NEXT_EXPERIMENT_SCOPE.md` sebagai gerbang intake, outcome/fitur,
 split, evaluasi dan bukti. Tidak ada training baru, pembukaan ulang frozen test 2015, perubahan API,
 deployment atau data mentah yang dipublikasikan pada tahap ini.
+
+## 2026-09-29 — kelanjutan scope dan intake sumber M1
+
+Scope eksperimen berikutnya disetujui untuk persiapan dan eksekusi lokal berbatas sumber daya setelah
+gerbang sumber/kontrak/split lulus dan protokol terkunci. Status sumber saat ini MISSING_SOURCE;
+persetujuan tidak menghilangkan persyaratan data. Tahun split belum ditetapkan.
+
+Seleksi dokumentasi sumber membedakan turunan Zenodo 2007–2018, dataset Mendeley 2008–2019
+dengan target BADLOAN yang berbeda, dan data mortgage Freddie Mac. Tidak ada sumber yang sudah
+lolos kontrak personal-loan saat aplikasi/horizon 36 bulan dalam pencarian terbatas ini. Endpoint
+historis LendingClub belum dapat diverifikasi melalui alat riset. Rujukan dan batas audit dicatat
+dalam M1_SOURCE_INTAKE_GUIDE.md.
+
+Ditambahkan scripts/inspect_m1_source.py untuk inventory folder privat dan inspeksi checksum/ukuran/
+header CSV atau gzip. File hilang dan header ambigu menghasilkan status eksplisit; snapshot lama
+ditandai dan semua hasil tetap ready_for_training=false. Script tidak mengakses database, memuat
+record ke model atau membaca skor test. Tes memakai fixture sintetis kecil; laporan lokal tetap
+privat. Persyaratan gap label availability dan independensi terhadap membership historis diperjelas.

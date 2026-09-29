@@ -1,6 +1,10 @@
 # Scope intake data dan eksperimen M1 berikutnya
 
-Status 23 September 2026: **arah disetujui; eksekusi training belum dimulai**.
+Status 29 September 2026: **scope disetujui; intake sumber sedang dikerjakan**.
+Persetujuan mencakup persiapan dan eksperimen lokal berbatas sumber daya menurut gerbang dokumen
+ini. Sumber baru belum tersedia/lolos audit, sehingga training belum dapat dimulai. Persetujuan
+yang sama tidak perlu diminta ulang; perubahan target, sumber/populasi atau scope M2 tetap keputusan
+terpisah. Lihat [panduan intake dan hasil seleksi sumber](M1_SOURCE_INTAKE_GUIDE.md).
 
 Dokumen ini menerjemahkan keputusan holdout berikutnya menjadi gerbang kerja yang dapat diaudit.
 Tujuannya adalah mendapatkan evaluasi temporal independen setelah frozen test 2015 terpakai.
@@ -11,7 +15,8 @@ Tujuannya adalah mendapatkan evaluasi temporal independen setelah frozen test 20
 - Prediksi dibuat pada saat aplikasi, sebelum grade, pricing dan keputusan kredit.
 - Target adalah outcome buruk dalam 36 bulan untuk pinjaman tenor 36 bulan.
 - Output utama adalah probabilitas risiko dan bukti evaluasi. Tidak ada keputusan approve/reject.
-- Tidak ada training baru sampai sumber data lolos seluruh gerbang intake di bawah.
+- Training baru dimulai setelah gerbang sumber/kontrak/split 1–3 lulus dan protokol gerbang 4 dikunci.
+  Gerbang 5 merupakan keputusan sesudah evaluasi, bukan prasyarat training.
 
 ## Gerbang 1 — intake sumber privat
 
@@ -47,6 +52,12 @@ Tahun konkret ditentukan setelah profil sumber baru tersedia:
 4. membership, alasan exclusion, jumlah label dan checksum disimpan sebelum training;
 5. tidak boleh ada overlap loan ID atau fit preprocessing di luar train.
 
+Independensi diperiksa terhadap membership train/validation/test eksperimen lama. Snapshot baru
+dengan loan ID yang sama seperti test 2015 bukan test independen. Untuk backtest saat aplikasi,
+label train harus diketahui pada training-as-of sebelum prediction time evaluasi; gunakan gap
+availability yang cukup untuk horizon 36 bulan. Cohort mature pada akhir snapshot saja tidak
+membuktikan bahwa label sudah tersedia ketika prediksi dibuat.
+
 Frozen test tidak boleh dibuka untuk pemilihan fitur, model, calibration atau threshold.
 
 ## Gerbang 4 — protokol model dan evaluasi
@@ -60,6 +71,10 @@ Frozen test tidak boleh dibuka untuk pemilihan fitur, model, calibration atau th
   menampilkan kurva precision/recall dan operating point dengan minimum support `max(100, 0,5%)`.
 - Kandidat, preprocessing, calibration dan laporan harus terikat pada satu manifest versi sebelum
   frozen test dibuka satu kali.
+- Batas eksperimen lokal: maksimum dua thread; constant, satu Logistic Regression dan satu
+  XGBoost kecil; tanpa pencarian hyperparameter luas. Jumlah baris, ukuran fitur, memori dan waktu
+  diukur pada train/validation sebelum eksekusi final. Budget konkret ditulis pada manifest sumber
+  dan protokol sebelum fit. Capacity diperiksa ulang; training dihentikan bila budget dilampaui.
 
 ## Gerbang 5 — keputusan setelah evaluasi
 

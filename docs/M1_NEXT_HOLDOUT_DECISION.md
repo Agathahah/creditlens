@@ -1,9 +1,10 @@
 # Keputusan sebelum eksperimen model berikutnya
 
-Status 23 September 2026: **arah eksperimen berikutnya disetujui pemilik proyek**. Persetujuan ini
-mencakup audit/intake sumber baru dan penyusunan scope eksperimen; training baru tetap menunggu
-sumber lolos intake dan persetujuan scope eksekusi. Frozen test 2015 sudah terpakai dan tidak boleh
-digunakan untuk memilih fitur, model atau threshold.
+Status 23 September 2026: **arah eksperimen berikutnya disetujui pemilik proyek**. Pada
+29 September 2026 pemilik proyek menyetujui kelanjutan scope eksperimen: intake sumber dan
+eksperimen lokal berbatas sumber daya setelah gerbang sumber, waktu, split dan protokol lulus.
+Persetujuan sudah tercatat; hambatan saat ini adalah bukti sumber, bukan persetujuan ulang.
+Frozen test 2015 sudah terpakai dan tidak boleh digunakan untuk memilih fitur, model atau threshold.
 
 ## Keputusan yang disetujui
 
