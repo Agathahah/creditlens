@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "data_as_of_report": "2026-09-23",
+  "kind": "historical_research_aggregates",
+  "source_report": "docs/audit/M1_LOCAL_EVALUATION_2026-09-23.md",
+  "model_release_passed": false,
+  "test_consumed": true,
+  "target": "Retrospective observed outcome for accepted 36-month loans; not verified 36-month PD",
+  "cohorts": [
+    {"split": "Train", "vintage": "2011–2013", "eligible": 157993, "non_adverse": 138213, "adverse": 19780},
+    {"split": "Validation", "vintage": "2014", "eligible": 162570, "non_adverse": 140255, "adverse": 22315},
+    {"split": "Frozen test (consumed)", "vintage": "2015", "eligible": 283024, "non_adverse": 240893, "adverse": 42131}
+  ],
+  "validation": [
+    {"candidate": "Constant", "average_precision": 0.1373, "roc_auc": 0.5000, "brier": 0.1186},
+    {"candidate": "Logistic Regression", "average_precision": 0.2016, "roc_auc": 0.6291, "brier": 0.1158},
+    {"candidate": "Bounded XGBoost", "average_precision": 0.2046, "roc_auc": 0.6356, "brier": 0.1155}
+  ],
+  "test": {"average_precision": 0.2197, "ap_ci_low": 0.2164, "ap_ci_high": 0.2221, "roc_auc": 0.6343, "brier": 0.1241, "historical_ap_gate": 0.25, "predicted_positive": 0},
+  "limitations": [
+    "Only accepted loans; rejected-loan outcomes are unavailable.",
+    "Outcome snapshot date and event timing have not been verified.",
+    "All member_id values were missing; borrower independence cannot be established.",
+    "Public use rights for source data/model artifacts remain unresolved.",
+    "The 2015 test was consumed; it must not be reused for model or threshold selection."
+  ]
+}

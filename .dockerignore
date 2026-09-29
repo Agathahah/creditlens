@@ -16,3 +16,10 @@ src/**/*.pyc
 src/**/*.pyo
 src/**/.env
 src/**/.env.*
+
+# Only the published aggregate evidence and isolated dashboard build files.
+!infra/docker/Dockerfile.dashboard
+!infra/docker/requirements.dashboard.txt
+!docs/
+!docs/audit/
+!docs/audit/PORTFOLIO_RESEARCH_SNAPSHOT.json
