@@ -55,9 +55,8 @@ menampilkan empty state, bukan tingkat risiko nol. Unduhan CSV hanya berisi agre
    Image ID disalin dari laporan smoke lokal ke snapshot agregat. CI versi tersebut:
    [run 36538053231](https://github.com/Agathahah/creditlens/actions/runs/36538053231).
    Bukti ini mendahului desain UI baru; build/CI desain baru harus diperiksa setelah commit/push.
-6. **Status publik belum diverifikasi:** tidak ada URL publik terverifikasi dalam snapshot ini.
-   Halaman localhost atau tombol Deploy bukan bukti publikasi. Cloud deployment perlu uji UI
-   tanpa login, catatan URL/revisi/tanggal; deployment scoring tetap tertahan.
+6. **Status publik pada 29 September belum diverifikasi:** saat itu tidak ada URL teruji.
+   Pemeriksaan Cloud 30 September dicatat di bawah; deployment scoring tetap tertahan.
 
 ## Batas keamanan dan operasi
 
@@ -95,3 +94,13 @@ mencakup AP/prevalence, calibration, kualitas operating point, beban review, fai
 biaya kesalahan FP/FN serta dampak moneter belum tersedia. Dataset accepted-only tidak mewakili
 semua pemohon dan tidak membuktikan performa prospektif. Dashboard publik adalah demo riset;
 model/API scoring tetap tertahan.
+
+## Verifikasi publik 30 September
+
+Revisi dashboard `084e524` lulus lint, tes dan Docker smoke dalam
+[CI run 36685936180](https://github.com/Agathahah/creditlens/actions/runs/36685936180).
+URL [dashboard publik](https://creditlens-risk-evidence.streamlit.app/) berasal dari platform,
+bukan localhost atau nama hasil tebakan. Sharing Cloud menyatakan public and searchable; sembilan
+halaman dibuka pada situs hidup tanpa error aplikasi; permintaan HTTP anonim mengikuti redirect
+cookie normal dan mendapat 200. Snapshot mencatat waktu `2026-09-30T08:03:29Z` dan revisi lengkap.
+Ini hanya memverifikasi pilot agregat. Tidak ada model rilis atau API scoring aktif.

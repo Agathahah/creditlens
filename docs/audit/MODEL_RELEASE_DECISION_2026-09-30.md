@@ -34,7 +34,9 @@ untuk keputusan ini dan tidak boleh dipakai memilih ulang model/threshold.
 - **Kandidat historis: REJECT untuk scoring.** Penyimpanan hasil riset dan dashboard agregat boleh;
   `model_release_passed` tetap false dan API harus menolak bundle lama/belum terverifikasi.
 - **Dashboard publik: demo riset tersendiri.** Publikasi hanya berisi agregat tanpa borrower/model,
-  sesudah commit, CI dan verifikasi URL sebenarnya. Ini tidak mengubah keputusan model.
+  sesudah commit, CI dan verifikasi URL sebenarnya. Pilot tersebut diverifikasi pada 30 September
+  di `https://creditlens-risk-evidence.streamlit.app/` dari revisi `084e524`; ini tidak mengubah
+  keputusan model.
 - **Model/API production: BLOCKED.** Tidak boleh mengaktifkan skor atau keputusan kredit hanya
   untuk memenuhi tenggat portfolio.
 

@@ -94,7 +94,13 @@ binds the image ID to code revision. The unhealthy-container negative test passe
 Docker execution subsequently passed in CI run 36538053231 at head 928acc6. The operator also
 ran a local smoke on 29 September: healthy container, HTTP 200, non-root runtime and five forbidden
 /app paths absent. These results predate the redesign below; they do not cover every image file. Community Cloud dependency discovery is prepared in the UI entrypoint directory.
-No public deployment URL is verified in the evidence snapshot. Source admission for new M1 remains MISSING_SOURCE.
+The aggregate dashboard pilot is publicly reachable at
+[creditlens-risk-evidence.streamlit.app](https://creditlens-risk-evidence.streamlit.app/).
+Revision `084e524` passed lint, application tests and Dashboard Docker Smoke in
+[CI run 36685936180](https://github.com/Agathahah/creditlens/actions/runs/36685936180).
+Streamlit Cloud reports the app public and searchable; all nine pages rendered in the live app,
+and an anonymous HTTP request completed with 200. This verifies the dashboard pilot, not a
+scoring-model/API release. Source admission for new M1 remains MISSING_SOURCE.
 See [dashboard pilot runbook](docs/DASHBOARD_RELEASE_RUNBOOK.md).
 
 
@@ -108,7 +114,7 @@ The aggregate SQL is read-only; it has not been rerun against the active databas
 
 The UI and filter/empty-state contracts pass locally. Historical model failure and consumed test
 remain explicit. The dashboard does not probe a live API, load borrower records/models or train.
-Public URL verification and CI/build for this redesign remain pending. See
+Public URL verification and CI/build for this redesign were completed on 30 September; see
 [data story and evidence](docs/audit/DASHBOARD_DATA_STORY_2026-09-29.md).
 
 
@@ -120,4 +126,6 @@ vintage aggregates and home-ownership counts; it does not query the active datab
 The three candidate methods and their validation results are explained separately, with no implied
 test result for unselected baselines. A dated release decision keeps the historical candidate
 REJECT and scoring API BLOCKED. The source/holdout, bundle/parity and operations gates remain open.
-The public demo update has not yet been committed, run in remote CI or URL-verified.
+The public demo update was committed as `084e524`, passed the new dashboard CI job and was
+URL-verified on 30 September. The historical model remains REJECT for scoring; no source
+holdout, model bundle or scoring API deployment was promoted.

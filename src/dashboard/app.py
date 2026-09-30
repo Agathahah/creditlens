@@ -124,6 +124,10 @@ def _validate(evidence: Evidence) -> None:
             raise ValueError("Deployment publik memerlukan URL HTTPS yang diverifikasi.")
         if not package.get("public_verified_at") or not package.get("public_verified_revision"):
             raise ValueError("Bukti deployment publik belum lengkap.")
+        if not str(package.get("public_ci_run_url", "")).startswith(
+            "https://github.com/Agathahah/creditlens/actions/runs/"
+        ):
+            raise ValueError("Run CI untuk dashboard publik belum tercatat.")
     elif package.get("verified_public_url") is not None:
         raise ValueError("URL publik belum boleh diumumkan tanpa verifikasi.")
 
@@ -928,7 +932,7 @@ def _api(evidence: Evidence) -> None:
 
 
 def _deployment(evidence: Evidence) -> None:
-    """Display dated packaging proof without inventing a public deployment URL."""
+    """Display separate packaging, public-demo and scoring-release evidence."""
     package = evidence["packaging"]
     st.write(
         "Deployment dashboard menyajikan bukti riset agregat. Deployment API "
@@ -943,9 +947,14 @@ def _deployment(evidence: Evidence) -> None:
     )
     columns[2].metric("Rilis model scoring", "TERTAHAN")
     st.caption(
-        f"Packaging diperiksa {package['evidence_reported_at']} "
+        f"Smoke Docker lokal diperiksa {package['evidence_reported_at']} "
         f"untuk revisi {package['code_revision'][:7]}. "
-        "Desain dashboard baru masih perlu build dan CI setelah commit."
+        + (
+            f"Desain sembilan halaman lulus CI pada revisi "
+            f"{package['public_verified_revision'][:7]} dan URL publik diuji terpisah."
+            if package["public_deployment_verified"]
+            else "Desain dashboard baru masih perlu build dan CI setelah commit."
+        )
     )
     left, right = st.columns(2)
     with left, st.container(border=True, key="panel_15"):
@@ -967,6 +976,8 @@ def _deployment(evidence: Evidence) -> None:
             width="stretch",
         )
         st.markdown(f"[Lihat CI versi {package['ci_head']}]({package['ci_run_url']})")
+        if package["public_deployment_verified"]:
+            st.markdown(f"[Lihat CI dashboard publik]({package['public_ci_run_url']})")
         with st.expander("Identitas image yang diuji"):
             st.code(package["image_id"], language="text")
         _source(evidence, "packaging", "Prosedur build, smoke test, dan verifikasi publik")

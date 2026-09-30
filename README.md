@@ -53,4 +53,7 @@ Open http://localhost:8501 on the machine running the server. See the
 [dashboard evidence and population definitions](docs/audit/DASHBOARD_DATA_STORY_2026-09-29.md),
 [read-only aggregate queries](scripts/sql/dashboard_aggregates.sql), and
 [packaging/public pilot runbook](docs/DASHBOARD_RELEASE_RUNBOOK.md).
-The model remains below its release gate; a verified public deployment URL is not yet recorded.
+The [public dashboard pilot](https://creditlens-risk-evidence.streamlit.app/) shows the
+aggregate research story. Revision `084e524` passed dashboard CI and was checked on the public
+URL on 30 September 2026. The model remains below its release gate; the pilot provides no
+scoring API or credit decision.

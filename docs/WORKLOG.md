@@ -244,3 +244,19 @@ Logistic Regression and bounded XGBoost separately with validation metrics, rela
 and the selected candidate's failed frozen-test confusion matrix. No new fit or test use occurred.
 The 30 September decision report records REJECT for the historical model and BLOCKED for scoring.
 Public pilot publication and fresh CI are follow-on verification steps; they do not waive model gates.
+
+
+## 2026-09-30 — verified aggregate dashboard pilot
+
+Committed and pushed `084e524` on `codex/m0-mentoring`. PR #14 remained draft. CI run
+36685936180 passed lint/typecheck, application tests and Dashboard Docker Smoke; the API-image
+and model-gate jobs were skipped. The aggregate-only app was deployed on Streamlit Community
+Cloud at https://creditlens-risk-evidence.streamlit.app/ with Python 3.12 and no secrets.
+Cloud Sharing showed public and searchable. Nine live pages rendered without application errors;
+the business, dataset and model pages displayed the intended caveats and historical numbers.
+An anonymous HTTP request with a temporary in-memory cookie session returned 200. The release
+snapshot records revision `084e524` and verification time `2026-09-30T08:03:29Z`.
+
+This is a public research dashboard pilot. No scoring bundle was admitted, no fresh holdout was
+opened, and the failed M1 candidate was not promoted. The branch may auto-update the Cloud app;
+later revisions require a new public smoke before their URL evidence is considered current.

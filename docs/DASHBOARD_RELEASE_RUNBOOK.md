@@ -17,8 +17,8 @@ Run [36538053231](https://github.com/Agathahah/creditlens/actions/runs/365380532
 `928acc6` lulus lint, application tests dan Dashboard Docker Smoke. Laporan smoke lokal operator
 juga mencatat revisi `928acc6`, healthy, HTTP 200, non-root dan lima path /app terlarang tidak ada.
 Bukti packaging tersebut disalin ke snapshot publik dengan image ID; laporan lengkap tetap lokal.
-Desain sembilan halaman yang disiapkan setelah revisi tersebut belum dicakup oleh build/CI itu.
-URL publik belum terverifikasi dalam snapshot; jangan menganggap localhost sebagai deployment publik.
+Desain sembilan halaman yang disiapkan setelah revisi tersebut belum dicakup oleh run lama.
+Verifikasi build/CI desain baru dan URL publik tercatat pada pembaruan 30 September di bawah.
 
 ## Kriteria penerimaan packaging
 
@@ -151,3 +151,25 @@ hasil kandidat diberi label validation; hanya kandidat terpilih memiliki test hi
 Status rilis scoring harus mengikuti
 [keputusan 30 September](audit/MODEL_RELEASE_DECISION_2026-09-30.md), terpisah dari URL dashboard.
 Jangan masukkan token/database/model ketika membuat aplikasi Cloud.
+
+## Hasil pilot publik — 30 September 2026
+
+Commit `084e524` (`084e5247915dbbabe7543875540f96fcdb0dd6c7`) dipush ke
+`codex/m0-mentoring`. [CI run 36685936180](https://github.com/Agathahah/creditlens/actions/runs/36685936180)
+menyelesaikan lint/typecheck, unit/integration tests dan **Dashboard Docker Smoke** dengan sukses;
+Build Docker Image API lama dan Model Evaluation Gate dilewati pada PR ini. Tiga job sukses
+tidak membuktikan rilis model.
+
+Dashboard dipasang dari repository publik `Agathahah/creditlens`, branch tersebut, entrypoint
+`src/dashboard/app.py`, Python 3.12, tanpa secrets. URL aktual:
+[creditlens-risk-evidence.streamlit.app](https://creditlens-risk-evidence.streamlit.app/).
+Pengaturan Sharing Cloud menunjukkan **public and searchable**. Semua sembilan halaman dibuka
+pada situs hidup tanpa error aplikasi; halaman Profil dataset memperlihatkan 603.587 eligible
+dan sheet numerik, halaman model menampilkan ketiga AP validation serta kegagalan test.
+Permintaan HTTP anonim dengan sesi cookie sementara (tanpa login) mencapai 200; alur cookie
+dibutuhkan untuk mengikuti redirect normal Streamlit Cloud. Timestamp pemeriksaan:
+`2026-09-30T08:03:29Z`. Pemeriksaan ini tidak setara dengan load test, SLO atau audit keamanan.
+
+URL mengikuti branch pengembangan dan bisa berubah setiap push. Setelah push berikutnya,
+verifikasi ulang revisi dan sembilan halaman sebelum membagikan ulang tautan. Snapshot dashboard
+menyimpan revisi yang **terakhir diverifikasi**; model/API scoring tetap tertahan.

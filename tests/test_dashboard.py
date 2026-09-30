@@ -75,8 +75,9 @@ def test_story_pages_render_with_scope_disclosure(page: str) -> None:
             for item in app.metric
         )
     if page == "Deployment":
-        assert app.metric[1].value == "BELUM DIVERIFIKASI"
+        assert app.metric[1].value == "TERVERIFIKASI"
         assert any("928acc6" in item.value for item in app.caption)
+        assert any("084e524" in item.value for item in app.caption)
     if page == "API & keamanan":
         assert any("tidak melakukan probe API live" in item.value for item in app.caption)
     if page == "Kesimpulan":
@@ -99,8 +100,12 @@ def test_snapshot_reconciles_populations_and_preserves_failure() -> None:
     assert snapshot["model_release_passed"] is False
     assert snapshot["test_consumed"] is True
     assert snapshot["test"]["average_precision"] < snapshot["test"]["historical_ap_gate"]
-    assert snapshot["packaging"]["public_deployment_verified"] is False
-    assert snapshot["packaging"]["verified_public_url"] is None
+    assert snapshot["packaging"]["public_deployment_verified"] is True
+    assert (
+        snapshot["packaging"]["verified_public_url"]
+        == "https://creditlens-risk-evidence.streamlit.app/"
+    )
+    assert snapshot["packaging"]["public_verified_revision"].startswith("084e524")
     profile = snapshot["experiment_profile"]
     assert profile["rows"] == 603587
     assert sum(item["rows"] for item in profile["home_ownership"]) == 603587

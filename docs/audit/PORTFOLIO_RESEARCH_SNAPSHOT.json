@@ -350,9 +350,15 @@
     },
     "ci_run_url": "https://github.com/Agathahah/creditlens/actions/runs/36538053231",
     "ci_head": "928acc6",
-    "public_deployment_verified": false,
-    "verified_public_url": null,
-    "scope": "Historical local dashboard packaging at 928acc6, not the current redesign or scoring API"
+    "public_deployment_verified": true,
+    "verified_public_url": "https://creditlens-risk-evidence.streamlit.app/",
+    "scope": "Local Docker smoke at 928acc6; PR CI and public aggregate dashboard at 084e524. No scoring-model or API release.",
+    "public_verified_at": "2026-09-30T08:03:29Z",
+    "public_verified_revision": "084e5247915dbbabe7543875540f96fcdb0dd6c7",
+    "public_ci_run_url": "https://github.com/Agathahah/creditlens/actions/runs/36685936180",
+    "public_visibility": "public and searchable (Streamlit Cloud Sharing setting)",
+    "anonymous_http_status": 200,
+    "public_page_smoke": "9/9 navigation pages rendered without application error"
   },
   "dashboard_sources": {
     "warehouse": "docs/audit/M0_LABEL_ACTIVE_ROLLOUT_REPORT.json",
@@ -480,7 +486,7 @@
   "release_decision": {
     "reported_at": "2026-09-30",
     "historical_candidate": "REJECT",
-    "dashboard_pilot": "READY_FOR_PUBLIC_VERIFICATION_AFTER_CI",
+    "dashboard_pilot": "PUBLIC_VERIFIED",
     "scoring_api": "BLOCKED",
     "required_gates": [
       {
