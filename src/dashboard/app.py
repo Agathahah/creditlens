@@ -246,12 +246,13 @@ def _label_chart(frame: pd.DataFrame) -> None:
 
 
 def _overview(evidence: Evidence) -> None:
-    """Connect the business question, data coverage, experiment, and release decision."""
+    """Connect portfolio monitoring, data coverage, and the release decision."""
     st.markdown(
-        "**Masalah bisnis yang ingin diuji:** tim risiko fintech perlu memprioritaskan "
-        "review manual ketika banyak permohonan masuk. CreditLens meneliti apakah "
-        "fitur yang tersedia saat aplikasi dapat membantu mengurutkan risiko. "
-        "Kandidat saat ini belum layak dipakai untuk keputusan nyata."
+        "**CreditLens membantu membaca kualitas portofolio pinjaman yang sudah dicairkan.** "
+        "Alurnya dimulai dari rekonsiliasi data, melihat perkembangan tiap vintage, "
+        "lalu menilai apakah bukti model cukup kuat untuk menjadi peringatan dini "
+        "bagi analis. Dashboard ini masih memakai snapshot historis; belum "
+        "memantau pinjaman aktif atau mengirim skor."
     )
     frame = _population(evidence)
     _population_metrics(frame)
@@ -259,22 +260,22 @@ def _overview(evidence: Evidence) -> None:
     with main:
         left, right = st.columns([1.3, 1])
         with left, st.container(border=True, key="panel_01"):
-            st.subheader("Seberapa besar data yang tersedia?")
+            st.subheader("Cakupan pinjaman historis")
             _volume_chart(frame)
             st.caption(
                 "Volume warehouse sesuai filter; lebih banyak data belum menjamin outcome lengkap."
             )
         with right, st.container(border=True, key="panel_02"):
-            st.subheader("Apa yang sudah diketahui?")
+            st.subheader("Kelengkapan outcome")
             _label_chart(frame)
             st.caption("Proporsi terhadap seluruh pinjaman dalam filter, termasuk outcome NULL.")
         _source(evidence, "profile", "Profil agregat 23 Sep 2026; bukan data live")
         with st.container(border=True, key="panel_03"):
-            st.subheader("Dari data besar ke keputusan rilis")
+            st.subheader("Dari data historis ke keputusan rilis")
             _flow(
                 [
                     ("2,26 juta pinjaman", "Warehouse 2007–2018"),
-                    ("603.587 eligible", "Eksperimen 36 bulan, 2011–2015"),
+                    ("603.587 eligible", "Eksperimen M1 lama, 2011–2015"),
                     ("AP test 0,2197", "Di bawah gate 0,25"),
                     ("Tahan scoring", "Holdout independen baru diperlukan"),
                 ]
@@ -294,80 +295,85 @@ def _overview(evidence: Evidence) -> None:
             "lama menghasilkan nol prediksi positif.",
         )
         _insight(
-            "Manfaat untuk tim fintech",
-            "Menemukan batas data dan mencegah model yang belum teruji masuk ke "
-            "alur keputusan kredit.",
+            "Manfaat untuk tim portofolio",
+            "Melihat cakupan outcome per vintage dan mengetahui bukti apa yang "
+            "masih dibutuhkan sebelum membuat daftar prioritas review.",
         )
         st.caption(
             "Insight ini merangkum cakupan penuh; bukan estimasi kerugian atau "
             "dampak bisnis terukur."
         )
     st.markdown(
-        '<div class="verdict"><b>Kesimpulan saat ini:</b> pipeline data dan demo agregat '
-        "dapat ditinjau. Model scoring masih tertahan; dashboard bukan alat "
-        "persetujuan kredit.</div>",
+        '<div class="verdict"><b>Temuan saat ini:</b> data historis sudah dapat '
+        "ditelusuri dan dibandingkan per vintage. Peringatan dini berbasis "
+        "model masih menunggu data dan evaluasi baru; dashboard ini belum "
+        "memicu tindakan terhadap peminjam.</div>",
         unsafe_allow_html=True,
     )
 
 
 def _business_problem(evidence: Evidence) -> None:
-    """Explain the proposed lender workflow and distinguish it from measured impact."""
-    st.subheader("Masalah yang biasanya dihadapi tim risiko")
+    """Explain the portfolio-review workflow and distinguish it from measured impact."""
+    st.subheader("Portofolio membutuhkan pemantauan yang konsisten")
     st.write(
-        "Fintech pemberi pinjaman menerima permohonan dengan kapasitas review yang terbatas. "
-        "Tim perlu menentukan kasus mana yang patut diperiksa lebih dahulu sambil "
-        "menghindari kerugian dari risiko yang terlewat dan dampak buruk ketika "
-        "pemohon yang layak ditandai keliru. Angka biaya kedua kesalahan belum tersedia."
+        "Sesudah pinjaman dicairkan, tim risiko perlu melihat perubahan kualitas "
+        "portofolio dan memilih kelompok yang perlu ditinjau lebih dahulu. "
+        "CreditLens menyatukan jumlah pinjaman, status outcome, vintage, dan "
+        "bukti model agar analisis tidak hanya bertumpu pada ukuran dataset. "
+        "Belum ada data bulanan, saldo berjalan, atau biaya intervensi untuk "
+        "mengukur manfaat peringatan dini secara nyata."
     )
     left, right = st.columns(2)
     with left, st.container(border=True, key="business_problem"):
-        st.subheader("Keputusan yang ingin dibantu")
+        st.subheader("Alur kerja yang dituju")
         _flow(
             [
-                ("Aplikasi masuk", "Fitur sebelum pricing"),
-                ("Skor risiko", "Jika model lolos gate"),
-                ("Analis manusia", "Review lebih dulu"),
+                ("Pinjaman dicairkan", "Masuk ke portofolio"),
+                ("Pantau perkembangan", "Snapshot berkala diperlukan"),
+                ("Tandai perubahan", "Jika model sudah tervalidasi"),
+                ("Analis meninjau", "Tindakan tetap oleh manusia"),
             ]
         )
         st.write(
-            "Output yang dirancang adalah estimasi risiko untuk prioritas review. "
-            "Analis tetap menilai permohonan. Tidak ada aturan otomatis approve/reject "
-            "atau rekomendasi suku bunga dalam proyek ini."
+            "Output yang direncanakan adalah daftar prioritas review portofolio, "
+            "bukan keputusan otomatis atas nasabah. Saat ini dashboard hanya "
+            "menggambarkan riwayat; skor dan alert untuk pinjaman aktif belum tersedia."
         )
     with right, st.container(border=True, key="business_limit"):
-        st.subheader("Bukti yang belum dimiliki")
+        st.subheader("Batas data yang perlu diketahui")
         st.markdown(
             "- Data hanya berisi pinjaman yang **sudah diterima** oleh pemberi pinjaman lama.\n"
-            "- Hasil pinjaman yang **ditolak** tidak diketahui.\n"
-            "- Tanggal outcome dan horizon 36 bulan belum dapat diaudit.\n"
-            "- Biaya review, kerugian kredit, fairness, serta dampak bisnis belum diukur."
+            "- Snapshot status tunggal tidak menunjukkan **perubahan bulanan** tiap pinjaman.\n"
+            "- Tanggal outcome, saldo, dan waktu fitur sebelum alert belum dapat diaudit.\n"
+            "- Biaya review, manfaat intervensi, fairness, serta dampak bisnis belum diukur."
         )
         st.caption(
-            "Karena itu, hasil riset tidak dapat digeneralisasi ke semua pemohon "
-            "atau diklaim telah menurunkan kerugian fintech."
+            "Data pinjaman yang sudah didanai cocok untuk analisis retrospektif "
+            "portofolio. Namun, snapshot ini belum cukup untuk membuktikan "
+            "prediksi prospektif atau penurunan kerugian."
         )
-    st.subheader("Apa ukuran keberhasilan untuk use case ini?")
+    st.subheader("Ukuran keberhasilan untuk pemantauan portofolio")
     st.dataframe(
         pd.DataFrame(
             [
                 {
-                    "Ukuran": "AP + prevalence",
-                    "Mengapa": "Kualitas ranking kasus adverse pada kelas minoritas",
-                    "Status": "Historis tersedia; gate gagal",
+                    "Ukuran": "Cakupan outcome per vintage",
+                    "Peran": "Menunjukkan bagian portofolio yang sudah bisa dinilai",
+                    "Status": "Agregat historis tersedia",
                 },
                 {
-                    "Ukuran": "Kalibrasi + Brier",
-                    "Mengapa": "Apakah probabilitas risiko bisa dipercaya",
-                    "Status": "Brier historis tersedia; validasi kalibrasi belum lengkap",
+                    "Ukuran": "Perubahan tunggakan & saldo",
+                    "Peran": "Menemukan pergeseran risiko pada pinjaman aktif",
+                    "Status": "Memerlukan snapshot berkala baru",
                 },
                 {
-                    "Ukuran": "Recall, precision, beban review",
-                    "Mengapa": "Jumlah kasus terdeteksi vs kapasitas analis",
-                    "Status": "Threshold lama gagal; biaya bisnis belum ada",
+                    "Ukuran": "Recall, precision & beban review",
+                    "Peran": "Mengukur kasus yang ditemukan per kapasitas analis",
+                    "Status": "Menunggu target alert dan evaluasi independen",
                 },
                 {
-                    "Ukuran": "Fairness, latency, audit & rollback",
-                    "Mengapa": "Operasi yang aman dan dapat diperiksa",
+                    "Ukuran": "Kalibrasi, fairness & operasi",
+                    "Peran": "Menjaga alert dapat dipercaya dan ditelusuri",
                     "Status": "Belum dibuktikan pada layanan aktif",
                 },
             ]
@@ -376,9 +382,9 @@ def _business_problem(evidence: Evidence) -> None:
         width="stretch",
     )
     st.info(
-        "Keputusan produk saat ini: lanjutkan penelitian dan siapkan demo baca-saja. "
-        "Scoring API tetap tertahan sampai data, evaluasi independen, bundle "
-        "dan operasi lolos gate."
+        "Tahap saat ini adalah analisis portofolio historis. Pengembangan alert "
+        "berbasis model menunggu data berkala yang valid, evaluasi independen, "
+        "artefak model yang teruji, dan kesiapan operasi."
     )
     _source(evidence, "model", "Bukti M1 historis dan batas penggunaan")
 
@@ -403,7 +409,7 @@ def _dataset_profile(evidence: Evidence) -> None:
     left, right = st.columns([1.25, 1])
     vintage = pd.DataFrame(profile["vintage_summary"])
     with left, st.container(border=True, key="profile_vintage"):
-        st.subheader("Bagaimana komposisi berubah per tahun?")
+        st.subheader("Komposisi outcome menurut tahun penerbitan")
         _chart(
             vintage,
             {
@@ -500,8 +506,8 @@ def _dataset_profile(evidence: Evidence) -> None:
 def _data(evidence: Evidence) -> None:
     """Expose vintage maturity and the different warehouse and experiment populations."""
     st.write(
-        "Vintage adalah kelompok pinjaman berdasarkan tahun penerbitan. Pertanyaan utama: "
-        "apakah kelompok yang lebih baru sudah memiliki outcome yang cukup lengkap?"
+        "Vintage adalah kelompok pinjaman berdasarkan tahun penerbitan. Kelengkapan "
+        "outcome berbeda antartahun dan menentukan kelompok yang dapat dianalisis."
     )
     frame = _population(evidence)
     _population_metrics(frame)
@@ -538,7 +544,7 @@ def _data(evidence: Evidence) -> None:
         )
         st.caption("Denominator tiap sel: seluruh pinjaman dengan tahun dan tenor tersebut.")
     with right, st.container(border=True, key="panel_06"):
-        st.subheader("Mengapa data terbaru belum menjadi test baru?")
+        st.subheader("Vintage terbaru belum memenuhi syarat evaluasi")
         _insight(
             "2018 / 36 bulan: 88,03% NULL",
             "Mayoritas outcome belum/tidak definitif dalam snapshot. Tahun "
@@ -596,7 +602,7 @@ def _data(evidence: Evidence) -> None:
             "147 outcome NULL dan 2 pendapatan tidak valid dikeluarkan dari vintage test 2015."
         )
     with right, st.container(border=True, key="panel_08"):
-        st.subheader("Untuk apa pinjaman digunakan?")
+        st.subheader("Distribusi tujuan pinjaman pada eksperimen")
         purposes = pd.DataFrame(evidence["experiment_purposes"])
         top = purposes.nlargest(5, "rows").copy()
         top["purpose"] = top.purpose.str.replace("_", " ")
@@ -702,9 +708,10 @@ def _engineering(evidence: Evidence) -> None:
 def _model(evidence: Evidence) -> None:
     """Explain model selection and preserve the consumed test and failed release gate."""
     st.write(
-        "Eksperimen menjawab: apakah fitur pada tahap aplikasi memiliki sinyal "
-        "untuk mengurutkan outcome adverse? Hasilnya belum membuktikan probabilitas"
-        " gagal bayar 36 bulan yang terkalibrasi."
+        "Eksperimen M1 historis memakai fitur tahap aplikasi untuk mengurutkan outcome "
+        "adverse. Hasil ini membantu menilai metode dan batas datanya, tetapi belum "
+        "merupakan model pemantauan pinjaman aktif atau probabilitas gagal bayar "
+        "36 bulan yang terkalibrasi."
     )
     left, right = st.columns([1.4, 1])
     validation = pd.DataFrame(evidence["validation"])
@@ -736,7 +743,7 @@ def _model(evidence: Evidence) -> None:
             "AP dipilih karena outcome adverse adalah kelas minoritas. AP lebih tinggi lebih baik."
         )
     with right, st.container(border=True, key="panel_12"):
-        st.subheader("Mengapa bounded XGBoost?")
+        st.subheader("Alasan pemilihan bounded XGBoost dalam eksperimen lama")
         _insight(
             "AP validation tertinggi: 0,2046",
             "Aturan memilih AP tertinggi, dengan Brier sebagai pembanding jika AP "
@@ -747,7 +754,7 @@ def _model(evidence: Evidence) -> None:
             "menunjukkan manfaat bisnis yang terukur atau membenarkan kompleksitas "
             "saat deployment."
         )
-    st.subheader("Bagaimana ketiga kandidat bekerja pada data ini?")
+    st.subheader("Cara kerja dan hasil ketiga kandidat")
     candidates = {row["candidate"]: row for row in evidence["validation"]}
     first, second, third = st.columns(3)
     with first, st.container(border=True, key="model_constant"):
@@ -789,6 +796,11 @@ def _model(evidence: Evidence) -> None:
         "hasil **validation 2014**; laporan frozen test yang tersedia hanya "
         "untuk kandidat terpilih. "
         "Tidak ada hasil test terpisah untuk model konstan atau Logistic Regression."
+    )
+    st.info(
+        "Fokus produk berikutnya adalah pemantauan setelah pencairan. Skor M1 dibuat "
+        "dari fitur tahap aplikasi, sehingga hasil di halaman ini tidak boleh "
+        "dipakai sebagai alert untuk pinjaman aktif."
     )
     _source(evidence, "model_code", "Implementasi estimator dan preprocessing tiap kandidat")
     with st.expander("Metrik lain dan angka lengkap"):
@@ -850,13 +862,13 @@ def _model(evidence: Evidence) -> None:
 def _api(evidence: Evidence) -> None:
     """Separate tested API rejection from unverified operational security controls."""
     st.write(
-        "API adalah jalur integrasi untuk aplikasi fintech. Saat ini kontrak "
-        "penolakan model tersedia; layanan prediksi dengan bundle yang layak rilis "
-        "belum dibuktikan."
+        "API kelak dapat mengirim alert portofolio ke alur kerja analis. Saat ini "
+        "kontrak penolakan model tersedia; layanan prediksi dengan bundle yang "
+        "layak rilis belum dibuktikan."
     )
     _flow(
         [
-            ("Request aplikasi", "Input sesuai schema"),
+            ("Permintaan skor", "Input sesuai schema"),
             ("Cek readiness", "Bundle & daftar fitur"),
             ("Jika belum terverifikasi", "Tolak scoring: HTTP 503"),
             ("Scoring setelah gate", "Parity & rilis masih diperlukan"),
@@ -889,7 +901,7 @@ def _api(evidence: Evidence) -> None:
             st.caption("Respons pada fixture registry kosong; bukan respons API live.")
         _source(evidence, "api", "Tes readiness, penolakan, dan fixture sintetis")
     with right, st.container(border=True, key="panel_14"):
-        st.subheader("Security check: apa yang ada buktinya?")
+        st.subheader("Pemeriksaan keamanan yang sudah ada buktinya")
         st.markdown(
             "- Dashboard hanya membaca snapshot agregat.\n- Image dashboard memakai "
             "user non-root.\n- Smoke test memeriksa tidak adanya lima path aplikasi "
@@ -982,7 +994,7 @@ def _deployment(evidence: Evidence) -> None:
             st.code(package["image_id"], language="text")
         _source(evidence, "packaging", "Prosedur build, smoke test, dan verifikasi publik")
     with right, st.container(border=True, key="panel_16"):
-        st.subheader("Di mana dashboard dapat dibuka?")
+        st.subheader("Akses dashboard riset publik")
         if package["public_deployment_verified"]:
             st.link_button("Buka demo publik", package["verified_public_url"])
             st.caption(
@@ -996,14 +1008,10 @@ def _deployment(evidence: Evidence) -> None:
                 "snapshot ini."
             )
         st.write(
-            "Untuk demo publik: push desain ini → CI dashboard lolos → deploy "
-            "entrypoint src/dashboard/app.py → periksa URL dari browser tanpa login"
-            " → catat revisi dan tanggal verifikasi."
+            "Alur publikasi: commit desain → CI dashboard → deploy Streamlit → "
+            "periksa URL tanpa login → catat revisi dan tanggal verifikasi."
         )
-        st.caption(
-            "Tidak ada URL contoh yang dianggap sudah aktif. Status publik tidak "
-            "otomatis berubah hanya karena halaman ini terbuka."
-        )
+        st.caption("Verifikasi lama tidak otomatis mencakup perubahan dashboard terbaru.")
     st.subheader("Urutan menuju layanan scoring")
     _flow(
         [
@@ -1014,10 +1022,11 @@ def _deployment(evidence: Evidence) -> None:
         ]
     )
     st.warning(
-        "Model lama belum lolos. Hosting dashboard dan CI hijau tidak mengubah "
-        "keputusan menahan layanan scoring."
+        "Dashboard ini sudah menyajikan riset historis secara publik. Layanan scoring "
+        "untuk memantau pinjaman aktif masih ditahan: data berkala, outcome yang "
+        "bertanggal, dan evaluasi independen belum tersedia."
     )
-    st.subheader("Keputusan rilis model: apa yang memblokir?")
+    st.subheader("Syarat sebelum rilis scoring portofolio")
     release = evidence["release_decision"]
     st.dataframe(
         pd.DataFrame(release["required_gates"]).rename(
@@ -1036,11 +1045,12 @@ def _deployment(evidence: Evidence) -> None:
 
 def _conclusion(evidence: Evidence) -> None:
     """State the project value, finding, limitation, and concrete next release requirement."""
-    st.subheader("Apa tujuan dan manfaat CreditLens?")
+    st.subheader("Tujuan dan manfaat CreditLens")
     st.write(
-        "CreditLens meneliti kelayakan data dan model risiko kredit pada pinjaman "
-        "yang diterima. Pipeline menghubungkan data sumber, fitur, evaluasi, dan "
-        "kesiapan API agar keputusan rilis dapat dijelaskan dan diaudit."
+        "CreditLens menata bukti risiko dari pinjaman yang telah dicairkan agar tim "
+        "dapat memahami kualitas portofolio dan, kelak, memprioritaskan tinjauan "
+        "pinjaman aktif. Alur data menghubungkan sumber, label, fitur, evaluasi, "
+        "dan kesiapan API sehingga setiap keputusan rilis dapat diaudit."
     )
     left, right = st.columns(2)
     with left, st.container(border=True, key="panel_17"):
@@ -1064,8 +1074,8 @@ def _conclusion(evidence: Evidence) -> None:
         st.subheader("Manfaat yang dituju")
         st.markdown(
             "- **Tim data:** dapat menelusuri kualitas dan kelengkapan outcome.\n- "
-            "**Tim risiko:** dapat menilai hasil model dengan denominator dan waktu"
-            " yang jelas.\n- **Tim engineering:** dapat memisahkan demo, kesiapan "
+            "**Tim risiko:** dapat menilai vintage dan kelengkapan outcome dengan "
+            "denominator yang jelas.\n- **Tim engineering:** dapat memisahkan demo, kesiapan "
             "artefak, dan rilis layanan."
         )
         st.caption(
@@ -1074,16 +1084,23 @@ def _conclusion(evidence: Evidence) -> None:
         )
     st.subheader("Keputusan berikutnya")
     st.write(
-        "M1 berikutnya menunggu sumber holdout independen yang memenuhi kontrak "
-        "waktu, hak penggunaan, maturity, dan pemisahan ID dari seluruh split lama."
-        " Setelah itu barulah eksperimen berbatas sumber daya dapat dievaluasi "
-        "secara independen."
+        "Langkah berikutnya adalah memperoleh snapshot berkala pinjaman aktif "
+        "dengan tanggal observasi, riwayat tunggakan, saldo, outcome bertanggal, "
+        "serta hak penggunaan yang jelas. Setelah kontrak target dan horizon alert "
+        "disetujui, lakukan pembagian waktu baru dan evaluasi independen sebelum "
+        "membangun layanan scoring."
     )
     st.info(
-        "Kesimpulan proyek saat ini: demonstrasi data engineering dan evaluasi "
-        "risiko kredit untuk prioritas review manual yang dapat ditelusuri, "
-        "dengan kandidat scoring yang secara "
-        "eksplisit belum layak rilis."
+        "Kesimpulan saat ini: analisis vintage dan kontrak data sudah membantu "
+        "menjelaskan kualitas portofolio historis. Eksperimen M1 memberi pelajaran "
+        "tentang evaluasi model, tetapi alert untuk pinjaman aktif belum tersedia."
+    )
+    package = evidence["packaging"]
+    deployment_line = (
+        f"Dashboard publik diverifikasi {package['public_verified_at']} pada revisi "
+        f"{package['public_verified_revision'][:7]}; revisi baru perlu verifikasi ulang."
+        if package["public_deployment_verified"]
+        else "Deployment dashboard publik belum diverifikasi dalam snapshot."
     )
     summary = (
         "# CreditLens — ringkasan bukti\n\n"
@@ -1091,8 +1108,8 @@ def _conclusion(evidence: Evidence) -> None:
         "Warehouse: 2.260.668 pinjaman; 1.345.350 berlabel; 915.318 NULL.\n"
         "M1 eligible: 603.587 pinjaman diterima, tenor 36 bulan, vintage 2011–2015.\n"
         "AP frozen test: 0,2197; gate historis: 0,25; gagal. Test 2015 sudah terpakai.\n"
-        "Model scoring tertahan. Deployment publik belum diverifikasi dalam snapshot.\n"
-        "Dashboard menampilkan agregat historis, bukan monitoring atau keputusan kredit.\n"
+        f"Model scoring tertahan. {deployment_line}\n"
+        "Dashboard menampilkan agregat historis, bukan alert live atau keputusan kredit.\n"
         f"\nSumber: {REPOSITORY_URL}/blob/codex/m0-mentoring/{evidence['source_report']}\n"
     )
     st.download_button("Unduh ringkasan temuan", summary, "creditlens-findings.md", "text/markdown")
@@ -1118,8 +1135,8 @@ def main() -> None:
         page = st.radio("Jelajahi alur proyek", PAGES, label_visibility="collapsed")
         st.divider()
         st.markdown(
-            "**Pertanyaan proyek**\n\nApakah data dan model sudah cukup valid untuk "
-            "mendukung integrasi risiko kredit?"
+            "**Alur proyek**\n\nData pinjaman historis → kualitas outcome → "
+            "eksperimen → kontrol API → rencana pemantauan portofolio."
         )
         st.markdown(
             '<p class="side-note">Demo agregat historis<br>Profil: 23 Sep '
@@ -1128,21 +1145,22 @@ def main() -> None:
         )
         st.markdown(f"[Repository & bukti audit]({REPOSITORY_URL})")
     titles = {
-        "Ringkasan": "Apakah model risiko kredit sudah layak digunakan?",
-        "Masalah bisnis": "Mengapa tim fintech memerlukan bukti risiko yang andal?",
-        "Profil dataset": "Apa isi dataset yang dipakai eksperimen?",
-        "Data & vintage": "Kenali data sebelum mempercayai model",
-        "Data engineering": "Setiap layer memiliki asal dan kontrak yang jelas",
-        "Eksperimen model": "Pilih di validation, nilai sekali di test",
-        "API & keamanan": "Hanya artefak yang terverifikasi boleh menuju scoring",
-        "Deployment": "Tunjukkan bukti build, lalu verifikasi layanan",
-        "Kesimpulan": "Apa yang berhasil, apa yang tertahan, dan mengapa",
+        "Ringkasan": "CreditLens: dari data pinjaman ke pemantauan portofolio",
+        "Masalah bisnis": "Meninjau kualitas pinjaman setelah pencairan",
+        "Profil dataset": "Data historis di balik analisis",
+        "Data & vintage": "Perkembangan vintage dan kematangan outcome",
+        "Data engineering": "Dari data mentah ke metrik yang dapat ditelusuri",
+        "Eksperimen model": "Hasil eksperimen dan batas penggunaannya",
+        "API & keamanan": "Kontrol sebelum skor diterbitkan",
+        "Deployment": "Dashboard publik dan status layanan scoring",
+        "Kesimpulan": "Temuan, manfaat, dan langkah menuju alert",
     }
     st.markdown(
         '<div class="hero"><div class="eyebrow">CreditLens / '
         f"{escape(page)}</div><h1>{escape(titles[page])}</h1>"
-        "<p>Riset risiko kredit untuk menghubungkan kualitas data, evaluasi model, dan "
-        "kesiapan API. Membantu tim fintech menilai bukti sebelum menggunakan scoring.</p></div>",
+        "<p>Analisis portofolio historis, kualitas outcome, dan eksperimen model. "
+        "Bukti data dan kontrol rilis menjadi dasar rancangan pemantauan pinjaman "
+        "aktif di masa depan.</p></div>",
         unsafe_allow_html=True,
     )
     st.caption(

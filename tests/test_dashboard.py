@@ -18,7 +18,7 @@ def test_overview_explains_scope_and_filters_counts() -> None:
     assert app.metric[0].value == "2.260.668"
     assert app.metric[1].value == "1.345.350"
     assert app.metric[2].value == "915.318"
-    assert any("Pertanyaan proyek" in item.value for item in app.markdown)
+    assert any("Alur proyek" in item.value for item in app.markdown)
     app.selectbox[0].select("2018")
     app.selectbox[1].select("36 bulan").run(timeout=20)
     assert not app.exception
@@ -59,7 +59,7 @@ def test_story_pages_render_with_scope_disclosure(page: str) -> None:
     assert not app.exception
     assert any("Snapshot historis" in item.value for item in app.caption)
     if page == "Masalah bisnis":
-        assert any("kapasitas review" in item.value for item in app.markdown)
+        assert any("pemantauan portofolio" in item.value.lower() for item in app.markdown)
     if page == "Profil dataset":
         assert app.metric[0].value == "603.587"
         assert any("9 juta USD" in item.value for item in app.markdown)
@@ -81,7 +81,7 @@ def test_story_pages_render_with_scope_disclosure(page: str) -> None:
     if page == "API & keamanan":
         assert any("tidak melakukan probe API live" in item.value for item in app.caption)
     if page == "Kesimpulan":
-        assert "belum layak rilis" in app.info[0].value
+        assert "alert untuk pinjaman aktif belum tersedia" in app.info[0].value
 
 
 def test_snapshot_reconciles_populations_and_preserves_failure() -> None:

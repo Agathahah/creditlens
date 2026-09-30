@@ -260,3 +260,15 @@ snapshot records revision `084e524` and verification time `2026-09-30T08:03:29Z`
 This is a public research dashboard pilot. No scoring bundle was admitted, no fresh holdout was
 opened, and the failed M1 candidate was not promoted. The branch may auto-update the Cloud app;
 later revisions require a new public smoke before their URL evidence is considered current.
+
+## 2026-09-30 — portfolio monitoring direction and dashboard narrative
+
+The requested next use case is monitoring funded loans after disbursement. This updates the
+direction for future data intake and experiment design; the application-time M1 results remain
+historical and cannot be reused as an active-loan alert model. The dashboard copy now tells that
+sequence plainly across nine pages, with a separate explanation of the three old model
+candidates, their failed release gate, API refusal, and the public research pilot. The
+downloadable summary uses the dated public-deployment evidence from the snapshot. A new
+portfolio-monitoring scope states the periodic panel, prospective outcome, independent
+evaluation and operating controls required before scoring can be reconsidered. No new
+dataset was supplied, no model was trained, and no live alert was claimed.

@@ -1,8 +1,15 @@
 # CreditLens project status
 
-Updated 2026-09-29. M0 data recovery is implemented and the approved bounded M1 local
+Updated 2026-09-30. M0 data recovery is implemented and the approved bounded M1 local
 experiment has completed. The candidate failed release gates. The next holdout direction is approved,
 but a new auditable dataset/snapshot has not been admitted; the project is not production ready.
+
+**Current product direction (30 September):** portfolio monitoring after disbursement.
+The old application-time M1 experiment and its gate are historical evidence, not an
+active-loan alert model. A dated [scope and data contract](docs/PORTFOLIO_MONITORING_SCOPE_2026-09-30.md)
+records required periodic snapshots, prospective outcomes, and independent evaluation.
+No new source exists yet; scoring release remains on hold. The public Streamlit dashboard
+is a historical research exhibit, not a live monitoring service.
 
 ## Verified implementation
 
