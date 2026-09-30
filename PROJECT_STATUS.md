@@ -33,8 +33,9 @@ but a new auditable dataset/snapshot has not been admitted; the project is not p
 [Run 36535113262](https://github.com/Agathahah/creditlens/actions/runs/36535113262) passed
 lint/typecheck and application tests: 146 passed, 4 skipped, 7 warnings; reported aggregate coverage
 was 89% including test files under src. Model Evaluation Gate and the API Docker job were skipped.
-This verification precedes the new dashboard packaging job/cloud preparation; those changes still
-require commit/push and CI. Neither skipped jobs nor PR success establish model release acceptance.
+This run preceded dashboard packaging. Run 36538053231 at head 928acc6 subsequently passed
+lint, application tests and the separate dashboard Docker smoke job. The new dashboard redesign
+prepared below still requires its own commit/push and CI. Neither skipped jobs nor PR success establish model release acceptance.
 
 The earlier detailed run on 7a859fe reported 124 passed, 4 skipped, 8 warnings. Reported total coverage was 91% including test files under src; the ingestion module was 54%. Private PostgreSQL migration/transaction checks are local evidence and are not yet CI jobs. See [CI evidence](docs/audit/M0_PR14_CI_REPORT.json).
 
@@ -88,9 +89,35 @@ See [the roadmap](docs/PRODUCTION_READINESS_ROADMAP.md).
 ## Dashboard packaging and pilot preparation
 
 A dedicated PR job builds only the research dashboard and checks Docker health, HTTP, non-root
-runtime, absent data/model/backup/credential paths, and reconciled failure disclosures. Its report
+runtime, absence of five specified /app paths, and reconciled failure disclosures. Its report
 binds the image ID to code revision. The unhealthy-container negative test passed locally; actual
-Docker execution awaits the new CI run because host capacity was about 7.2 GiB, below the 8 GiB local
-smoke rule. Community Cloud dependency discovery is prepared in the UI entrypoint directory.
-No cloud app or public URL has been created. Source admission for new M1 remains MISSING_SOURCE.
+Docker execution subsequently passed in CI run 36538053231 at head 928acc6. The operator also
+ran a local smoke on 29 September: healthy container, HTTP 200, non-root runtime and five forbidden
+/app paths absent. These results predate the redesign below; they do not cover every image file. Community Cloud dependency discovery is prepared in the UI entrypoint directory.
+No public deployment URL is verified in the evidence snapshot. Source admission for new M1 remains MISSING_SOURCE.
 See [dashboard pilot runbook](docs/DASHBOARD_RELEASE_RUNBOOK.md).
+
+
+## 2026-09-29 — dashboard data story redesign
+
+Prepared seven sections covering purpose, warehouse/vintage distributions, engineering lineage,
+model selection, API/security contracts, historical packaging and conclusions. Year/term filters
+apply only to warehouse charts; M1 metrics/purpose counts retain their separate denominators.
+Published aggregates reconcile to 2,260,668 warehouse loans and 603,587 eligible M1 loans.
+The aggregate SQL is read-only; it has not been rerun against the active database in this change.
+
+The UI and filter/empty-state contracts pass locally. Historical model failure and consumed test
+remain explicit. The dashboard does not probe a live API, load borrower records/models or train.
+Public URL verification and CI/build for this redesign remain pending. See
+[data story and evidence](docs/audit/DASHBOARD_DATA_STORY_2026-09-29.md).
+
+
+## 2026-09-30 — business framing, profile and candidate explanations
+
+The dashboard now states the intended application-time manual-review prioritization use case and
+its measurement limits. A descriptive sheet adds prior read-only eligible-cohort percentiles,
+vintage aggregates and home-ownership counts; it does not query the active database during render.
+The three candidate methods and their validation results are explained separately, with no implied
+test result for unselected baselines. A dated release decision keeps the historical candidate
+REJECT and scoring API BLOCKED. The source/holdout, bundle/parity and operations gates remain open.
+The public demo update has not yet been committed, run in remote CI or URL-verified.

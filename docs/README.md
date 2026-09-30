@@ -34,3 +34,11 @@ Raw data, credentials and backup archives are not repository deliverables. Histo
 - [Production readiness roadmap](PRODUCTION_READINESS_ROADMAP.md): dated research dashboard, fail-closed API probes, and remaining model/release gates.
 
 - [Dashboard packaging and pilot runbook](DASHBOARD_RELEASE_RUNBOOK.md): dedicated Docker smoke, isolated cloud dependencies, public checks and rollback boundaries.
+
+- [Dashboard data story and provenance](audit/DASHBOARD_DATA_STORY_2026-09-29.md): purpose,
+  denominator definitions, vintage completeness, historical findings and operational limits.
+- [Aggregate SQL](../scripts/sql/dashboard_aggregates.sql): repeatable-read queries for warehouse
+  lineage, vintage/term labels and the separate M1 purpose distribution.
+
+- [Model release decision](audit/MODEL_RELEASE_DECISION_2026-09-30.md): fintech use case,
+  three-candidate validation comparison, rejected historical candidate and required gates.

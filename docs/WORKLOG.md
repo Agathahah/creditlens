@@ -206,3 +206,41 @@ Added a technical pilot runbook with actual-URL verification and explicit rollba
 Community Cloud is a proposed free dashboard host, not an operated scoring service. No deployment,
 new model fit/evaluation, database mutation, commit or push was performed in this preparation.
 Personal storytelling/CV/publication notes remain in ignored private storage.
+
+
+## 2026-09-29 — dashboard story and traceable aggregate distributions
+
+Redesigned the aggregate-only UI into seven narrative sections with warehouse year/term filters,
+label distribution, annual volume, vintage completeness heatmap, eligible-cohort purpose counts,
+lineage/recovery evidence, model selection, API/security boundaries, deployment proof and conclusions.
+Counts from the read-only 23 September profile reconcile with the public M0 label rollout;
+603,587 eligible M1 loans remain distinct from 2,260,668 warehouse loans. Added repeatable-read
+aggregate SQL; it was not executed against the active database during this change.
+
+Preserved the failed historical gate and consumed test. The packaging snapshot records the
+operator's 29 September smoke for code revision 928acc6, plus its CI link. It does not claim to
+verify this new UI, a public cloud URL or an approved scoring model. No inference, new training,
+active database mutation, cloud deployment, model admission or publication was performed.
+
+Focused UI/aggregate/empty-state/error-state and negative packaging tests: 11 passed locally.
+The isolated UI environment lacks pytest-asyncio, producing one unknown asyncio_mode config warning;
+this is a test-runner configuration limitation, not an application exception. Black, Ruff and
+isort passed for changed Python files; targeted mypy with follow-imports=silent passed for the
+standalone dashboard module. Browser verification covered the overview and vintage visualization;
+responsive layout was inspected separately. CI/build for this redesign remain pending after push.
+
+Verification in the main checkout also reported a sandbox restriction on writing pytest cache.
+All 11 tests still passed; no cache data is required by the application.
+
+
+## 2026-09-30 — use case, dataset sheet and explicit model release decision
+
+Added a prospective application-time manual-review *use case* to the research dashboard, while
+retaining accepted-loan selection bias and unverified 36-month outcome timing. Curated only
+historical aggregate feature percentiles/vintage/home ownership from the private read-only
+23 September profile; extended the public repeatable-read SQL to reproduce those aggregates.
+The new queries were not executed in this change. The model page now explains constant,
+Logistic Regression and bounded XGBoost separately with validation metrics, relative tradeoffs,
+and the selected candidate's failed frozen-test confusion matrix. No new fit or test use occurred.
+The 30 September decision report records REJECT for the historical model and BLOCKED for scoring.
+Public pilot publication and fresh CI are follow-on verification steps; they do not waive model gates.

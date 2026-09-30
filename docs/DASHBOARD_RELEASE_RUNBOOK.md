@@ -11,9 +11,19 @@ lulus dan tes melaporkan 146 passed, 4 skipped, 7 warnings; coverage agregat 89%
 tes dalam src. Model Evaluation Gate dan Build Docker Image lama skipped. Hasil ini mendahului
 penambahan job Docker dashboard di bawah; packaging baru belum diuji oleh runner sampai push.
 
+## Pembaruan bukti 29 September
+
+Run [36538053231](https://github.com/Agathahah/creditlens/actions/runs/36538053231) untuk head
+`928acc6` lulus lint, application tests dan Dashboard Docker Smoke. Laporan smoke lokal operator
+juga mencatat revisi `928acc6`, healthy, HTTP 200, non-root dan lima path /app terlarang tidak ada.
+Bukti packaging tersebut disalin ke snapshot publik dengan image ID; laporan lengkap tetap lokal.
+Desain sembilan halaman yang disiapkan setelah revisi tersebut belum dicakup oleh build/CI itu.
+URL publik belum terverifikasi dalam snapshot; jangan menganggap localhost sebagai deployment publik.
+
 ## Kriteria penerimaan packaging
 
-1. Tes UI membaca snapshot historis, merender disclosure gagal gate dan dapat mengganti cohort.
+1. Tes UI membaca snapshot historis, menavigasi sembilan halaman, mengubah filter warehouse dengan
+   denominator yang tepat, menangani kombinasi kosong dan mempertahankan disclosure gagal gate.
 2. Image dashboard berhasil dibuild dan server HTTP health mengembalikan 200.
 3. Container health menjadi healthy dalam 60 detik; user runtime bukan root.
 4. Path `/app/data`, `/app/models`, `/app/.git`, `/app/.env`, `/app/.local-backups` tidak ada.
@@ -39,7 +49,7 @@ cd /Users/agathasilalahi/Documents/creditlens
 ```
 
 Jika environment belum tersedia, buat mengikuti PRODUCTION_READINESS_ROADMAP.md. Buka
-http://localhost:8501, periksa semua tab dan disclosure, lalu Ctrl+C. `width="stretch"` dipakai
+http://localhost:8501, periksa sembilan halaman, filter tahun/tenor dan disclosure, lalu Ctrl+C. `width="stretch"` dipakai
 untuk menghindari parameter tabel Streamlit yang sudah deprecated.
 
 ## Docker lokal atau runner CI
@@ -103,7 +113,7 @@ berikutnya setelah uji publik; jangan menggunakan tag v* karena workflow API lam
 ## Verifikasi setelah URL tersedia
 
 1. Buka URL sebenarnya dari jendela browser yang tidak login ke dashboard.
-2. Ketiga tab dan selector cohort berfungsi; tidak ada traceback.
+2. Sembilan halaman, filter tahun/tenor dan unduhan agregat berfungsi; tidak ada traceback.
 3. Judul/status menyatakan riset historis, model gagal dan test consumed.
 4. Angka merujuk snapshot 23 September, bukan traffic layanan langsung.
 5. Link laporan sumber dapat dibuka.
@@ -131,3 +141,13 @@ sudah consumed. Agar scoring dirilis, sumber baru harus lolos provenance/rights/
 split dikunci dan kandidat lulus evaluasi independen. Setelah itu bundle validator/parity,
 probability-only API, release manifest, CI model, dependency lock API, smoke/load, monitoring dan
 rollback perlu dibuktikan. Tidak mengubah protokol atau menurunkan gate demi publikasi portfolio.
+
+## Penambahan 30 September: verifikasi cerita bisnis
+
+Periksa halaman Masalah bisnis: prioritas review manual adalah use case yang dituju, sedangkan
+biaya FP/FN dan ROI tetap belum diukur. Periksa Profil dataset: angka numerik/vintage/kategori
+berasal dari 603.587 eligible M1, bukan dari seluruh warehouse. Di Eksperimen model, ketiga
+hasil kandidat diberi label validation; hanya kandidat terpilih memiliki test historis.
+Status rilis scoring harus mengikuti
+[keputusan 30 September](audit/MODEL_RELEASE_DECISION_2026-09-30.md), terpisah dari URL dashboard.
+Jangan masukkan token/database/model ketika membuat aplikasi Cloud.
