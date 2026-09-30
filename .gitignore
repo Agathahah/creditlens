@@ -82,3 +82,6 @@ data/raw/*.log
 # Graphify artifacts
 graphify-out/
 .user.yml
+
+# Local recovery archives; keep database backups out of Git
+.local-backups/

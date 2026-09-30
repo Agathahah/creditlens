@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS raw.lc_loans (
     annual_inc NUMERIC(15,2),
     verification_status VARCHAR(50),
     issue_date DATE,
-    loan_status VARCHAR(50),
+    loan_status TEXT,
     purpose VARCHAR(100),
     title VARCHAR(255),
     zip_code VARCHAR(20),

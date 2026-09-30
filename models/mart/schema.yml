@@ -10,7 +10,7 @@ models:
           - unique
           - not_null
       - name: is_default
-        description: "Target biner penunggakan (1 = Default, 0 = Fully Paid, NULL = Ongoing)."
+        description: "Target retrospektif: 1=Charged Off/Default, 0=Fully Paid, NULL=semua status lain. Record berlabel NULL tetap disimpan."
         tests:
           - accepted_values:
               values: [0, 1]
@@ -37,7 +37,7 @@ models:
           - unique
           - not_null
       - name: is_default
-        description: "Target biner penunggakan."
+        description: "Target retrospektif dari staging: 1=Charged Off/Default, 0=Fully Paid, NULL=semua status lain; belum PD pada horizon tetap."
         tests:
           - accepted_values:
               values: [0, 1]

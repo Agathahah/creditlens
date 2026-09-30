@@ -1,0 +1,446 @@
+{
+  "started_at_utc": "2026-09-09T08:02:10.571982+00:00",
+  "workspace": "/private/tmp/creditlens-m0-qkw9p4dg",
+  "database": "creditlens_m0",
+  "transport": "private Unix socket; TCP disabled",
+  "steps": [
+    {
+      "step": "initdb",
+      "exit_code": 0
+    },
+    {
+      "step": "start",
+      "exit_code": 0
+    },
+    {
+      "step": "createdb",
+      "exit_code": 0
+    },
+    {
+      "step": "empty_build",
+      "exit_code": 0,
+      "results": [
+        {
+          "unique_id": "model.creditlens.fred_macro_clean",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "unique_id": "model.creditlens.lc_loans_clean",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "unique_id": "model.creditlens.macro_features",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "unique_id": "model.creditlens.loan_features",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "unique_id": "model.creditlens.final_features",
+          "status": "success",
+          "failures": null
+        }
+      ]
+    },
+    {
+      "step": "empty_counts",
+      "counts_staging_loan_final": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "step": "legacy_tests_empty",
+      "exit_code": 0,
+      "results": [
+        {
+          "unique_id": "test.creditlens.accepted_values_final_features_is_default__0__1.7521f57ca0",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.accepted_values_loan_features_is_default__0__1.ec342397f9",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.not_null_final_features_id.c45e496212",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.not_null_fred_macro_clean_observation_month.58703c013d",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.not_null_lc_loans_clean_loan_id.4d29caf7e2",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.not_null_loan_features_id.8e39b8e782",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.not_null_loan_features_installment_to_income_ratio.2db3bc5379",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.not_null_macro_features_date.64ad6476fe",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_fred_indicators_observation_date.1d114bbb5b",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_fred_indicators_series_id.9a52379f9d",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_fred_indicators_value.de123c332d",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_lc_loans_issue_date.8bf74e28d6",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_lc_loans_loan_amnt.7b9626f218",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_lc_loans_loan_id.3f5855eed7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_lc_loans_loan_status.d1ed1b3a50",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_sec_financials_adsh.97176ee9b9",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_sec_financials_period.7cc03b477f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_sec_financials_tag.22a4087ec5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_unique_raw_lc_loans_loan_id.4b14546db7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.unique_final_features_id.fabb277f88",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.unique_fred_macro_clean_observation_month.7813e4de10",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.unique_lc_loans_clean_loan_id.d425861d88",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.unique_loan_features_id.5544512f92",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.unique_macro_features_date.f59f5fe20e",
+          "status": "pass",
+          "failures": 0
+        }
+      ]
+    },
+    {
+      "step": "nonempty_rejects_empty",
+      "exit_code": 1,
+      "results": [
+        {
+          "unique_id": "test.creditlens.nonempty_required_models",
+          "status": "fail",
+          "failures": 3
+        }
+      ]
+    },
+    {
+      "step": "after_ingestion_before_rebuild",
+      "counts_staging_loan_final": [
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "step": "reconciliation_rejects_stale_mart",
+      "exit_code": 1,
+      "results": [
+        {
+          "unique_id": "test.creditlens.reconcile_loan_counts",
+          "status": "fail",
+          "failures": 1
+        }
+      ]
+    },
+    {
+      "step": "populated_build_and_tests",
+      "exit_code": 0,
+      "results": [
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_fred_indicators_observation_date.1d114bbb5b",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_fred_indicators_series_id.9a52379f9d",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_fred_indicators_value.de123c332d",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_lc_loans_issue_date.8bf74e28d6",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_lc_loans_loan_amnt.7b9626f218",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_lc_loans_loan_id.3f5855eed7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_lc_loans_loan_status.d1ed1b3a50",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_sec_financials_adsh.97176ee9b9",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_sec_financials_period.7cc03b477f",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_not_null_raw_sec_financials_tag.22a4087ec5",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.source_unique_raw_lc_loans_loan_id.4b14546db7",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "model.creditlens.fred_macro_clean",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "unique_id": "model.creditlens.lc_loans_clean",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "unique_id": "test.creditlens.not_null_fred_macro_clean_observation_month.58703c013d",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.unique_fred_macro_clean_observation_month.7813e4de10",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.not_null_lc_loans_clean_loan_id.4d29caf7e2",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.unique_lc_loans_clean_loan_id.d425861d88",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "model.creditlens.macro_features",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "unique_id": "model.creditlens.loan_features",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "unique_id": "test.creditlens.not_null_macro_features_date.64ad6476fe",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.unique_macro_features_date.f59f5fe20e",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.accepted_values_loan_features_is_default__0__1.ec342397f9",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.not_null_loan_features_id.8e39b8e782",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.not_null_loan_features_installment_to_income_ratio.2db3bc5379",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.unique_loan_features_id.5544512f92",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "model.creditlens.final_features",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "unique_id": "test.creditlens.accepted_values_final_features_is_default__0__1.7521f57ca0",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.nonempty_required_models",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.not_null_final_features_id.c45e496212",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.reconcile_loan_counts",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.unique_final_features_id.fabb277f88",
+          "status": "pass",
+          "failures": 0
+        }
+      ]
+    },
+    {
+      "step": "populated_counts",
+      "counts_staging_loan_final": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "step": "reconciliation_rejects_missing_final",
+      "exit_code": 1,
+      "results": [
+        {
+          "unique_id": "test.creditlens.reconcile_loan_counts",
+          "status": "fail",
+          "failures": 1
+        }
+      ]
+    },
+    {
+      "step": "restore_final",
+      "exit_code": 0,
+      "results": [
+        {
+          "unique_id": "model.creditlens.final_features",
+          "status": "success",
+          "failures": null
+        },
+        {
+          "unique_id": "test.creditlens.accepted_values_final_features_is_default__0__1.7521f57ca0",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.nonempty_required_models",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.not_null_final_features_id.c45e496212",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.reconcile_loan_counts",
+          "status": "pass",
+          "failures": 0
+        },
+        {
+          "unique_id": "test.creditlens.unique_final_features_id.fabb277f88",
+          "status": "pass",
+          "failures": 0
+        }
+      ]
+    },
+    {
+      "step": "restored_counts",
+      "counts_staging_loan_final": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "step": "stop",
+      "exit_code": 0
+    }
+  ],
+  "status": "passed",
+  "cluster_stopped": true,
+  "finished_at_utc": "2026-09-09T08:02:22.250293+00:00"
+}

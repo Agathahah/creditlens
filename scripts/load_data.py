@@ -1,13 +1,11 @@
 import argparse
 import logging
-import os
 import sys
 
 import pandas as pd
 import requests
 from fredapi import Fred
 from psycopg2.extras import execute_values
-from tqdm import tqdm
 
 from src.common.config import get_settings
 
@@ -79,133 +77,23 @@ class DataLoader:
             cursor.close()
             conn.close()
 
-    def load_lending_club(self, csv_path: str) -> None:
-        """Idempotent chunked loader for massive 2.9M record loans dataset."""
-        if not os.path.exists(csv_path):
-            logger.error(f"Lending Club CSV file not found at path: {csv_path}")
-            return
+    def load_lending_club(self, csv_path: str, *, insert_missing: bool = False) -> None:
+        """Load or resume a local Lending Club CSV without truncating source status.
 
-        logger.info(f"Beginning chunked ingestion of {csv_path}...")
-
+        Args:
+            csv_path: CSV or compressed CSV source path.
+            insert_missing: Insert only IDs absent from raw, preserving existing records.
+        """
         import psycopg2
 
-        conn = psycopg2.connect(self.settings.POSTGRES_URL)
-        cursor = conn.cursor()
+        from src.ingestion.lending_club import load_csv
 
-        # Read file in 100k chunks to optimize RAM footprint
-        chunksize = 100000
+        connection = psycopg2.connect(self.settings.POSTGRES_URL)
         try:
-            for chunk in tqdm(pd.read_csv(csv_path, chunksize=chunksize, low_memory=False)):
-                # Keep only valid rows
-                chunk = chunk.dropna(subset=["id", "loan_amnt", "issue_d"])
-
-                for _, row in chunk.iterrows():
-                    # Parse dates helper
-                    issue_date = (
-                        pd.to_datetime(row["issue_d"]).date()
-                        if not pd.isna(row["issue_d"])
-                        else None
-                    )
-                    earliest_cr = (
-                        pd.to_datetime(row["earliest_cr_line"]).date()
-                        if not pd.isna(row["earliest_cr_line"])
-                        else None
-                    )
-                    last_pymnt = (
-                        pd.to_datetime(row["last_pymnt_d"]).date()
-                        if not pd.isna(row["last_pymnt_d"])
-                        else None
-                    )
-
-                    cursor.execute(
-                        """
-                        INSERT INTO raw.lc_loans (
-                            loan_id, member_id, loan_amnt, funded_amnt, term, int_rate, installment,
-                            grade, sub_grade, emp_title, emp_length, home_ownership, annual_inc,
-                            verification_status, issue_date, loan_status, purpose, title, zip_code,
-                            addr_state, dti, delinq_2yrs, earliest_cr_line, inq_last_6mths,
-                            open_acc, pub_rec, revol_bal, revol_util, total_acc, total_pymnt,
-                            total_rec_prncp, total_rec_int, recoveries, collection_recovery_fee,
-                            last_pymnt_date, last_pymnt_amnt, application_type
-                        ) VALUES (
-                            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                            %s, %s, %s
-                        ) ON CONFLICT (loan_id) DO UPDATE SET
-                            loan_status = EXCLUDED.loan_status,
-                            total_pymnt = EXCLUDED.total_pymnt,
-                            last_pymnt_date = EXCLUDED.last_pymnt_date,
-                            loaded_at = NOW();
-                    """,
-                        (
-                            int(row["id"]),
-                            int(row["member_id"]) if not pd.isna(row["member_id"]) else None,
-                            float(row["loan_amnt"]),
-                            float(row["funded_amnt"]) if not pd.isna(row["funded_amnt"]) else None,
-                            row["term"],
-                            float(row["int_rate"]) if not pd.isna(row["int_rate"]) else None,
-                            float(row["installment"]) if not pd.isna(row["installment"]) else None,
-                            row["grade"],
-                            row["sub_grade"],
-                            row["emp_title"] if not pd.isna(row["emp_title"]) else None,
-                            row["emp_length"] if not pd.isna(row["emp_length"]) else None,
-                            row["home_ownership"],
-                            float(row["annual_inc"]) if not pd.isna(row["annual_inc"]) else 0.0,
-                            row["verification_status"],
-                            issue_date,
-                            row["loan_status"],
-                            row["purpose"],
-                            row["title"] if not pd.isna(row["title"]) else None,
-                            row["zip_code"],
-                            row["addr_state"],
-                            (
-                                float(row["dti"])
-                                if (not pd.isna(row["dti"]) and float(row["dti"]) >= 0)
-                                else None
-                            ),
-                            int(row["delinq_2yrs"]) if not pd.isna(row["delinq_2yrs"]) else 0,
-                            earliest_cr,
-                            int(row["inq_last_6mths"]) if not pd.isna(row["inq_last_6mths"]) else 0,
-                            int(row["open_acc"]) if not pd.isna(row["open_acc"]) else 0,
-                            int(row["pub_rec"]) if not pd.isna(row["pub_rec"]) else 0,
-                            float(row["revol_bal"]) if not pd.isna(row["revol_bal"]) else 0.0,
-                            float(row["revol_util"]) if not pd.isna(row["revol_util"]) else 0.0,
-                            int(row["total_acc"]) if not pd.isna(row["total_acc"]) else 0,
-                            float(row["total_pymnt"]) if not pd.isna(row["total_pymnt"]) else 0.0,
-                            (
-                                float(row["total_rec_prncp"])
-                                if not pd.isna(row["total_rec_prncp"])
-                                else 0.0
-                            ),
-                            (
-                                float(row["total_rec_int"])
-                                if not pd.isna(row["total_rec_int"])
-                                else 0.0
-                            ),
-                            float(row["recoveries"]) if not pd.isna(row["recoveries"]) else 0.0,
-                            (
-                                float(row["collection_recovery_fee"])
-                                if not pd.isna(row["collection_recovery_fee"])
-                                else 0.0
-                            ),
-                            last_pymnt,
-                            (
-                                float(row["last_pymnt_amnt"])
-                                if not pd.isna(row["last_pymnt_amnt"])
-                                else 0.0
-                            ),
-                            row["application_type"],
-                        ),
-                    )
-                conn.commit()
-            logger.info("Successfully completed Lending Club ingestion.")
-        except Exception as e:
-            conn.rollback()
-            logger.error(f"Failure during chunked loading iteration: {e}")
-            raise e
+            summary = load_csv(csv_path, connection, insert_missing=insert_missing)
+            logger.info("Successfully completed Lending Club ingestion: %s", summary)
         finally:
-            cursor.close()
-            conn.close()
+            connection.close()
 
     # SEC EDGAR bulk ZIP (sub.txt + num.txt) is no longer served at the old
     # /dera/data/financial-statements/ path. Use the XBRL frames API instead:
@@ -322,6 +210,11 @@ if __name__ == "__main__":
         "--source", type=str, required=True, choices=["fred", "lending_club", "sec_edgar", "all"]
     )
     parser.add_argument("--csv-path", type=str, help="Local file path for Lending Club CSV")
+    parser.add_argument(
+        "--insert-missing",
+        action="store_true",
+        help="Resume Lending Club import without updating existing loan IDs",
+    )
     parser.add_argument("--year", type=int, default=2023, help="SEC EDGAR year (default: 2023)")
     parser.add_argument(
         "--quarter",
@@ -340,6 +233,6 @@ if __name__ == "__main__":
         if not args.csv_path:
             logger.error("--csv-path is required when loading Lending Club data!")
             sys.exit(1)
-        loader.load_lending_club(args.csv_path)
+        loader.load_lending_club(args.csv_path, insert_missing=args.insert_missing)
     if args.source == "sec_edgar" or args.source == "all":
         loader.load_sec_edgar(args.year, args.quarter)

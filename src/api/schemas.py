@@ -92,3 +92,11 @@ class HealthResponse(BaseModel):
     status: str = Field(..., description="Service status ('ok')")
     model_loaded: bool = Field(..., description="Whether a scoring model is loaded")
     explainer_loaded: bool = Field(..., description="Whether a SHAP explainer is loaded")
+
+
+class ReadinessResponse(BaseModel):
+    """Runtime bundle availability; this is not model-quality certification."""
+
+    status: str
+    model_loaded: bool
+    bundle_verified: bool

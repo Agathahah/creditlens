@@ -1,0 +1,514 @@
+{
+  "schema_version": 1,
+  "data_as_of_report": "2026-09-23",
+  "kind": "historical_research_aggregates",
+  "source_report": "docs/audit/M1_LOCAL_EVALUATION_2026-09-23.md",
+  "model_release_passed": false,
+  "test_consumed": true,
+  "target": "Retrospective observed outcome for accepted 36-month loans; not verified 36-month PD",
+  "cohorts": [
+    {
+      "split": "Train",
+      "vintage": "2011–2013",
+      "eligible": 157993,
+      "non_adverse": 138213,
+      "adverse": 19780
+    },
+    {
+      "split": "Validation",
+      "vintage": "2014",
+      "eligible": 162570,
+      "non_adverse": 140255,
+      "adverse": 22315
+    },
+    {
+      "split": "Frozen test (consumed)",
+      "vintage": "2015",
+      "eligible": 283024,
+      "non_adverse": 240893,
+      "adverse": 42131
+    }
+  ],
+  "validation": [
+    {
+      "candidate": "Constant",
+      "average_precision": 0.1373,
+      "roc_auc": 0.5,
+      "brier": 0.1186
+    },
+    {
+      "candidate": "Logistic Regression",
+      "average_precision": 0.2016,
+      "roc_auc": 0.6291,
+      "brier": 0.1158
+    },
+    {
+      "candidate": "Bounded XGBoost",
+      "average_precision": 0.2046,
+      "roc_auc": 0.6356,
+      "brier": 0.1155
+    }
+  ],
+  "test": {
+    "average_precision": 0.2197,
+    "ap_ci_low": 0.2164,
+    "ap_ci_high": 0.2221,
+    "roc_auc": 0.6343,
+    "brier": 0.1241,
+    "historical_ap_gate": 0.25,
+    "predicted_positive": 0
+  },
+  "limitations": [
+    "Only accepted loans; rejected-loan outcomes are unavailable.",
+    "Outcome snapshot date and event timing have not been verified.",
+    "All member_id values were missing; borrower independence cannot be established.",
+    "Public use rights for source data/model artifacts remain unresolved.",
+    "The 2015 test was consumed; it must not be reused for model or threshold selection."
+  ],
+  "warehouse": {
+    "rows": 2260668,
+    "non_adverse": 1076751,
+    "adverse": 268599,
+    "unresolved": 915318,
+    "profile_reported_at": "2026-09-23",
+    "vintages": [
+      {
+        "year": 2007,
+        "term": 36,
+        "rows": 603,
+        "labeled": 251,
+        "unresolved": 352,
+        "adverse": 45,
+        "non_adverse": 206
+      },
+      {
+        "year": 2008,
+        "term": 36,
+        "rows": 2393,
+        "labeled": 1562,
+        "unresolved": 831,
+        "adverse": 247,
+        "non_adverse": 1315
+      },
+      {
+        "year": 2009,
+        "term": 36,
+        "rows": 5281,
+        "labeled": 4716,
+        "unresolved": 565,
+        "adverse": 594,
+        "non_adverse": 4122
+      },
+      {
+        "year": 2010,
+        "term": 36,
+        "rows": 9156,
+        "labeled": 8466,
+        "unresolved": 690,
+        "adverse": 842,
+        "non_adverse": 7624
+      },
+      {
+        "year": 2010,
+        "term": 60,
+        "rows": 3381,
+        "labeled": 3070,
+        "unresolved": 311,
+        "adverse": 645,
+        "non_adverse": 2425
+      },
+      {
+        "year": 2011,
+        "term": 36,
+        "rows": 14101,
+        "labeled": 14101,
+        "unresolved": 0,
+        "adverse": 1499,
+        "non_adverse": 12602
+      },
+      {
+        "year": 2011,
+        "term": 60,
+        "rows": 7620,
+        "labeled": 7620,
+        "unresolved": 0,
+        "adverse": 1798,
+        "non_adverse": 5822
+      },
+      {
+        "year": 2012,
+        "term": 36,
+        "rows": 43470,
+        "labeled": 43470,
+        "unresolved": 0,
+        "adverse": 5903,
+        "non_adverse": 37567
+      },
+      {
+        "year": 2012,
+        "term": 60,
+        "rows": 9897,
+        "labeled": 9897,
+        "unresolved": 0,
+        "adverse": 2741,
+        "non_adverse": 7156
+      },
+      {
+        "year": 2013,
+        "term": 36,
+        "rows": 100422,
+        "labeled": 100422,
+        "unresolved": 0,
+        "adverse": 12378,
+        "non_adverse": 88044
+      },
+      {
+        "year": 2013,
+        "term": 60,
+        "rows": 34392,
+        "labeled": 34382,
+        "unresolved": 10,
+        "adverse": 8646,
+        "non_adverse": 25736
+      },
+      {
+        "year": 2014,
+        "term": 36,
+        "rows": 162570,
+        "labeled": 162570,
+        "unresolved": 0,
+        "adverse": 22315,
+        "non_adverse": 140255
+      },
+      {
+        "year": 2014,
+        "term": 60,
+        "rows": 73059,
+        "labeled": 60533,
+        "unresolved": 12526,
+        "adverse": 18847,
+        "non_adverse": 41686
+      },
+      {
+        "year": 2015,
+        "term": 36,
+        "rows": 283173,
+        "labeled": 283026,
+        "unresolved": 147,
+        "adverse": 42132,
+        "non_adverse": 240894
+      },
+      {
+        "year": 2015,
+        "term": 60,
+        "rows": 137922,
+        "labeled": 92520,
+        "unresolved": 45402,
+        "adverse": 33672,
+        "non_adverse": 58848
+      },
+      {
+        "year": 2016,
+        "term": 36,
+        "rows": 323495,
+        "labeled": 232361,
+        "unresolved": 91134,
+        "adverse": 46120,
+        "non_adverse": 186241
+      },
+      {
+        "year": 2016,
+        "term": 60,
+        "rows": 110912,
+        "labeled": 60744,
+        "unresolved": 50168,
+        "adverse": 22132,
+        "non_adverse": 38612
+      },
+      {
+        "year": 2017,
+        "term": 36,
+        "rows": 320419,
+        "labeled": 128551,
+        "unresolved": 191868,
+        "adverse": 25734,
+        "non_adverse": 102817
+      },
+      {
+        "year": 2017,
+        "term": 60,
+        "rows": 123160,
+        "labeled": 40770,
+        "unresolved": 82390,
+        "adverse": 13435,
+        "non_adverse": 27335
+      },
+      {
+        "year": 2018,
+        "term": 36,
+        "rows": 344671,
+        "labeled": 41272,
+        "unresolved": 303399,
+        "adverse": 5468,
+        "non_adverse": 35804
+      },
+      {
+        "year": 2018,
+        "term": 60,
+        "rows": 150571,
+        "labeled": 15046,
+        "unresolved": 135525,
+        "adverse": 3406,
+        "non_adverse": 11640
+      }
+    ]
+  },
+  "experiment_purposes": [
+    {
+      "purpose": "debt_consolidation",
+      "rows": 344288
+    },
+    {
+      "purpose": "credit_card",
+      "rows": 148086
+    },
+    {
+      "purpose": "home_improvement",
+      "rows": 34606
+    },
+    {
+      "purpose": "other",
+      "rows": 31838
+    },
+    {
+      "purpose": "major_purchase",
+      "rows": 11986
+    },
+    {
+      "purpose": "small_business",
+      "rows": 6672
+    },
+    {
+      "purpose": "medical",
+      "rows": 6652
+    },
+    {
+      "purpose": "car",
+      "rows": 6471
+    },
+    {
+      "purpose": "moving",
+      "rows": 4395
+    },
+    {
+      "purpose": "vacation",
+      "rows": 4181
+    },
+    {
+      "purpose": "house",
+      "rows": 2442
+    },
+    {
+      "purpose": "wedding",
+      "rows": 1530
+    },
+    {
+      "purpose": "renewable_energy",
+      "rows": 439
+    },
+    {
+      "purpose": "educational",
+      "rows": 1
+    }
+  ],
+  "engineering": {
+    "source_rows": 2260701,
+    "excluded_source_rows": 33,
+    "layer_rows": {
+      "raw.lc_loans": 2260668,
+      "staging.lc_loans_clean": 2260668,
+      "mart.loan_features": 2260668,
+      "mart.final_features": 2260668
+    },
+    "label_mismatches_after": 0,
+    "corrected_late_status_rows": 21467,
+    "label_rollout_reported_at": "2026-09-22",
+    "dbt_passed_tests": 12
+  },
+  "packaging": {
+    "evidence_reported_at": "2026-09-29",
+    "code_revision": "928acc650c3cc191c54ca1b62a44f9db076b3481",
+    "status": "passed",
+    "image_id": "sha256:b433161e8aaa9e93265bf9edda6722e8a2df06114a9cde709fb40c9524a999ef",
+    "checks": {
+      "docker_health": "healthy",
+      "http_health": 200,
+      "non_root_user": true,
+      "forbidden_app_paths_absent": true,
+      "historical_counts_reconciled": true,
+      "failed_model_gate_disclosed": true
+    },
+    "ci_run_url": "https://github.com/Agathahah/creditlens/actions/runs/36538053231",
+    "ci_head": "928acc6",
+    "public_deployment_verified": true,
+    "verified_public_url": "https://creditlens-risk-evidence.streamlit.app/",
+    "scope": "Local Docker smoke at 928acc6; PR CI and public aggregate dashboard at 084e524. No scoring-model or API release.",
+    "public_verified_at": "2026-09-30T08:03:29Z",
+    "public_verified_revision": "084e5247915dbbabe7543875540f96fcdb0dd6c7",
+    "public_ci_run_url": "https://github.com/Agathahah/creditlens/actions/runs/36685936180",
+    "public_visibility": "public and searchable (Streamlit Cloud Sharing setting)",
+    "anonymous_http_status": 200,
+    "public_page_smoke": "9/9 navigation pages rendered without application error"
+  },
+  "dashboard_sources": {
+    "warehouse": "docs/audit/M0_LABEL_ACTIVE_ROLLOUT_REPORT.json",
+    "profile": "docs/audit/DASHBOARD_DATA_STORY_2026-09-29.md",
+    "query": "scripts/sql/dashboard_aggregates.sql",
+    "model": "docs/audit/M1_LOCAL_EVALUATION_2026-09-23.md",
+    "api": "src/api/tests/test_readiness.py",
+    "packaging": "docs/DASHBOARD_RELEASE_RUNBOOK.md",
+    "model_code": "src/ml/m1_local.py",
+    "release": "docs/audit/MODEL_RELEASE_DECISION_2026-09-30.md"
+  },
+  "experiment_profile": {
+    "population": "accepted, resolved 36-month loans issued 2011–2015 with annual_inc > 0",
+    "rows": 603587,
+    "numeric_summary": [
+      {
+        "feature": "annual_inc",
+        "unit": "USD per year",
+        "min": 1200,
+        "p01": 17400,
+        "median": 60000,
+        "p99": 250000,
+        "max": 9000000
+      },
+      {
+        "feature": "dti",
+        "unit": "source points",
+        "min": 0,
+        "p01": 1.99,
+        "median": 17.16,
+        "p99": 37.15,
+        "max": 999
+      },
+      {
+        "feature": "revol_util",
+        "unit": "percent points",
+        "min": 0,
+        "p01": 2.2,
+        "median": 54.5,
+        "p99": 98.2,
+        "max": 892.3
+      },
+      {
+        "feature": "credit_history_age_months",
+        "unit": "months",
+        "min": 35.9753593429,
+        "p01": 46.9815195072,
+        "median": 175.9671457906,
+        "p99": 478.0616016427,
+        "max": 852.0082135524
+      }
+    ],
+    "vintage_summary": [
+      {
+        "year": 2011,
+        "rows": 14101,
+        "adverse_pct": 10.63,
+        "annual_inc_median": 57000,
+        "dti_median": 13.45,
+        "revol_util_median": 49.6
+      },
+      {
+        "year": 2012,
+        "rows": 43470,
+        "adverse_pct": 13.579,
+        "annual_inc_median": 57200,
+        "dti_median": 16.18,
+        "revol_util_median": 60.2
+      },
+      {
+        "year": 2013,
+        "rows": 100422,
+        "adverse_pct": 12.326,
+        "annual_inc_median": 60000,
+        "dti_median": 16.41,
+        "revol_util_median": 59
+      },
+      {
+        "year": 2014,
+        "rows": 162570,
+        "adverse_pct": 13.726,
+        "annual_inc_median": 60000,
+        "dti_median": 17.05,
+        "revol_util_median": 54.2
+      },
+      {
+        "year": 2015,
+        "rows": 283024,
+        "adverse_pct": 14.886,
+        "annual_inc_median": 62000,
+        "dti_median": 17.87,
+        "revol_util_median": 52.2
+      }
+    ],
+    "home_ownership": [
+      {
+        "category": "MORTGAGE",
+        "rows": 281298
+      },
+      {
+        "category": "RENT",
+        "rows": 260580
+      },
+      {
+        "category": "OWN",
+        "rows": 61632
+      },
+      {
+        "category": "OTHER",
+        "rows": 40
+      },
+      {
+        "category": "NONE",
+        "rows": 35
+      },
+      {
+        "category": "ANY",
+        "rows": 2
+      }
+    ],
+    "missing_selected_features_in_eligible": 0,
+    "source_checked_at": "2026-09-23",
+    "source_query": "scripts/sql/dashboard_aggregates.sql"
+  },
+  "release_decision": {
+    "reported_at": "2026-09-30",
+    "historical_candidate": "REJECT",
+    "dashboard_pilot": "PUBLIC_VERIFIED",
+    "scoring_api": "BLOCKED",
+    "required_gates": [
+      {
+        "gate": "Sumber & hak penggunaan",
+        "status": "BLOCKED",
+        "evidence": "Snapshot baru dengan rights/as-of/outcome timing belum diterima"
+      },
+      {
+        "gate": "Holdout independen",
+        "status": "BLOCKED",
+        "evidence": "Frozen test 2015 sudah terpakai; kandidat gagal AP dan threshold"
+      },
+      {
+        "gate": "Bundle + parity API",
+        "status": "NOT_RUN",
+        "evidence": "Belum ada bundle rilis terverifikasi dan raw→HTTP parity"
+      },
+      {
+        "gate": "Security & staging",
+        "status": "NOT_RUN",
+        "evidence": "Auth, rate limit, dependency audit, load, monitoring dan rollback belum terbukti"
+      }
+    ]
+  }
+}

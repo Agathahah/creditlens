@@ -5,13 +5,14 @@ models:
     description: >
       Cleaned and deduplicated Lending Club loans. Adds is_default binary target,
       emp_length_years, credit_age_years, and issue_year/month for temporal splits.
-      Filters to rows with definitive loan outcomes for ML training.
+      Retains rows outside the retrospective target with a NULL label.
+      Model cohort eligibility and outcome timing are separate contracts.
     columns:
       - name: loan_id
         description: "Lending Club loan identifier (primary key)"
         tests: [not_null, unique]
       - name: is_default
-        description: "Binary ML target: 1=default/charged-off, 0=fully-paid, NULL=ongoing"
+        description: "Target retrospektif: 1=Charged Off/Default, 0=Fully Paid, NULL=semua status lain termasuk terlambat, di luar kebijakan, kosong atau tidak dikenal."
       - name: emp_length_years
         description: "Employment length parsed to integer years (0–11)"
       - name: credit_age_years

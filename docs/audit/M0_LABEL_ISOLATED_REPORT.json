@@ -1,0 +1,319 @@
+{
+  "tanggal": "2026-09-11",
+  "lingkup": "SQL label dan PostgreSQL sementara; database aktif tidak diakses atau direbuild",
+  "kontrak": "Fully Paid=0; Charged Off/Default=1; status lain=NULL. Klaim retrospektif.",
+  "lingkungan": {
+    "transport": "private Unix socket; TCP disabled",
+    "dbt": "1.12.0rc3",
+    "workspace": "/private/tmp/creditlens-m0-1eir8c77",
+    "cluster_stopped": true
+  },
+  "status": "passed",
+  "pengujian_sebelum_perbaikan": {
+    "workspace": "/private/tmp/creditlens-m0-umyxgbqt",
+    "test": "loan_label_contract",
+    "status": "fail",
+    "failures": 3,
+    "alasan": "Label Late (31-120 days) salah pada staging dan dua mart; cluster dihentikan."
+  },
+  "percobaan_awal": {
+    "sandbox": "initdb gagal karena shared memory dibatasi; tidak ada database aktif diubah",
+    "konflik_fixture": "Percobaan awal sesudah perbaikan mapping menemukan source_not_null_raw_lc_loans_loan_status menolak fixture NULL. Penjaga kualitas dipertahankan dan dimasukkan sebagai kasus negatif yang diharapkan."
+  },
+  "source_sha256": {
+    "models/staging/lc_loans_clean.sql": "8287e14da4c45d9395527887c290770dc8ab8c6c1b3fbaffb12d558b997d8d45",
+    "models/mart/loan_features.sql": "b80edb49d2e4ef1d375f2846c9683c60f8b9eda0739e500b83c53df5986eec7f",
+    "models/mart/final_features.sql": "702169155ee4cad880286e2938bdeca545fcd2cbcc38936d86cb2e60dd65617e",
+    "tests/dbt/loan_label_contract.sql": "2d0e521f5232cd48d44af03a140ca84a012101300ef6d912c2e22a707f9c0967",
+    "scripts/verify_m0_dbt.py": "90a1c8df108456728bb6f87b2474689adfd237063f2df58562c936c5e4e6af1a"
+  },
+  "label_cases": [
+    {
+      "status": "Fully Paid",
+      "expected_label": 0
+    },
+    {
+      "status": "Charged Off",
+      "expected_label": 1
+    },
+    {
+      "status": "Default",
+      "expected_label": 1
+    },
+    {
+      "status": "Current",
+      "expected_label": null
+    },
+    {
+      "status": "Late (31-120 days)",
+      "expected_label": null
+    },
+    {
+      "status": "In Grace Period",
+      "expected_label": null
+    },
+    {
+      "status": "Late (16-30 days)",
+      "expected_label": null
+    },
+    {
+      "status": "Does not meet the credit policy. Status:Fully Paid",
+      "expected_label": null
+    },
+    {
+      "status": "Does not meet the credit policy. Status:Charged Off",
+      "expected_label": null
+    },
+    {
+      "status": null,
+      "expected_label": null
+    },
+    {
+      "status": "Unrecognized status",
+      "expected_label": null
+    }
+  ],
+  "langkah": [
+    {
+      "step": "initdb",
+      "exit_code": 0
+    },
+    {
+      "step": "start",
+      "exit_code": 0
+    },
+    {
+      "step": "createdb",
+      "exit_code": 0
+    },
+    {
+      "step": "empty_build",
+      "exit_code": 0,
+      "hasil": {
+        "pass": 0,
+        "success": 5,
+        "fail": []
+      }
+    },
+    {
+      "step": "empty_counts"
+    },
+    {
+      "step": "legacy_tests_empty",
+      "exit_code": 0,
+      "hasil": {
+        "pass": 25,
+        "success": 0,
+        "fail": []
+      }
+    },
+    {
+      "step": "nonempty_rejects_empty",
+      "exit_code": 1,
+      "hasil": {
+        "pass": 0,
+        "success": 0,
+        "fail": [
+          {
+            "test": "test.creditlens.nonempty_required_models",
+            "failures": 3
+          }
+        ]
+      }
+    },
+    {
+      "step": "after_ingestion_before_rebuild"
+    },
+    {
+      "step": "reconciliation_rejects_stale_mart",
+      "exit_code": 1,
+      "hasil": {
+        "pass": 0,
+        "success": 0,
+        "fail": [
+          {
+            "test": "test.creditlens.reconcile_loan_counts",
+            "failures": 1
+          }
+        ]
+      }
+    },
+    {
+      "step": "populated_build_and_tests",
+      "exit_code": 0,
+      "hasil": {
+        "pass": 27,
+        "success": 5,
+        "fail": []
+      }
+    },
+    {
+      "step": "populated_counts"
+    },
+    {
+      "step": "reconciliation_rejects_missing_final",
+      "exit_code": 1,
+      "hasil": {
+        "pass": 0,
+        "success": 0,
+        "fail": [
+          {
+            "test": "test.creditlens.reconcile_loan_counts",
+            "failures": 1
+          }
+        ]
+      }
+    },
+    {
+      "step": "restore_final",
+      "exit_code": 0,
+      "hasil": {
+        "pass": 6,
+        "success": 1,
+        "fail": []
+      }
+    },
+    {
+      "step": "restored_counts"
+    },
+    {
+      "step": "label_fixture_build",
+      "exit_code": 0,
+      "hasil": {
+        "pass": 0,
+        "success": 5,
+        "fail": []
+      }
+    },
+    {
+      "step": "label_contract_all_statuses",
+      "exit_code": 0,
+      "hasil": {
+        "pass": 1,
+        "success": 0,
+        "fail": []
+      }
+    },
+    {
+      "step": "label_ids_statuses_and_nulls_preserved",
+      "rows_per_layer": 13,
+      "raw_unchanged": true
+    },
+    {
+      "step": "label_contract_rejects_current_and_late_labels",
+      "exit_code": 1,
+      "hasil": {
+        "pass": 0,
+        "success": 0,
+        "fail": [
+          {
+            "test": "test.creditlens.loan_label_contract",
+            "failures": 2
+          }
+        ]
+      }
+    },
+    {
+      "step": "restore_label_final",
+      "exit_code": 0,
+      "hasil": {
+        "pass": 6,
+        "success": 1,
+        "fail": []
+      }
+    },
+    {
+      "step": "label_contract_rejects_missing_paid_label",
+      "exit_code": 1,
+      "hasil": {
+        "pass": 0,
+        "success": 0,
+        "fail": [
+          {
+            "test": "test.creditlens.loan_label_contract",
+            "failures": 1
+          }
+        ]
+      }
+    },
+    {
+      "step": "restore_labels_with_null_fixture",
+      "exit_code": 0,
+      "hasil": {
+        "pass": 0,
+        "success": 5,
+        "fail": []
+      }
+    },
+    {
+      "step": "null_status_preserved_without_invented_label",
+      "rows_per_layer": 13,
+      "raw_unchanged": true
+    },
+    {
+      "step": "source_guard_rejects_null_status",
+      "exit_code": 1,
+      "hasil": {
+        "pass": 26,
+        "success": 0,
+        "fail": [
+          {
+            "test": "test.creditlens.source_not_null_raw_lc_loans_loan_status.d1ed1b3a50",
+            "failures": 1
+          }
+        ]
+      }
+    },
+    {
+      "step": "remove_null_source_fixture",
+      "removed_rows": 1
+    },
+    {
+      "step": "restore_label_all_and_tests",
+      "exit_code": 0,
+      "hasil": {
+        "pass": 27,
+        "success": 5,
+        "fail": []
+      }
+    },
+    {
+      "step": "final_label_contract_and_raw_preserved",
+      "rows_per_layer": 12,
+      "raw_unchanged": true
+    },
+    {
+      "step": "stop",
+      "exit_code": 0
+    }
+  ],
+  "build_akhir": {
+    "models": 5,
+    "tests_passed": 27,
+    "failed": 0
+  },
+  "batas": [
+    "13 record sintetis menguji 11 kasus label ditambah dua record fixture awal; ID/status/label sesuai pada tiga layer dan raw tidak berubah oleh build.",
+    "Fixture NULL sengaja dihapus hanya dari cluster tes setelah penolakan source guard terbukti; full build akhir memakai 12 record valid.",
+    "Status NULL ditangani aman sebagai label NULL, tetapi syarat kualitas sumber tetap menolak status kosong.",
+    "Tes lokal memakai PostgreSQL/dbt yang sudah terpasang; belum menjadi job GitHub CI.",
+    "Tidak ada training, commit, push, merge atau deployment dalam verifikasi ini."
+  ],
+  "started_at_utc": "2026-09-11T04:15:47.608077+00:00",
+  "finished_at_utc": "2026-09-11T04:16:09.091895+00:00",
+  "regresi_ingestion_migrasi": {
+    "status": "passed",
+    "checks": [
+      "legacy_status_fails_and_entire_batch_rolls_back",
+      "unknown_downstream_view_blocks_migration_without_cascade",
+      "migration_upgrades_legacy_column_and_preserves_actual_dbt_view",
+      "resume_preserves_existing_values_and_full_long_status",
+      "repeated_resume_is_noop_including_loaded_at",
+      "default_upsert_updates_changed_outcomes_only",
+      "downgrade_refuses_long_values",
+      "safe_downgrade_restores_old_bound"
+    ],
+    "cluster_stopped": true,
+    "workspace": "/private/tmp/creditlens-ingestion-test-wpygqrd4"
+  }
+}

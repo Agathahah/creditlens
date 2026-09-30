@@ -1,0 +1,10 @@
+{
+  "workspace": "/private/tmp/creditlens-ingestion-test-i1t_ntnb",
+  "checks": [
+    "legacy_status_fails_and_entire_batch_rolls_back",
+    "unknown_downstream_view_blocks_migration_without_cascade"
+  ],
+  "status": "failed",
+  "error": "AssertionError: ",
+  "cluster_stopped": true
+}
