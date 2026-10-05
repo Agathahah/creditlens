@@ -24,6 +24,8 @@
 
 Pemeriksaan memakai pemisah `|`, ID origination posisi 20, ID performance posisi 1, periode posisi 2, saldo posisi 3, dan status tunggakan posisi 4. Posisi ini cocok dengan [layout resmi efektif Juli 2026](https://www.freddiemac.com/fmac-resources/research/pdf/file_layout_july_2026.xlsx), tetapi mapping seluruh 31/35 field dan semantik missing value belum diaudit. Status `00` berarti lancar/kurang dari 30 hari menunggak, `03` berarti 90–119 hari, dan `RA` berarti REO acquisition menurut [ringkasan perubahan disclosure](https://www.freddiemac.com/fmac-resources/research/pdf/disclosure-changes-summary.pdf). Status dan *zero balance* tidak boleh langsung disamakan dengan label LendingClub.
 
+Pemeriksaan sembilan field origination menemukan sentinel `999` pada DTI **513 dari 50.000** baris, sentinel `9999` pada Classic FICO **15** baris, dan sentinel `9999` pada VantageScore 4.0 **seluruh 50.000** baris. CLTV dan LTV masing-masing memiliki satu sentinel `999`; tanggal pembayaran pertama, saldo awal, suku bunga, dan tenor tidak memiliki blank/sentinel pada pemeriksaan ini. Angka `999/9999` adalah kode *tidak tersedia*, bukan nilai numerik untuk model. VantageScore harus dikeluarkan dari kandidat fitur sampel ini. [Disclosure Freddie Mac](https://www.freddiemac.com/fmac-resources/research/pdf/disclosure-changes-summary.pdf) mendefinisikan `9999` sebagai *Not Available* untuk VantageScore. Audit sentinel field lain tetap diperlukan.
+
 ## Batas dan gate berikutnya
 
 1. Rekam release dan cutoff resmi, halaman ketentuan yang diterima pemilik, serta hak publikasi riset spesifik. [FAQ Freddie Mac](https://www.freddiemac.com/fmac-resources/research/pdf/faq.pdf) membedakan hasil riset nonkomersial dari distribusi data sumber.
