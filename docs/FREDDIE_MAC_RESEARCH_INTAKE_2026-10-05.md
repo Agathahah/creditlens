@@ -16,7 +16,7 @@ Pendaftaran Clarity dan penerimaan syarat dilakukan oleh pemilik akun sendiri. J
 
 ## Intake terbatas yang disarankan
 
-1. Buka [halaman resmi Freddie Mac](https://www.freddiemac.com/research/datasets/sf-loanlevel-dataset) → **Access Historical Data** → daftar/masuk Clarity → baca dan setujui sendiri syaratnya → **SFLLD Data Download** → ambil **sample vintage 2018** terlebih dahulu. Jangan ambil dataset penuh sekitar 56 juta hipotek untuk pemeriksaan awal.
+1. Buka [halaman resmi Freddie Mac](https://www.freddiemac.com/research/datasets/sf-loanlevel-dataset) → **Access Historical Data** → daftar/masuk Clarity → baca dan setujui sendiri syaratnya → pilih tab **SFLLD Data**, bukan **CRT Data**. Bagian *Custom Download* dengan filter `Deal Name`, `Loss Type`, dan `Offering` berada di tab CRT dan bukan sumber studi ini. Pada **Standard Dataset Download by Year**, cari baris **2018** lalu klik **`sample_2018.zip`** pada kolom **Sample File**. Jangan pilih `historical_data_2018.zip` (Full Standard), `non_std_historical_data.zip`, atau `rpl_historical_data.zip` untuk intake awal. Sampel 2018 adalah satu vintage untuk uji format/kualitas, bukan train/validation/test yang sudah cukup.
 2. Simpan ZIP di `~/Documents/creditlens-private/freddie/`, di luar Git. Catat URL resmi, release/cutoff, waktu unduh, nama file, byte size, SHA-256, dan syarat yang diterima. Jangan kirim file mentah ke chat.
 3. Periksa nama member ZIP, format origination/performance, kolom dan tipe terhadap layout release tersebut; hitung ID unik, bulan pertama/akhir, duplikasi `(loan_id, period)`, missing periods, rentang delinquency/UPB, penutupan, serta perubahan data/koreksi. Jangan ekstrak semua file sebelum ukuran tak terkompresi diketahui.
 4. Baru setelah intake lulus, tetapkan peristiwa target dan horizon bersama pemilik risiko. Rancangan awal yang **belum disetujui**: dari setiap loan-month aktif dengan status lancar pada `as_of`, peringatkan peralihan ke tunggakan berat dalam jendela berikutnya. Definisi tunggakan berat, horizon, satuan kapasitas analis dan kasus censoring belum final.
@@ -28,23 +28,25 @@ Pendaftaran Clarity dan penerimaan syarat dilakukan oleh pemilik akun sendiri. J
 cd "$HOME/Documents/creditlens"
 mkdir -p "$HOME/Documents/creditlens-private/freddie"
 chmod 700 "$HOME/Documents/creditlens-private/freddie"
-find "$HOME/Downloads" -maxdepth 1 -type f -iname 'sample_*.zip' -print
+find "$HOME/Downloads" -maxdepth 1 -type f -iname 'sample_2018*.zip' -print
+df -h "$HOME/Downloads"
 ```
 
-Setelah memilih **nama file yang benar** dan memindahkannya ke folder privat, jalankan:
+Jika hasil `find` menunjukkan nama persis `sample_2018.zip`, pindahkan tanpa menimpa berkas yang sudah ada, lalu periksa metadata:
 
 ```bash
+mv -n "$HOME/Downloads/sample_2018.zip" "$HOME/Documents/creditlens-private/freddie/"
 export FREDDIE_SAMPLE="$HOME/Documents/creditlens-private/freddie/sample_2018.zip"
 if [ -f "$FREDDIE_SAMPLE" ]; then
   df -h .
   stat -f '%N | %z bytes' "$FREDDIE_SAMPLE"
   shasum -a 256 "$FREDDIE_SAMPLE"
-  unzip -l "$FREDDIE_SAMPLE" | tail -n 8
+  unzip -l "$FREDDIE_SAMPLE" | tail -n 12
 else
   echo 'File belum ditemukan; periksa nama/path'
 fi
 ```
 
-Perintah di atas hanya memeriksa metadata dan daftar isi ZIP. Jangan gunakan path contoh jika nama berkas yang diunduh berbeda. Kirim hanya nama berkas, ukuran, SHA-256, release/cutoff dan daftar nama member ZIP; jangan kirim baris data pinjaman.
+Perintah di atas hanya memeriksa metadata dan daftar isi ZIP. Menurut [FAQ resmi](https://www.freddiemac.com/fmac-resources/research/pdf/faq.pdf), sampel tahunan berisi satu file origination dan satu file kinerja bulanan untuk pinjaman yang sama. Jangan memaksa perintah pindah di atas bila nama unduhan berbeda, misalnya `sample_2018 (1).zip`; periksa dulu file yang sudah ada. Kirim hanya nama berkas, ukuran, SHA-256, release/cutoff dan daftar nama member ZIP; jangan kirim baris data pinjaman.
 
 **Gate:** studi ini baru dapat menjadi *research prototype* setelah source intake dan hak penggunaan lulus. Scoring production untuk pinjaman fintech nyata tetap memerlukan panel milik operator, tujuan penggunaan yang sah, outcome bertanggal, evaluasi prospektif, integrasi API aman, monitoring, serta persetujuan bisnis/compliance.
