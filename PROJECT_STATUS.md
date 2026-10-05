@@ -11,6 +11,14 @@ records required periodic snapshots, prospective outcomes, and independent evalu
 No new source exists yet; scoring release remains on hold. The public Streamlit dashboard
 is a historical research exhibit, not a live monitoring service.
 
+**5 October follow-up:** The owner reported that, after rebooting Streamlit Cloud, the public
+overview shows “CreditLens: dari data pinjaman ke pemantauan portofolio”. This confirms the new
+headline was visible to the owner; a fresh independent check of all nine pages and the deployed
+revision was not completed. PR #14 remains draft. A separate Freddie Mac mortgage-performance
+research track was chosen; [source intake](docs/FREDDIE_MAC_RESEARCH_INTAKE_2026-10-05.md)
+documents its monthly panel, terms and boundaries. No Freddie file has been admitted, trained
+on, or published. The LendingClub M1 model remains rejected and scoring remains blocked.
+
 ## Verified implementation
 
 | Area | Evidence / status |

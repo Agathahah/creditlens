@@ -10,6 +10,7 @@ Updated 2026-09-30. Documentation records implemented behavior, decisions, valid
 | [Technical design](TECHNICAL_DESIGN.md) | Pipeline, bundle, serving and integration boundaries |
 | [Evaluation/release plan](EVALUATION_RELEASE_PLAN.md) | Validation, quality gates and release evidence |
 | [Portfolio monitoring scope](PORTFOLIO_MONITORING_SCOPE_2026-09-30.md) | Current use case, required periodic data, evaluation and release blockers |
+| [Freddie Mac research intake](FREDDIE_MAC_RESEARCH_INTAKE_2026-10-05.md) | Separate mortgage panel candidate, rights, sample intake and release boundaries |
 | [Next holdout decision](M1_NEXT_HOLDOUT_DECISION.md) | Approved prediction horizon, timing, source and holdout direction |
 | [Next experiment scope](M1_NEXT_EXPERIMENT_SCOPE.md) | Source intake, temporal split and evaluation gates before new training |
 | [M1 source intake](M1_SOURCE_INTAKE_GUIDE.md) | Source screening evidence and bounded file inspection commands |
