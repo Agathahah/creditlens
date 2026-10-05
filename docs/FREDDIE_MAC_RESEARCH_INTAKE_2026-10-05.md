@@ -1,6 +1,6 @@
 # Kandidat dataset baru: Freddie Mac SFLLD untuk studi hipotek terpisah
 
-**Keputusan 5 Oktober 2026:** pengguna memilih studi riset hipotek terpisah. Ini tidak mengganti populasi LendingClub, tidak menjadi holdout bagi model M1 lama, dan tidak memberi izin rilis scoring CreditLens. Dataset Freddie Mac **belum diunduh, belum diaudit lokal, dan belum diterima untuk training**.
+**Keputusan 5 Oktober 2026:** pengguna memilih studi riset hipotek terpisah. Ini tidak mengganti populasi LendingClub, tidak menjadi holdout bagi model M1 lama, dan tidak memberi izin rilis scoring CreditLens. Sampel 2018 kemudian **diunduh dan lulus pemeriksaan struktur awal**; lihat [laporan intake](audit/FREDDIE_SAMPLE_INTAKE_2026-10-05.md). Dataset belum diterima untuk training atau publikasi data.
 
 ## Alasan memilih kandidat
 

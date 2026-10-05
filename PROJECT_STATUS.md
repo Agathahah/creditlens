@@ -25,7 +25,14 @@ The [Tableau guide](docs/TABLEAU_PUBLIC_DASHBOARD_GUIDE.md) starts from this exa
 Public release remains pending an explicit rights review of the LendingClub-derived aggregates.
 The 5 October docs-only PR run passed lint and tests but failed while Codecov initialized
 an optional coverage upload due to TLS handshake failure; a focused workflow fix was pushed
-as `fe2a67f`, with follow-up CI verification pending.
+as `fe2a67f`. Subsequent PR run 37275600387 passed lint, tests, and dashboard Docker smoke;
+the model evaluation and API image jobs remained skipped.
+
+The separate Freddie Mac `sample_2018.zip` was downloaded privately and passed ZIP CRC plus
+bounded structural inspection: 50,000 unique origination loans, 2,059,564 monthly performance
+rows, period 2018-01 through 2026-03, and no basic key/period defects observed. This is a
+preliminary source intake, not admission for training or a CreditLens fintech scoring release.
+See the [sanitized intake report](docs/audit/FREDDIE_SAMPLE_INTAKE_2026-10-05.md).
 
 ## Verified implementation
 
