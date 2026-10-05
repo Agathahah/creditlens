@@ -1,6 +1,6 @@
 # CreditLens project status
 
-Updated 2026-09-30. M0 data recovery is implemented and the approved bounded M1 local
+Updated 2026-10-05. M0 data recovery is implemented and the approved bounded M1 local
 experiment has completed. The candidate failed release gates. The next holdout direction is approved,
 but a new auditable dataset/snapshot has not been admitted; the project is not production ready.
 
@@ -18,6 +18,14 @@ revision was not completed. PR #14 remains draft. A separate Freddie Mac mortgag
 research track was chosen; [source intake](docs/FREDDIE_MAC_RESEARCH_INTAKE_2026-10-05.md)
 documents its monthly panel, terms and boundaries. No Freddie file has been admitted, trained
 on, or published. The LendingClub M1 model remains rejected and scoring remains blocked.
+
+The Tableau Public editor shows the aggregate Excel connection but an empty data-model
+canvas and no published visualization URL.
+The [Tableau guide](docs/TABLEAU_PUBLIC_DASHBOARD_GUIDE.md) starts from this exact screen.
+Public release remains pending an explicit rights review of the LendingClub-derived aggregates.
+The 5 October docs-only PR run passed lint and tests but failed while Codecov initialized
+an optional coverage upload due to TLS handshake failure; a focused workflow fix was pushed
+as `fe2a67f`, with follow-up CI verification pending.
 
 ## Verified implementation
 
