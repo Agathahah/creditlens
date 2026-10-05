@@ -91,6 +91,9 @@ jobs:
 
       - name: Upload coverage
         uses: codecov/codecov-action@v4
+        # Coverage.xml is produced by the required test step; a Codecov TLS outage
+        # must not block the independent dashboard smoke check.
+        continue-on-error: true
         with:
           file: ./coverage.xml
           fail_ci_if_error: false
