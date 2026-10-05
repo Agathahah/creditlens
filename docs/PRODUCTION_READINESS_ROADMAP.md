@@ -4,6 +4,13 @@ Tanggal keputusan/persiapan: 29 September 2026. Permintaan melanjutkan proyek me
 mencakup persiapan lokal API, demo agregat dan kriteria rilis berikut. Ini belum menjadi bukti
 model valid atau layanan sudah dioperasikan. Eksperimen M1 baru mengikuti scope yang telah disetujui.
 
+## Status terbaru 5 Oktober 2026
+
+- Dashboard riset Streamlit sudah dipublikasikan; pemilik melaporkan judul revisi baru terlihat setelah reboot. Pemeriksaan eksternal menyeluruh atas revisi terbaru belum selesai. Tableau Public memiliki koneksi agregat di editor, tetapi belum ada visualisasi publik yang terverifikasi; hak publikasi turunan LendingClub masih perlu dipastikan.
+- [PR #14](https://github.com/Agathahah/creditlens/pull/14) masih draft. [CI 37275600387](https://github.com/Agathahah/creditlens/actions/runs/37275600387) lulus lint, tes dan Docker smoke dashboard; Model Evaluation Gate dan image API tetap skipped.
+- Studi hipotek Freddie Mac dipisahkan dari CreditLens fintech. `sample_2018.zip` sudah lulus [intake struktur awal](audit/FREDDIE_SAMPLE_INTAKE_2026-10-05.md): 50.000 ID pinjaman dan 2.059.564 baris bulanan. Ini bukan holdout model LendingClub, belum dilatih, dan belum menyelesaikan kebutuhan panel operator fintech.
+- **Rilis scoring tetap HOLD.** Kandidat LendingClub gagal gate historis, target pemantauan baru belum dikunci, bundle/model release belum diterima, dan belum ada staging/operasi yang diverifikasi. Baca bagian bertanggal 29 September di bawah sebagai rencana historis; beberapa status implementasi lokalnya sudah berubah sejak itu.
+
 ## Status push yang diverifikasi
 
 GitHub PR #14 menerima head `61c960c` dan checkout lokal cocok (0/0). Pada
