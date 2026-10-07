@@ -152,8 +152,6 @@ jobs:
         run: docker build -f infra/docker/Dockerfile.api -t creditlens:${{ github.ref_name }} .
 
       - name: Test Docker image
-        run: |
-          docker run -d --name creditlens-test -p 8000:8000 creditlens:${{ github.ref_name }}
-          sleep 10
-          curl -f http://localhost:8000/health || exit 1
-          docker stop creditlens-test
+        # /health may be 200 when no verified scoring model exists.
+        # This smoke fails closed; real bundle admission remains a separate gate.
+        run: bash scripts/smoke_api_image.sh creditlens:${{ github.ref_name }}

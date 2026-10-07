@@ -301,3 +301,11 @@ Full application suite before commit: 169 passed, 4 skipped, 8 warnings in 22.42
 Skipped external/optional integration checks are not production evidence. All repository Python
 files passed black/isort/ruff and mypy (80 source files). The private notebook code cells
 executed successfully and reconciled eligible = labeled + censored; notebook remains ignored.
+
+
+A follow-up service control fixes the tag API-image smoke: it now checks `/ready` and the
+verified-model response contract instead of accepting `/health` 200. The probe binds only
+loopback, has a bounded timeout and removes only its temporary container. Synthetic positive
+and negative command fixtures check that liveness-only HTTP 200 fails; these are software
+contracts, not a real model/image release. The API image job still requires a tag and remains
+skipped on the PR. Actual serving/load/rollback and bundle admission remain open.

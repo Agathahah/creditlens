@@ -45,7 +45,7 @@ Gate model Freddie **belum memiliki angka final** karena dukungan event train, k
 
 ## Kontrol layanan dan batas rilis
 
-Implementasi saat ini menjaga `/live` terpisah dari `/ready`; model legacy/missing/incomplete ditolak di `/ready`, `/predict` dan `/explain`. Tes menggunakan fixture sintetis untuk kontrak software. Belum ada loader bundle real yang diterima.
+Implementasi saat ini menjaga `/live` terpisah dari `/ready`; model legacy/missing/incomplete ditolak di `/ready`, `/predict` dan `/explain`. Tes menggunakan fixture sintetis untuk kontrak software. Belum ada loader bundle real yang diterima. Smoke image API pada workflow tag sekarang memeriksa `/ready` dan respons verified, bukan menerima `/health` 200. Bukti tes menggunakan command fixture; image API/model real belum diterima.
 
 | Kontrol berikutnya | Bukti yang wajib ada sebelum scoring publik |
 |---|---|
