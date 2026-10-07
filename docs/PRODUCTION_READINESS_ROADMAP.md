@@ -4,6 +4,14 @@ Tanggal keputusan/persiapan: 29 September 2026. Permintaan melanjutkan proyek me
 mencakup persiapan lokal API, demo agregat dan kriteria rilis berikut. Ini belum menjadi bukti
 model valid atau layanan sudah dioperasikan. Eksperimen M1 baru mengikuti scope yang telah disetujui.
 
+## Status terbaru 7 Oktober 2026
+
+- Tableau agregat diterbitkan 6 Oktober; pemilik mengonfirmasi berfungsi. URL ada di [panduan](TABLEAU_PUBLIC_DASHBOARD_GUIDE.md).
+- Builder panel bulanan dan label 3 bulan untuk Freddie 2018 sudah diimplementasikan dan dijalankan privat. Source admission, point-in-time, validation tambahan dan test independen belum selesai.
+- [Protokol riset](FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md) menetapkan censoring, whitelist, rancangan split disjoint dan larangan membuka test 2020 pada builder pengembangan.
+- Kontrol API lama tetap menolak missing/legacy/incomplete bundles. Tidak ada model baru atau promosi readiness; rilis scoring tetap HOLD.
+- Perubahan halaman riset Streamlit perlu CI dan pemeriksaan versi publik. Catatan bertanggal 5 Oktober dan lebih awal di bawah adalah riwayat.
+
 ## Status terbaru 5 Oktober 2026
 
 - Dashboard riset Streamlit sudah dipublikasikan; pemilik melaporkan judul revisi baru terlihat setelah reboot. Pemeriksaan eksternal menyeluruh atas revisi terbaru belum selesai. Tableau Public memiliki koneksi agregat di editor, tetapi belum ada visualisasi publik yang terverifikasi; hak publikasi turunan LendingClub masih perlu dipastikan.

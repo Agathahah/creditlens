@@ -25,6 +25,7 @@ PAGES = (
     "Eksperimen model",
     "API & keamanan",
     "Deployment",
+    "Riset panel bulanan",
     "Kesimpulan",
 )
 COLORS = ["#007f79", "#d45858", "#c6983e"]
@@ -943,6 +944,82 @@ def _api(evidence: Evidence) -> None:
     )
 
 
+def _monthly_research(evidence: Evidence) -> None:
+    """Present implementation status without reading private mortgage outcomes."""
+    st.write(
+        "CreditLens mempertahankan analisis LendingClub sebagai bukti historis. "
+        "Studi Freddie Mac yang terpisah mengembangkan pola panel bulanan untuk "
+        "pemantauan setelah pencairan, dengan populasi hipotek AS."
+    )
+    st.caption("Status implementasi lokal: 7 Oktober 2026 · Evaluasi independen belum dijalankan")
+    _flow(
+        [
+            ("Panel bulanan", "Satu pinjaman × bulan laporan"),
+            ("Label ke depan", "90+ hari / REO dalam 3 bulan"),
+            ("Evaluasi terpisah", "Vintage disjoint dan test terkunci"),
+            ("Kontrol layanan", "Bundle, parity, akses dan rollback"),
+        ]
+    )
+    st.dataframe(
+        pd.DataFrame(
+            [
+                {
+                    "Tahap": "Panel dan label lokal",
+                    "Status": "DIIMPLEMENTASIKAN",
+                    "Bukti / batas": "Builder ZIP → SQLite privat; tes kalender/censoring",
+                },
+                {
+                    "Tahap": "Admission sumber",
+                    "Status": "TERTAHAN",
+                    "Bukti / batas": "Release/cutoff, hak penggunaan dan point-in-time terbuka",
+                },
+                {
+                    "Tahap": "Train / validation / test",
+                    "Status": "BELUM DIJALANKAN",
+                    "Bukti / batas": "Rancangan vintage 2018 / 2019 / 2020; test 2020 disegel",
+                },
+                {
+                    "Tahap": "Scoring",
+                    "Status": "TERTAHAN",
+                    "Bukti / batas": "Belum ada model lolos evaluasi atau bundle real diterima",
+                },
+            ]
+        ),
+        hide_index=True,
+        width="stretch",
+    )
+    st.subheader("Label berbatas waktu")
+    st.write(
+        "Dari pinjaman lancar dengan saldo positif pada bulan laporan, label positif "
+        "menandai tunggakan 90+ hari atau REO acquisition pada tiga bulan kalender "
+        "berikutnya. Label negatif memerlukan ketiga bulan lengkap. Data hilang, "
+        "status tidak diketahui dan terminasi lebih awal menjadi label NULL."
+    )
+    st.info(
+        "Horizon 3 bulan adalah pilihan desain riset untuk pemantauan triwulanan, "
+        "belum terbukti optimal. Data historis dapat dikoreksi; bulan laporan belum "
+        "membuktikan tanggal informasi tersedia. Tidak ada alert pinjaman aktif saat ini."
+    )
+    st.subheader("Evaluasi dan rilis berikutnya")
+    st.write(
+        "Preprocessing hanya di-fit pada train. Kandidat dan kalibrasi dipilih pada "
+        "validation; test dibuka sekali setelah gate dan kandidat dikunci. AP, "
+        "kalibrasi, precision/recall pada kapasitas analis dan uncertainty harus "
+        "dibaca bersama prevalence serta censoring. Gate lama LendingClub tidak "
+        "dipindahkan otomatis ke hipotek."
+    )
+    st.warning(
+        "Riset hipotek tidak mengesahkan model untuk fintech. Rilis scoring memerlukan "
+        "sumber dan evaluasi yang sesuai penggunaan, bundle/parity, autentikasi API, "
+        "HTTPS, batas request, monitoring dan rollback. Login GitHub/Tableau bukan "
+        "autentikasi API scoring."
+    )
+    st.markdown(
+        f"[Protokol panel, split dan kontrol rilis]({REPOSITORY_URL}/blob/"
+        "codex/m0-mentoring/docs/FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md)"
+    )
+
+
 def _deployment(evidence: Evidence) -> None:
     """Display separate packaging, public-demo and scoring-release evidence."""
     package = evidence["packaging"]
@@ -1012,6 +1089,12 @@ def _deployment(evidence: Evidence) -> None:
             "periksa URL tanpa login → catat revisi dan tanggal verifikasi."
         )
         st.caption("Verifikasi lama tidak otomatis mencakup perubahan dashboard terbaru.")
+    st.link_button(
+        "Buka dashboard Tableau",
+        "https://public.tableau.com/app/profile/agatha.silalahi/viz/creditlens/"
+        "CreditLensPortofoliodanBuktiModel",
+    )
+    st.caption("Tableau diterbitkan 6 Oktober; pemilik mengonfirmasi berjalan 7 Oktober 2026.")
     st.subheader("Urutan menuju layanan scoring")
     _flow(
         [
@@ -1153,6 +1236,7 @@ def main() -> None:
         "Eksperimen model": "Hasil eksperimen dan batas penggunaannya",
         "API & keamanan": "Kontrol sebelum skor diterbitkan",
         "Deployment": "Dashboard publik dan status layanan scoring",
+        "Riset panel bulanan": "Dari snapshot bulanan ke evaluasi risiko terpisah",
         "Kesimpulan": "Temuan, manfaat, dan langkah menuju alert",
     }
     st.markdown(
@@ -1176,6 +1260,7 @@ def main() -> None:
         "Eksperimen model": _model,
         "API & keamanan": _api,
         "Deployment": _deployment,
+        "Riset panel bulanan": _monthly_research,
         "Kesimpulan": _conclusion,
     }
     renderers[page](evidence)

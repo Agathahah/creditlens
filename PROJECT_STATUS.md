@@ -1,6 +1,6 @@
 # CreditLens project status
 
-Updated 2026-10-05. M0 data recovery is implemented and the approved bounded M1 local
+Updated 2026-10-07. M0 data recovery is implemented and the approved bounded M1 local
 experiment has completed. The candidate failed release gates. The next holdout direction is approved,
 but a new auditable dataset/snapshot has not been admitted; the project is not production ready.
 
@@ -8,7 +8,7 @@ but a new auditable dataset/snapshot has not been admitted; the project is not p
 The old application-time M1 experiment and its gate are historical evidence, not an
 active-loan alert model. A dated [scope and data contract](docs/PORTFOLIO_MONITORING_SCOPE_2026-09-30.md)
 records required periodic snapshots, prospective outcomes, and independent evaluation.
-No new source exists yet; scoring release remains on hold. The public Streamlit dashboard
+No new source has been admitted for fintech scoring; scoring release remains on hold. The public Streamlit dashboard
 is a historical research exhibit, not a live monitoring service.
 
 **5 October follow-up:** The owner reported that, after rebooting Streamlit Cloud, the public
@@ -16,13 +16,23 @@ overview shows “CreditLens: dari data pinjaman ke pemantauan portofolio”. Th
 headline was visible to the owner; a fresh independent check of all nine pages and the deployed
 revision was not completed. PR #14 remains draft. A separate Freddie Mac mortgage-performance
 research track was chosen; [source intake](docs/FREDDIE_MAC_RESEARCH_INTAKE_2026-10-05.md)
-documents its monthly panel, terms and boundaries. No Freddie file has been admitted, trained
-on, or published. The LendingClub M1 model remains rejected and scoring remains blocked.
+documents its monthly panel, terms and boundaries. The Freddie file has passed preliminary structural intake, but has not been admitted for training
+or published. The LendingClub M1 model remains rejected and scoring remains blocked.
 
-The Tableau Public editor shows the aggregate Excel connection but an empty data-model
-canvas and no published visualization URL.
-The [Tableau guide](docs/TABLEAU_PUBLIC_DASHBOARD_GUIDE.md) starts from this exact screen.
-Public release remains pending an explicit rights review of the LendingClub-derived aggregates.
+**7 October follow-up:** Tableau Public was published on 6 October and the owner confirms
+it works. [Open the full dashboard](https://public.tableau.com/app/profile/agatha.silalahi/viz/creditlens/CreditLensPortofoliodanBuktiModel).
+Year/term filters reconcile the warehouse KPI, trend and outcome heatmap; model validation
+uses a separate source. Independent anonymous access and aggregate redistribution rights
+are not recorded as complete. See [the updated guide](docs/TABLEAU_PUBLIC_DASHBOARD_GUIDE.md).
+
+A private Freddie 2018 monthly panel and forward three-month label builder are now implemented
+and exercised locally. Inputs remain a corrected historical mortgage snapshot, not point-in-time
+operator data. Training/source admission and independent evaluation remain pending. The builder
+rejects frozen-test vintage 2020; label NULL preserves censoring. Neither source records nor
+private derived panels are GitHub deliverables. See [the protocol](docs/FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md).
+The Streamlit source adds a research-status page and Tableau link; deployment of this revision
+still requires CI and a fresh public check. Scoring remains HOLD; the old test is not reopened.
+
 The 5 October docs-only PR run passed lint and tests but failed while Codecov initialized
 an optional coverage upload due to TLS handshake failure; a focused workflow fix was pushed
 as `fe2a67f`. Subsequent PR run 37275600387 passed lint, tests, and dashboard Docker smoke;

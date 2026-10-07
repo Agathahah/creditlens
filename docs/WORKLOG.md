@@ -272,3 +272,32 @@ downloadable summary uses the dated public-deployment evidence from the snapshot
 portfolio-monitoring scope states the periodic panel, prospective outcome, independent
 evaluation and operating controls required before scoring can be reconsidered. No new
 dataset was supplied, no model was trained, and no live alert was claimed.
+
+
+## 2026-10-07 — private monthly-panel research and public BI status
+
+Implemented a streaming ZIP-to-SQLite mortgage research builder with explicit three-calendar-month
+labels, nullable censoring, a minimal as-of feature whitelist, strict keys/layout and owner-only
+outputs outside Git. Development intake rejects frozen-test vintage 2020. The source is corrected
+historical data; no claim of verified point-in-time availability or admission for training.
+Actual local execution completed on sample 2018; private report/derived database remain outside Git.
+No source records, outcome tables or model artifacts were published. No training, test evaluation,
+scoring promotion or database recovery mutation was performed.
+
+Updated Tableau runbook with the verified dashboard URL and filter reconciliation. Added a
+Streamlit research-status page and Tableau link; public deployment of these UI changes must be
+verified separately. Package metadata no longer claims production-grade scoring and points to the
+actual repository. Existing API fail-closed contracts remain in place; no fake model pass replaces
+the LendingClub historical failure.
+
+Validation before publication: 27 focused tests passed (panel, dashboard and API readiness),
+with four dependency deprecation warnings; new panel module coverage was 86%. Remaining uncovered
+branches include malformed-file failures and CLI entry. Black/isort/ruff and strict mypy were run
+on the changed Python files. The bounded local build completed in 17.09 seconds with about
+80.3 MiB maximum RSS and a 248.3 MiB private SQLite output on this Mac; this is a panel-build
+measurement, not training, serving capacity or an API latency benchmark.
+
+Full application suite before commit: 169 passed, 4 skipped, 8 warnings in 22.42 seconds.
+Skipped external/optional integration checks are not production evidence. All repository Python
+files passed black/isort/ruff and mypy (80 source files). The private notebook code cells
+executed successfully and reconciled eligible = labeled + censored; notebook remains ignored.

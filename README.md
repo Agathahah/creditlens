@@ -52,7 +52,7 @@ The dashboard explains the funded-loan portfolio, its outcome gaps, and the hist
 model evidence behind a decision to hold scoring.
 It presents 2,260,668 warehouse loans, explicit unresolved outcomes, vintage/term filters,
 data lineage, historical model evaluation, API rejection contracts and dated Docker evidence.
-Nine sections connect the business problem, descriptive dataset and models to the release decision. It reads only published aggregates;
+Ten sections connect the business problem, descriptive dataset and models to the release decision. It reads only published aggregates;
 there is no borrower upload, database connection or credit decision.
 
 ```bash
@@ -67,3 +67,15 @@ The [public dashboard pilot](https://creditlens-risk-evidence.streamlit.app/) sh
 aggregate research story. Revision `084e524` passed dashboard CI and was checked on the public
 URL on 30 September 2026. The model remains below its release gate; the pilot provides no
 scoring API or credit decision.
+
+## Monthly mortgage research — separate from fintech scoring
+
+A private streaming builder now creates a Freddie Mac loan-month SQLite panel and a
+three-month prospective label, preserving missing follow-up and termination as censoring.
+It does not train or publish borrower records. The research dashboard explains implementation
+status; independent evaluation and scoring release remain on hold. The corrected source has
+not established point-in-time availability. See [protocol and local commands](docs/FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md).
+
+[Tableau portfolio dashboard](https://public.tableau.com/app/profile/agatha.silalahi/viz/creditlens/CreditLensPortofoliodanBuktiModel)
+was published on 6 October 2026; the owner confirmed it works on 7 October. This is a
+historical aggregate exhibit, not a scoring-model release.

@@ -49,6 +49,7 @@ def test_empty_filter_has_no_fabricated_population() -> None:
         "Eksperimen model",
         "API & keamanan",
         "Deployment",
+        "Riset panel bulanan",
         "Kesimpulan",
     ],
 )
@@ -134,3 +135,13 @@ def test_inconsistent_snapshot_stops_before_displaying_metrics(
     assert not app.exception
     assert "tidak konsisten" in app.error[0].value
     assert len(app.metric) == 0
+
+
+def test_monthly_research_never_implies_a_released_model() -> None:
+    """New research status must preserve evaluation and scoring holds."""
+    app = AppTest.from_file(str(ROOT / "src/dashboard/app.py")).run(timeout=20)
+    app.radio[0].set_value("Riset panel bulanan").run(timeout=20)
+    assert not app.exception
+    assert any("Evaluasi independen belum dijalankan" in item.value for item in app.caption)
+    assert any("Horizon 3 bulan" in item.value for item in app.info)
+    assert any("tidak mengesahkan model untuk fintech" in item.value for item in app.warning)

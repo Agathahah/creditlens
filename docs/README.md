@@ -47,3 +47,5 @@ Raw data, credentials and backup archives are not repository deliverables. Histo
 
 - [Model release decision](audit/MODEL_RELEASE_DECISION_2026-09-30.md): fintech use case,
   three-candidate validation comparison, rejected historical candidate and required gates.
+
+- [Monthly mortgage research protocol](FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md): private panel builder, three-month labels, censored outcomes, sealed test and service release gates.
