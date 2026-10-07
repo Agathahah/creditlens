@@ -85,3 +85,9 @@ graphify-out/
 
 # Local recovery archives; keep database backups out of Git
 .local-backups/
+
+# Private monthly research panels (never publish loan-month records)
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm

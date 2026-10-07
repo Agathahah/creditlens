@@ -19,3 +19,5 @@
 - Four pre-existing *_CONTEXT.md files are local historical snapshots, not publication instructions.
 - Graphify is only used when requested or explicitly authorized. For local checkout/commit, GRAPHIFY_SKIP_HOOK=1 uses the existing opt-out without deleting hooks.
 - Ops Copilot requires a separate design after the core stabilizes. Start with evidence-based retrieval and bounded read-only tools; do not add swarm, Hermes, automatic retraining or credit decisions without an established requirement.
+
+- Pada 7 Oktober 2026, kelanjutan lokal panel bulanan/label riset Freddie terpisah dan pembaruan GitHub diminta. Protokol ada di docs/FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md. Vintage 2020 calon frozen test tetap disegel; admission sumber, gate numerik dan point-in-time belum lengkap. Jangan menganggap permintaan ini sebagai kelulusan model, training penuh, merge atau promosi scoring.
