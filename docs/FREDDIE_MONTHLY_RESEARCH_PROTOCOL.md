@@ -91,3 +91,5 @@ Untuk mesin baru, gunakan output yang belum ada:
 ## Pembaruan 9 Oktober 2026
 
 Arsip 2019/2020 sudah tersedia privat dan struktur validation diperiksa tanpa statistik outcome. Metadata resmi Release 47 ditemukan; hubungan byte arsip ke release dan review pemilik belum terkonfirmasi. Angka gate/resource/policy yang dapat ditinjau kini tersedia dalam [persiapan rilis](FREDDIE_RELEASE_PREPARATION_2026-10-09.md). Proposal tidak mengubah keputusan HOLD atau membuka frozen test.
+
+Protokol eksperimen v1 disetujui per hash pada 9 Oktober. Review release/ketentuan sumber tetap belum selesai; penerimaan sumber, training dan pembukaan test belum terjadi. Lihat keputusan terbaru dalam dokumen persiapan rilis.

@@ -1,6 +1,6 @@
 # Persiapan admission dan rilis riset hipotek
 
-Tanggal: 9 Oktober 2026. Status: **persiapan lokal; protokol eksperimen diusulkan, belum disetujui**.
+Tanggal: 9 Oktober 2026. Status: **protokol eksperimen lokal disetujui per hash; penerimaan sumber belum lengkap**.
 Scoring LendingClub tetap HOLD. Dokumen ini tidak mengizinkan training penuh, membuka test,
 merge, tag, deployment atau penggunaan model hipotek pada pinjaman fintech.
 
@@ -72,7 +72,7 @@ bukan dengan mengubah nilai status pada konfigurasi setelah hash disetujui.
 | Ketidakpastian | 1.000 paired bootstrap per loan; semua loan-month pada loan yang disampling dipertahankan |
 | Kualitas data | Laporkan denominators, label NULL/censoring dan hasil per bulan |
 
-Angka tersebut adalah guardrail riset yang belum disetujui, bukan standar industri atau kebutuhan
+Angka tersebut adalah guardrail riset yang disetujui untuk eksperimen lokal, bukan standar industri atau kebutuhan
 lender. Minimum support bukan power calculation. Interval yang lebar atau support tidak memadai
 harus dilaporkan, bukan disamarkan oleh jumlah baris besar. Confidence interval yang tidak dapat
 diestimasi membuat gate uncertainty gagal. AP bootstrap membandingkan AP dengan prevalence pada
@@ -105,6 +105,18 @@ cd "$HOME/Documents/creditlens"
 ```
 
 Preflight tidak menulis/mengubah file atau membuat label. Tes memakai fixture sintetis dan tidak
-mengakses arsip privat. Hasil prasyarat saat persiapan ini: review release/terms/limitations/protokol
+mengakses arsip privat. Hasil prasyarat saat persiapan ini: review release/terms
 belum lengkap; training BLOCKED, model evaluation NOT_RUN, scoring HOLD. Bukti validasi software
 ditambahkan ke WORKLOG sesudah tes, terpisah dari kelulusan model.
+
+## Keputusan 9 Oktober 2026
+
+Protokol dan batas klaim retrospektif disetujui untuk eksperimen lokal berbatas sumber daya,
+terikat SHA-256 `c17999bce05357b4ef937eee474b0549702c811de91ccd43a8017a1f5eb696b7`.
+Konfigurasi JSON adalah artefak proposal yang dibekukan; nilai status asalnya tidak diubah
+agar persetujuan tetap terikat byte yang sama. Persetujuan aktual dicatat pada manifest
+privat dan keputusan ini. Ini tidak memberi izin membuka test atau deployment.
+
+Pemilik belum memeriksa metadata/ketentuan portal. Oleh karena itu dua prasyarat sumber
+masih gagal: `release_binding_confirmed` dan `internal_research_terms_acknowledged`.
+CLI tetap BLOCKED/HOLD; training dan evaluasi model tidak dijalankan.

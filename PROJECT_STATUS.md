@@ -52,8 +52,9 @@ contents were opened in admission preparation. Official Release 47 metadata was 
 (29 July 2026, performance cutoff 31 March 2026); local artifact binding and owner terms
 review remain unconfirmed. Historical corrected data is not verified point-in-time.
 
-A hash-bound proposed bounded research experiment and an advisory admission CLI are
-implemented. The CLI never enables scoring; owner review, protocol approval, real evaluation,
+A hash-bound bounded research experiment and an advisory admission CLI are
+implemented. The owner approved the exact protocol hash on 9 October; source release/terms
+review remains incomplete. The CLI never enables scoring; owner review, protocol approval, real evaluation,
 bundle/parity and service acceptance remain separate. API request/CORS boundaries are
 strengthened without admitting a real bundle. See
 [release preparation](docs/FREDDIE_RELEASE_PREPARATION_2026-10-09.md).

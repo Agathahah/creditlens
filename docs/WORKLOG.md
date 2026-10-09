@@ -334,3 +334,8 @@ arsip opaque yang tidak bisa dibuka sebagai ZIP, JSON ambigu, hash berubah, unsu
 scope, CORS tak diizinkan dan numeric overflow response 422. Warning dependency/loky
 dan integration skips tidak membuktikan produksi. Tidak ada evaluasi model real,
 training Freddie, pembukaan test, deployment, merge atau penghapusan data.
+
+The owner subsequently approved the exact experiment protocol hash and retrospective scope
+on 9 October. Private review records reflect that approval, while source release binding and
+terms remain unconfirmed. A fresh advisory preflight reports exactly those two blockers.
+Configuration bytes and frozen-test contents remain unchanged; no fit/evaluation was started.
