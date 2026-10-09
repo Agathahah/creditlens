@@ -1,0 +1,39 @@
+{
+  "protocol_id": "freddie_mortgage_3m_research_v1",
+  "status": "PROPOSED_NOT_APPROVED",
+  "scope": "freddie_mortgage_retrospective_research",
+  "horizon_months": 3,
+  "label_version": "freddie_current_to_90plus_or_reo_3m_v1",
+  "operational_point_in_time_claim": false,
+  "public_scoring_authorized": false,
+  "split": {
+    "train": {"vintage": 2018, "as_of_start": "201901", "as_of_end": "201909", "last_outcome": "201912"},
+    "validation": {"vintage": 2019, "as_of_start": "202001", "as_of_end": "202009", "last_outcome": "202012"},
+    "frozen_test": {"vintage": 2020, "as_of_start": "202101", "as_of_end": "202109", "last_outcome": "202112"}
+  },
+  "features": ["upb", "loan_age", "remaining_months", "interest_rate", "prior_dq_1", "prior_dq_2"],
+  "candidates": {
+    "constant": "Train labeled prevalence; unchanged on later splits",
+    "logistic_regression": {"C": 1.0, "max_iter": 1000, "class_weight": null},
+    "hist_gradient_boosting": {"max_iter": 80, "max_depth": 3, "learning_rate": 0.1, "l2_regularization": 1.0}
+  },
+  "preprocessing": "Train-only median imputation with missing indicators; train-only scaling for logistic regression",
+  "calibration": "No post-hoc calibrator in v1; Brier and reliability reviewed before acceptance",
+  "selection": "Validation AP; ties choose logistic regression; no hyperparameter search",
+  "alert_policy": {"method": "Monthly top fraction; deterministic tie handling using private loan key", "fraction": 0.01, "purpose": "Research capacity simulation; not a lender requirement"},
+  "resource_budget": {"threads": 2, "max_elapsed_minutes": 15, "max_rss_gib": 2, "seed": 42},
+  "proposed_research_gates": {
+    "minimum_unique_adverse_loans": {"train": 50, "validation": 30, "frozen_test": 30},
+    "ap_lift_over_prevalence_minimum": 2.0,
+    "ap_lift_loan_bootstrap_95pct_lower_bound_exceeds": 1.0,
+    "brier_skill_over_train_constant_minimum_exclusive": 0.0,
+    "recall_at_monthly_top_1pct_minimum": 0.2,
+    "alert_precision_lift_over_prevalence_minimum": 2.0,
+    "finite_probabilities_between_zero_and_one": true,
+    "report_monthly_censoring_and_counts": true,
+    "uncertainty": {"method": "Paired bootstrap by loan, preserving all loan-months", "replicates": 1000, "interval": 0.95}
+  },
+  "support_limit": "Support minima are research guardrails, not a power calculation or business validity guarantee",
+  "test_opening": "Only once after source admission, validation acceptance, candidate lock and recorded owner approval; a failed test is consumed",
+  "service_acceptance": "Separate immutable bundle, parity, access, load, monitoring and rollback evidence; never automatic promotion"
+}

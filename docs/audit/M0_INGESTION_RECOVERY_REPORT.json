@@ -1,0 +1,52 @@
+{
+  "started_at_utc": "2026-09-10T07:24:44.630604+00:00",
+  "status": "passed",
+  "steps": [
+    "migration_applied",
+    "insert_missing_completed",
+    "original_rows_count_and_aggregate_fingerprint_unchanged"
+  ],
+  "source_sha256": "55c16f75120f897683f02e7aabcf080d0e4a20c4832feb1d592cfa941bd62a2d",
+  "disk_free_gib_before": 4.469,
+  "fingerprint_cutoff_local_timestamp": "2026-09-10 14:24:44.988194",
+  "before": {
+    "raw_count": 1599982,
+    "issue_min": "2014-01-01",
+    "issue_max": "2018-12-01",
+    "long_status_count": 0,
+    "original_rows_fingerprint": [
+      1599982,
+      "-1980370350026473596362",
+      "2931373899878716181413"
+    ],
+    "revision": [
+      "e9827ae898f0"
+    ],
+    "loan_status_type": "character varying"
+  },
+  "ingestion": {
+    "read_rows": 2260701,
+    "excluded_required_fields": 33,
+    "skipped_existing": 1599982,
+    "written_rows": 660686,
+    "unchanged_or_conflicted": 0,
+    "committed_batches": 14
+  },
+  "after": {
+    "raw_count": 2260668,
+    "issue_min": "2007-06-01",
+    "issue_max": "2018-12-01",
+    "long_status_count": 761,
+    "original_rows_fingerprint": [
+      1599982,
+      "-1980370350026473596362",
+      "2931373899878716181413"
+    ],
+    "revision": [
+      "4b7d2a91c608"
+    ],
+    "loan_status_type": "text"
+  },
+  "disk_free_gib_after": 4.25,
+  "finished_at_utc": "2026-09-10T07:26:07.897289+00:00"
+}

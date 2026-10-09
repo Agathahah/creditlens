@@ -7,8 +7,10 @@ can inject lightweight fakes.
 
 from __future__ import annotations
 
+import math
 from collections.abc import Callable
 from dataclasses import dataclass, field
+from numbers import Real
 from typing import Any
 
 import pandas as pd
@@ -30,6 +32,18 @@ class ModelRegistry:
     expected_features: list[str] = field(default_factory=list)
     feature_fetcher: Callable[[str], dict[str, Any] | None] | None = None
     survival_model: SurvivalAnalysis | None = None
+    bundle_verified: bool = False
+
+    @property
+    def scoring_ready(self) -> bool:
+        """Whether a verified bundle and its feature contract are available.
+
+        The legacy artifact loader does not verify bundle provenance, schema,
+        or release evidence and therefore leaves ``bundle_verified`` false.
+        Tests can inject verified synthetic fixtures. A future bundle loader
+        must perform verification before setting this internal flag.
+        """
+        return self.model_loaded and self.bundle_verified and bool(self.expected_features)
 
     @property
     def model_loaded(self) -> bool:
@@ -43,12 +57,12 @@ class ModelRegistry:
             The loaded CreditPredictor.
 
         Raises:
-            HTTPException: 503 if no model is loaded.
+            HTTPException: 503 if a verified scoring bundle is unavailable.
         """
-        if self.predictor is None or self.predictor.model is None:
+        if not self.scoring_ready or self.predictor is None:
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                detail="No scoring model is loaded.",
+                detail="A verified scoring bundle is not available.",
             )
         return self.predictor
 
@@ -94,7 +108,7 @@ class ModelRegistry:
             Single-row DataFrame with columns ordered as the model expects.
 
         Raises:
-            HTTPException: 422 if required model features are missing.
+            HTTPException: 422 for missing/extra features or invalid numeric values.
         """
         expected = self.expected_features or sorted(features)
         missing = [name for name in expected if name not in features]
@@ -102,6 +116,15 @@ class ModelRegistry:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 detail=f"Missing required features: {missing}",
+            )
+        extra = sorted(set(features) - set(expected))
+        if extra or any(
+            isinstance(value, bool) or not isinstance(value, Real) or not math.isfinite(value)
+            for value in features.values()
+        ):
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="Features must match the model schema and contain finite values.",
             )
         return pd.DataFrame([{name: features[name] for name in expected}])
 

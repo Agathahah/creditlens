@@ -1,0 +1,494 @@
+{
+  "checked_at_utc": "2026-09-10T07:27:50.884753+00:00",
+  "mode": "read-only aggregate; no label or ML changes",
+  "loan_status_counts": {
+    "columns": [
+      "loan_status",
+      "count"
+    ],
+    "rows": [
+      [
+        "Fully Paid",
+        1076751
+      ],
+      [
+        "Current",
+        878317
+      ],
+      [
+        "Charged Off",
+        268559
+      ],
+      [
+        "Late (31-120 days)",
+        21467
+      ],
+      [
+        "In Grace Period",
+        8436
+      ],
+      [
+        "Late (16-30 days)",
+        4349
+      ],
+      [
+        "Does not meet the credit policy. Status:Fully Paid",
+        1988
+      ],
+      [
+        "Does not meet the credit policy. Status:Charged Off",
+        761
+      ],
+      [
+        "Default",
+        40
+      ]
+    ]
+  },
+  "year_status_counts": {
+    "columns": [
+      "extract",
+      "loan_status",
+      "count"
+    ],
+    "rows": [
+      [
+        2007,
+        "Charged Off",
+        45
+      ],
+      [
+        2007,
+        "Does not meet the credit policy. Status:Charged Off",
+        113
+      ],
+      [
+        2007,
+        "Does not meet the credit policy. Status:Fully Paid",
+        239
+      ],
+      [
+        2007,
+        "Fully Paid",
+        206
+      ],
+      [
+        2008,
+        "Charged Off",
+        247
+      ],
+      [
+        2008,
+        "Does not meet the credit policy. Status:Charged Off",
+        249
+      ],
+      [
+        2008,
+        "Does not meet the credit policy. Status:Fully Paid",
+        582
+      ],
+      [
+        2008,
+        "Fully Paid",
+        1315
+      ],
+      [
+        2009,
+        "Charged Off",
+        594
+      ],
+      [
+        2009,
+        "Does not meet the credit policy. Status:Charged Off",
+        129
+      ],
+      [
+        2009,
+        "Does not meet the credit policy. Status:Fully Paid",
+        436
+      ],
+      [
+        2009,
+        "Fully Paid",
+        4122
+      ],
+      [
+        2010,
+        "Charged Off",
+        1487
+      ],
+      [
+        2010,
+        "Does not meet the credit policy. Status:Charged Off",
+        270
+      ],
+      [
+        2010,
+        "Does not meet the credit policy. Status:Fully Paid",
+        731
+      ],
+      [
+        2010,
+        "Fully Paid",
+        10049
+      ],
+      [
+        2011,
+        "Charged Off",
+        3297
+      ],
+      [
+        2011,
+        "Fully Paid",
+        18424
+      ],
+      [
+        2012,
+        "Charged Off",
+        8644
+      ],
+      [
+        2012,
+        "Fully Paid",
+        44723
+      ],
+      [
+        2013,
+        "Charged Off",
+        21024
+      ],
+      [
+        2013,
+        "Current",
+        6
+      ],
+      [
+        2013,
+        "Fully Paid",
+        113780
+      ],
+      [
+        2013,
+        "In Grace Period",
+        1
+      ],
+      [
+        2013,
+        "Late (31-120 days)",
+        3
+      ],
+      [
+        2014,
+        "Charged Off",
+        41161
+      ],
+      [
+        2014,
+        "Current",
+        11919
+      ],
+      [
+        2014,
+        "Default",
+        1
+      ],
+      [
+        2014,
+        "Fully Paid",
+        181941
+      ],
+      [
+        2014,
+        "In Grace Period",
+        200
+      ],
+      [
+        2014,
+        "Late (16-30 days)",
+        73
+      ],
+      [
+        2014,
+        "Late (31-120 days)",
+        334
+      ],
+      [
+        2015,
+        "Charged Off",
+        75803
+      ],
+      [
+        2015,
+        "Current",
+        43299
+      ],
+      [
+        2015,
+        "Default",
+        1
+      ],
+      [
+        2015,
+        "Fully Paid",
+        299742
+      ],
+      [
+        2015,
+        "In Grace Period",
+        612
+      ],
+      [
+        2015,
+        "Late (16-30 days)",
+        279
+      ],
+      [
+        2015,
+        "Late (31-120 days)",
+        1359
+      ],
+      [
+        2016,
+        "Charged Off",
+        68242
+      ],
+      [
+        2016,
+        "Current",
+        134061
+      ],
+      [
+        2016,
+        "Default",
+        10
+      ],
+      [
+        2016,
+        "Fully Paid",
+        224853
+      ],
+      [
+        2016,
+        "In Grace Period",
+        1793
+      ],
+      [
+        2016,
+        "Late (16-30 days)",
+        902
+      ],
+      [
+        2016,
+        "Late (31-120 days)",
+        4546
+      ],
+      [
+        2017,
+        "Charged Off",
+        39148
+      ],
+      [
+        2017,
+        "Current",
+        261851
+      ],
+      [
+        2017,
+        "Default",
+        21
+      ],
+      [
+        2017,
+        "Fully Paid",
+        130152
+      ],
+      [
+        2017,
+        "In Grace Period",
+        2911
+      ],
+      [
+        2017,
+        "Late (16-30 days)",
+        1492
+      ],
+      [
+        2017,
+        "Late (31-120 days)",
+        8004
+      ],
+      [
+        2018,
+        "Charged Off",
+        8867
+      ],
+      [
+        2018,
+        "Current",
+        427181
+      ],
+      [
+        2018,
+        "Default",
+        7
+      ],
+      [
+        2018,
+        "Fully Paid",
+        47444
+      ],
+      [
+        2018,
+        "In Grace Period",
+        2919
+      ],
+      [
+        2018,
+        "Late (16-30 days)",
+        1603
+      ],
+      [
+        2018,
+        "Late (31-120 days)",
+        7221
+      ]
+    ]
+  },
+  "term_status_counts": {
+    "columns": [
+      "btrim",
+      "loan_status",
+      "count"
+    ],
+    "rows": [
+      [
+        "36 months",
+        "Charged Off",
+        163252
+      ],
+      [
+        "36 months",
+        "Current",
+        566695
+      ],
+      [
+        "36 months",
+        "Default",
+        25
+      ],
+      [
+        "36 months",
+        "Does not meet the credit policy. Status:Charged Off",
+        649
+      ],
+      [
+        "36 months",
+        "Does not meet the credit policy. Status:Fully Paid",
+        1789
+      ],
+      [
+        "36 months",
+        "Fully Paid",
+        857491
+      ],
+      [
+        "36 months",
+        "In Grace Period",
+        4834
+      ],
+      [
+        "36 months",
+        "Late (16-30 days)",
+        2545
+      ],
+      [
+        "36 months",
+        "Late (31-120 days)",
+        12474
+      ],
+      [
+        "60 months",
+        "Charged Off",
+        105307
+      ],
+      [
+        "60 months",
+        "Current",
+        311622
+      ],
+      [
+        "60 months",
+        "Default",
+        15
+      ],
+      [
+        "60 months",
+        "Does not meet the credit policy. Status:Charged Off",
+        112
+      ],
+      [
+        "60 months",
+        "Does not meet the credit policy. Status:Fully Paid",
+        199
+      ],
+      [
+        "60 months",
+        "Fully Paid",
+        219260
+      ],
+      [
+        "60 months",
+        "In Grace Period",
+        3602
+      ],
+      [
+        "60 months",
+        "Late (16-30 days)",
+        1804
+      ],
+      [
+        "60 months",
+        "Late (31-120 days)",
+        8993
+      ]
+    ]
+  },
+  "availability": {
+    "columns": [
+      "rows",
+      "nonnull_member_id",
+      "missing_last_payment_date",
+      "min",
+      "max"
+    ],
+    "rows": [
+      [
+        2260668,
+        0,
+        2427,
+        "2007-12-01",
+        "2019-03-01"
+      ]
+    ]
+  },
+  "legacy_staging_label_counts": {
+    "columns": [
+      "is_default",
+      "count"
+    ],
+    "rows": [
+      [
+        0,
+        1076751
+      ],
+      [
+        1,
+        290066
+      ],
+      [
+        null,
+        893851
+      ]
+    ]
+  }
+}

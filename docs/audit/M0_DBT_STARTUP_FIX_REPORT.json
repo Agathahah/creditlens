@@ -1,0 +1,172 @@
+{
+  "tanggal": "2026-09-11",
+  "masalah": {
+    "workspace": "/private/tmp/creditlens-m0-yh1w00yi",
+    "initdb_exit": 0,
+    "start_exit": 1,
+    "pesan_postgresql": "postmaster became multithreaded during startup",
+    "petunjuk_postgresql": "Set the LC_ALL environment variable to a valid locale.",
+    "batas": "Nilai locale Terminal pada eksekusi yang gagal tidak direkam; log menunjukkan masalah startup terkait locale, bukan kegagalan tes SQL."
+  },
+  "perubahan": {
+    "file": "scripts/verify_m0_dbt.py",
+    "locale_proses_anak": {
+      "LC_ALL": "C",
+      "LANG": "C"
+    },
+    "alasan": "--locale=C saat initdb tidak menetapkan lingkungan proses pg_ctl/postgres berikutnya. Locale proses anak kini ditetapkan eksplisit tanpa mengubah os.environ induk atau pengaturan shell global.",
+    "diagnostik": "Pesan gagal startup sekarang menunjuk start.log dan postgres.log."
+  },
+  "verifikasi": {
+    "perintah": "env LC_ALL=creditlens_invalid_locale LANG=creditlens_invalid_locale .venv/bin/python scripts/verify_m0_dbt.py",
+    "workspace": "/private/tmp/creditlens-m0-tzvm9uw_",
+    "transport": "private Unix socket; TCP disabled",
+    "status": "passed",
+    "cluster_stopped": true,
+    "started_at_utc": "2026-09-11T06:18:29.739591+00:00",
+    "finished_at_utc": "2026-09-11T06:18:51.430094+00:00",
+    "source_sha256": {
+      "models/staging/lc_loans_clean.sql": "8287e14da4c45d9395527887c290770dc8ab8c6c1b3fbaffb12d558b997d8d45",
+      "models/mart/loan_features.sql": "b80edb49d2e4ef1d375f2846c9683c60f8b9eda0739e500b83c53df5986eec7f",
+      "models/mart/final_features.sql": "702169155ee4cad880286e2938bdeca545fcd2cbcc38936d86cb2e60dd65617e",
+      "tests/dbt/loan_label_contract.sql": "2d0e521f5232cd48d44af03a140ca84a012101300ef6d912c2e22a707f9c0967",
+      "scripts/verify_m0_dbt.py": "21efbe4dd1fc373cbc3b32f5ea3421f5789f0ad12dddd7b1a2bb46d84458d9f2"
+    },
+    "hasil_akhir": {
+      "models": 5,
+      "tests_passed": 27,
+      "failed": 0
+    },
+    "langkah": [
+      {
+        "step": "initdb",
+        "exit_code": 0
+      },
+      {
+        "step": "start",
+        "exit_code": 0
+      },
+      {
+        "step": "createdb",
+        "exit_code": 0
+      },
+      {
+        "step": "empty_build",
+        "exit_code": 0
+      },
+      {
+        "step": "empty_counts"
+      },
+      {
+        "step": "legacy_tests_empty",
+        "exit_code": 0
+      },
+      {
+        "step": "nonempty_rejects_empty",
+        "exit_code": 1
+      },
+      {
+        "step": "after_ingestion_before_rebuild"
+      },
+      {
+        "step": "reconciliation_rejects_stale_mart",
+        "exit_code": 1
+      },
+      {
+        "step": "populated_build_and_tests",
+        "exit_code": 0
+      },
+      {
+        "step": "populated_counts"
+      },
+      {
+        "step": "reconciliation_rejects_missing_final",
+        "exit_code": 1
+      },
+      {
+        "step": "restore_final",
+        "exit_code": 0
+      },
+      {
+        "step": "restored_counts"
+      },
+      {
+        "step": "label_fixture_build",
+        "exit_code": 0
+      },
+      {
+        "step": "label_contract_all_statuses",
+        "exit_code": 0
+      },
+      {
+        "step": "label_ids_statuses_and_nulls_preserved",
+        "rows_per_layer": 13,
+        "raw_unchanged": true
+      },
+      {
+        "step": "label_contract_rejects_current_and_late_labels",
+        "exit_code": 1
+      },
+      {
+        "step": "restore_label_final",
+        "exit_code": 0
+      },
+      {
+        "step": "label_contract_rejects_missing_paid_label",
+        "exit_code": 1
+      },
+      {
+        "step": "restore_labels_with_null_fixture",
+        "exit_code": 0
+      },
+      {
+        "step": "null_status_preserved_without_invented_label",
+        "rows_per_layer": 13,
+        "raw_unchanged": true
+      },
+      {
+        "step": "source_guard_rejects_null_status",
+        "exit_code": 1
+      },
+      {
+        "step": "remove_null_source_fixture"
+      },
+      {
+        "step": "restore_label_all_and_tests",
+        "exit_code": 0
+      },
+      {
+        "step": "final_label_contract_and_raw_preserved",
+        "rows_per_layer": 12,
+        "raw_unchanged": true
+      },
+      {
+        "step": "stop",
+        "exit_code": 0
+      }
+    ]
+  },
+  "batas": [
+    "Hanya database sementara dengan data sintetis; database aktif tidak direbuild.",
+    "Laporan M0_LABEL_ISOLATED_REPORT.json tetap menjadi bukti versi skrip sebelumnya; hash skrip terbaru dicatat pada laporan ini.",
+    "Tidak ada training, perubahan CI, commit, push, merge atau deployment."
+  ],
+  "verifikasi_terminal_lanjutan": {
+    "workspace": "/private/tmp/creditlens-m0-f8181l6x",
+    "status": "passed",
+    "cluster_stopped": true,
+    "source_sha256": {
+      "models/staging/lc_loans_clean.sql": "8287e14da4c45d9395527887c290770dc8ab8c6c1b3fbaffb12d558b997d8d45",
+      "models/mart/loan_features.sql": "b80edb49d2e4ef1d375f2846c9683c60f8b9eda0739e500b83c53df5986eec7f",
+      "models/mart/final_features.sql": "702169155ee4cad880286e2938bdeca545fcd2cbcc38936d86cb2e60dd65617e",
+      "tests/dbt/loan_label_contract.sql": "2d0e521f5232cd48d44af03a140ca84a012101300ef6d912c2e22a707f9c0967",
+      "scripts/verify_m0_dbt.py": "21efbe4dd1fc373cbc3b32f5ea3421f5789f0ad12dddd7b1a2bb46d84458d9f2"
+    },
+    "finished_at_utc": "2026-09-11T06:32:33.829463+00:00",
+    "hasil_akhir": {
+      "models": 5,
+      "tests_passed": 27
+    },
+    "catatan": "Laporan dibaca langsung dan hash dicocokkan sebelum penambahan opsi --pg-bin berikutnya."
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "checked_at_utc": "2026-09-11T08:25:38.901905+00:00",
+  "mode": "read-only",
+  "disk_free_bytes": 18434875392,
+  "target": {
+    "database": "creditlens",
+    "user": "creditlens",
+    "address": "::1/128",
+    "port": 5432,
+    "transaction_read_only": "on",
+    "server_version": "14.22 (Homebrew)"
+  },
+  "alembic_versions": [
+    "4b7d2a91c608"
+  ],
+  "raw_status_counts": [
+    {
+      "status": "Charged Off",
+      "count": 268559
+    },
+    {
+      "status": "Current",
+      "count": 878317
+    },
+    {
+      "status": "Default",
+      "count": 40
+    },
+    {
+      "status": "Does not meet the credit policy. Status:Charged Off",
+      "count": 761
+    },
+    {
+      "status": "Does not meet the credit policy. Status:Fully Paid",
+      "count": 1988
+    },
+    {
+      "status": "Fully Paid",
+      "count": 1076751
+    },
+    {
+      "status": "In Grace Period",
+      "count": 8436
+    },
+    {
+      "status": "Late (16-30 days)",
+      "count": 4349
+    },
+    {
+      "status": "Late (31-120 days)",
+      "count": 21467
+    }
+  ],
+  "layers": {
+    "staging.lc_loans_clean": {
+      "total": 2260668,
+      "label_0": 1076751,
+      "label_1": 290066,
+      "label_null": 893851,
+      "new_contract_mismatches": 21467
+    },
+    "mart.loan_features": {
+      "total": 2260668,
+      "label_0": 1076751,
+      "label_1": 290066,
+      "label_null": 893851,
+      "new_contract_mismatches": 21467
+    },
+    "mart.final_features": {
+      "total": 2260668,
+      "label_0": 1076751,
+      "label_1": 290066,
+      "label_null": 893851,
+      "new_contract_mismatches": 21467
+    }
+  },
+  "relation_bytes": {
+    "mart.final_features": 664166400,
+    "mart.loan_features": 524926976,
+    "mart.macro_features": 106496,
+    "raw.lc_loans": 833372160
+  },
+  "other_nonidle_sessions_visible": 0,
+  "activity_visibility": "May be limited by database role permissions; not proof that all writers are idle",
+  "status": "inspected",
+  "raw_total": 2260668,
+  "expected_after": {
+    "total_per_layer": 2260668,
+    "label_0": 1076751,
+    "label_1": 268599,
+    "label_null": 915318,
+    "new_contract_mismatches": 0
+  },
+  "backup_status": "Backup baru dan restore drill untuk perubahan label belum dilakukan. Backup ingestion lama berisi 1.599.982 record dan tidak mewakili baseline terbaru.",
+  "limitations": [
+    "Disk free diukur pada filesystem folder repo/backup; lokasi fisik data_directory tidak dapat dibaca oleh role creditlens.",
+    "Statistik sesi dapat dibatasi hak akses; nol sesi aktif terlihat bukan bukti tidak ada writer.",
+    "Preflight adalah snapshot baca-saja, bukan izin penerapan. Perlu diperiksa ulang sebelum perubahan aktif."
+  ]
+}

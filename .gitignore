@@ -82,3 +82,12 @@ data/raw/*.log
 # Graphify artifacts
 graphify-out/
 .user.yml
+
+# Local recovery archives; keep database backups out of Git
+.local-backups/
+
+# Private monthly research panels (never publish loan-month records)
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm

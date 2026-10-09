@@ -1,0 +1,3 @@
+# Community Cloud searches the entrypoint directory before the repository root.
+# Reuse the isolated UI dependencies; never install the full ML/Feast stack here.
+-r ../../infra/docker/requirements.dashboard.txt
