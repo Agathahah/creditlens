@@ -7,8 +7,10 @@ can inject lightweight fakes.
 
 from __future__ import annotations
 
+import math
 from collections.abc import Callable
 from dataclasses import dataclass, field
+from numbers import Real
 from typing import Any
 
 import pandas as pd
@@ -106,7 +108,7 @@ class ModelRegistry:
             Single-row DataFrame with columns ordered as the model expects.
 
         Raises:
-            HTTPException: 422 if required model features are missing.
+            HTTPException: 422 for missing/extra features or invalid numeric values.
         """
         expected = self.expected_features or sorted(features)
         missing = [name for name in expected if name not in features]
@@ -114,6 +116,15 @@ class ModelRegistry:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 detail=f"Missing required features: {missing}",
+            )
+        extra = sorted(set(features) - set(expected))
+        if extra or any(
+            isinstance(value, bool) or not isinstance(value, Real) or not math.isfinite(value)
+            for value in features.values()
+        ):
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="Features must match the model schema and contain finite values.",
             )
         return pd.DataFrame([{name: features[name] for name in expected}])
 

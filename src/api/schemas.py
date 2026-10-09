@@ -7,7 +7,9 @@ All responses are JSON-serializable and include service latency so the
 
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from typing import Annotated
+
+from pydantic import BaseModel, ConfigDict, Field
 
 from src.common.models import CounterfactualResult, RiskTier
 
@@ -20,15 +22,19 @@ class ApplicantInput(BaseModel):
     numeric representations produced by ``preprocess_features``.
     """
 
+    model_config = ConfigDict(extra="forbid")
+
     applicant_id: str | None = Field(
         default=None,
+        max_length=128,
         description="Applicant/loan identifier; used as the Feast entity key "
         "when 'features' is omitted",
         examples=["app-001"],
     )
-    features: dict[str, float] | None = Field(
+    features: dict[str, Annotated[float, Field(strict=True, allow_inf_nan=False)]] | None = Field(
         default=None,
         min_length=1,
+        max_length=128,
         description="Mapping of model feature name to preprocessed numeric value. "
         "Omit to fetch features from the Feast online store by applicant_id.",
         examples=[{"loan_amnt": 15000.0, "int_rate": 13.5, "dti_eff": 18.2}],

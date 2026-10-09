@@ -14,9 +14,12 @@ import os
 from collections.abc import AsyncIterator, Callable
 from contextlib import asynccontextmanager
 from typing import Any
+from urllib.parse import urlsplit
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from src.api.routes import explain, health, predict
 from src.api.state import ModelRegistry
@@ -27,6 +30,58 @@ from src.ml.predict import CreditPredictor
 configure_logging()
 
 DEFAULT_MODEL_PATH = "models/xgboost_credit.joblib"
+
+
+def configured_origins() -> list[str]:
+    """Read explicit browser origins; no environment setting means no CORS access.
+
+    Returns:
+        Valid HTTP(S) origins without wildcard, credentials, path or query.
+
+    Raises:
+        ValueError: An origin is malformed or broadens access using a wildcard.
+    """
+    origins = [part.strip() for part in os.environ.get("API_ALLOWED_ORIGINS", "").split(",")]
+    allowed = []
+    for origin in filter(None, origins):
+        parsed = urlsplit(origin)
+        if (
+            parsed.scheme not in ("http", "https")
+            or not parsed.hostname
+            or "*" in origin
+            or parsed.username is not None
+            or parsed.password is not None
+            or parsed.path
+            or parsed.query
+            or parsed.fragment
+        ):
+            raise ValueError("API_ALLOWED_ORIGINS must contain explicit HTTP(S) origins")
+        _ = parsed.port  # Validate port syntax/range without exposing the input.
+        allowed.append(origin)
+    return allowed
+
+
+async def safe_validation_error(request: Request, error: Exception) -> JSONResponse:
+    """Return validation errors without echoing borrower values or non-finite input.
+
+    Args:
+        request: Request associated with the validation error.
+        error: Pydantic/FastAPI request validation failure.
+
+    Returns:
+        JSON-safe HTTP 422 containing locations and messages, not raw inputs.
+    """
+    if not isinstance(error, RequestValidationError):
+        raise error
+    return JSONResponse(
+        status_code=422,
+        content={
+            "detail": [
+                {"loc": item["loc"], "type": item["type"], "msg": item["msg"]}
+                for item in error.errors()
+            ]
+        },
+    )
 
 
 def build_feature_fetcher(
@@ -115,10 +170,11 @@ def create_app(registry: ModelRegistry | None = None) -> FastAPI:
     )
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
-        allow_methods=["*"],
-        allow_headers=["*"],
+        allow_origins=configured_origins(),
+        allow_methods=["GET", "POST"],
+        allow_headers=["Authorization", "Content-Type"],
     )
+    app.add_exception_handler(RequestValidationError, safe_validation_error)
     if registry is not None:
         app.state.registry = registry
 
