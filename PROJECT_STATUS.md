@@ -1,6 +1,6 @@
 # CreditLens project status
 
-Updated 2026-10-07. M0 data recovery is implemented and the approved bounded M1 local
+Updated 2026-10-09. M0 data recovery is implemented and the approved bounded M1 local
 experiment has completed. The candidate failed release gates. The next holdout direction is approved,
 but a new auditable dataset/snapshot has not been admitted; the project is not production ready.
 
@@ -43,6 +43,26 @@ bounded structural inspection: 50,000 unique origination loans, 2,059,564 monthl
 rows, period 2018-01 through 2026-03, and no basic key/period defects observed. This is a
 preliminary source intake, not admission for training or a CreditLens fintech scoring release.
 See the [sanitized intake report](docs/audit/FREDDIE_SAMPLE_INTAKE_2026-10-05.md).
+
+## 2026-10-09 — admission and request boundary preparation
+
+Private 2019/2020 sample archives are present; 2019 passed structural intake and loan IDs
+do not overlap the development 2018 sample. No validation outcome profile or frozen-test
+contents were opened in admission preparation. Official Release 47 metadata was found
+(29 July 2026, performance cutoff 31 March 2026); local artifact binding and owner terms
+review remain unconfirmed. Historical corrected data is not verified point-in-time.
+
+A hash-bound proposed bounded research experiment and an advisory admission CLI are
+implemented. The CLI never enables scoring; owner review, protocol approval, real evaluation,
+bundle/parity and service acceptance remain separate. API request/CORS boundaries are
+strengthened without admitting a real bundle. See
+[release preparation](docs/FREDDIE_RELEASE_PREPARATION_2026-10-09.md).
+Training remains blocked, independent evaluation NOT_RUN and scoring HOLD.
+
+The preceding exact head d5bff5a passed lint/tests/dashboard smoke in
+[run 37565762222](https://github.com/Agathahah/creditlens/actions/runs/37565762222);
+model evaluation/API image were skipped. Validation of the current follow-up is recorded
+separately in WORKLOG; no new dashboard public revision or scoring deployment is claimed.
 
 ## Verified implementation
 

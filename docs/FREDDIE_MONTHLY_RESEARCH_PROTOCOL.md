@@ -87,3 +87,7 @@ Untuk mesin baru, gunakan output yang belum ada:
 3. Audit sumber validation dan independensi ID; kunci eligibility, split, fitur, budget serta gate numerik. Selesaikan hak penggunaan dan batas point-in-time.
 4. Baru jalankan fit bounded serta pemilihan pada validation. Buka test sekali setelah kandidat final; gagal berarti HOLD, bukan tuning pada test.
 5. Bila model riset lulus, implementasikan bundle/parity dan staging terisolasi dengan kontrol operasi. Model hipotek tetap tidak menjadi scoring fintech production tanpa panel operator dan evaluasi penggunaan yang sesuai.
+
+## Pembaruan 9 Oktober 2026
+
+Arsip 2019/2020 sudah tersedia privat dan struktur validation diperiksa tanpa statistik outcome. Metadata resmi Release 47 ditemukan; hubungan byte arsip ke release dan review pemilik belum terkonfirmasi. Angka gate/resource/policy yang dapat ditinjau kini tersedia dalam [persiapan rilis](FREDDIE_RELEASE_PREPARATION_2026-10-09.md). Proposal tidak mengubah keputusan HOLD atau membuka frozen test.

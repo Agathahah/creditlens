@@ -49,3 +49,5 @@ Raw data, credentials and backup archives are not repository deliverables. Histo
   three-candidate validation comparison, rejected historical candidate and required gates.
 
 - [Monthly mortgage research protocol](FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md): private panel builder, three-month labels, censored outcomes, sealed test and service release gates.
+
+- [Mortgage admission and release preparation](FREDDIE_RELEASE_PREPARATION_2026-10-09.md): official release evidence, proposed hash-bound experiment, advisory admission and request/CORS limits.

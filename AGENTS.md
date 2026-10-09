@@ -21,3 +21,5 @@
 - Ops Copilot requires a separate design after the core stabilizes. Start with evidence-based retrieval and bounded read-only tools; do not add swarm, Hermes, automatic retraining or credit decisions without an established requirement.
 
 - Pada 7 Oktober 2026, kelanjutan lokal panel bulanan/label riset Freddie terpisah dan pembaruan GitHub diminta. Protokol ada di docs/FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md. Vintage 2020 calon frozen test tetap disegel; admission sumber, gate numerik dan point-in-time belum lengkap. Jangan menganggap permintaan ini sebagai kelulusan model, training penuh, merge atau promosi scoring.
+
+- Pada 9 Oktober 2026, permintaan melanjutkan menuju pencabutan HOLD mencakup persiapan admission/protokol dan pengamanan request lokal. docs/FREDDIE_RELEASE_PREPARATION_2026-10-09.md serta config/research/freddie_experiment_v1.json memuat usulan konkret, bukan gate yang sudah disetujui. Jangan fit sebelum review sumber/ketentuan dan hash protokol disetujui; jangan membuka test atau mempromosikan scoring dari preflight/CI.

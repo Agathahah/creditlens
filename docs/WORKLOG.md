@@ -309,3 +309,28 @@ loopback, has a bounded timeout and removes only its temporary container. Synthe
 and negative command fixtures check that liveness-only HTTP 200 fails; these are software
 contracts, not a real model/image release. The API image job still requires a tag and remains
 skipped on the PR. Actual serving/load/rollback and bundle admission remain open.
+
+## 9 Oktober 2026 — persiapan admission dan batas request
+
+Ditemukan metadata resmi Release 47 (29 Juli 2026, performance cutoff 31 Maret 2026).
+Kesesuaian layout/periode lokal belum mengonfirmasi hubungan byte dengan release atau
+review ketentuan pemilik. Proposal bounded research, kapasitas alert dan gate numerik
+tersimpan dalam config/research/freddie_experiment_v1.json; belum ada persetujuan/fit.
+
+CLI admission JSON memeriksa hash sumber/protokol, recorded owner review, scope retrospektif
+dan deklarasi test tertutup. CLI hanya hash ZIP; tidak membaca member test, membuat label
+validation, mengaktifkan API atau menyatakan kualitas model. Manifest dan laporan aktual
+disimpan privat. Actual preflight keluar 2/BLOCKED karena review pemilik belum lengkap.
+
+API menolak raw input/ctx pada error response, nilai non-finite/bool/string numerik,
+extra features, envelope tidak dikenal dan jumlah fitur/ID berlebihan. CORS default
+tertutup dengan origin eksplisit tervalidasi. Batas field ini bukan batas byte payload,
+autentikasi atau rate limit; kontrol layanan lengkap dan adapter hipotek tetap terbuka.
+
+Validasi lokal: seluruh suite src/ tests/ 202 passed, 4 skipped, 9 warnings, 23.62 detik;
+black/isort/ruff lulus pada seluruh source/tests/scripts, strict mypy lulus 82 source files.
+17 admission dan 14 input-control checks baru menggunakan fixture sintetis, termasuk
+arsip opaque yang tidak bisa dibuka sebagai ZIP, JSON ambigu, hash berubah, unsupported
+scope, CORS tak diizinkan dan numeric overflow response 422. Warning dependency/loky
+dan integration skips tidak membuktikan produksi. Tidak ada evaluasi model real,
+training Freddie, pembukaan test, deployment, merge atau penghapusan data.
