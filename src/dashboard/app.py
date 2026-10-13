@@ -951,14 +951,12 @@ def _monthly_research(evidence: Evidence) -> None:
         "Studi Freddie Mac yang terpisah mengembangkan pola panel bulanan untuk "
         "pemantauan setelah pencairan, dengan populasi hipotek AS."
     )
-    st.caption(
-        "Status lokal: 13 Oktober 2026 · Training dan validation selesai · Test belum dibuka"
-    )
+    st.caption("Status lokal: 13 Oktober 2026 · V3 validation lulus · Ujian independen selesai")
     _flow(
         [
             ("Panel bulanan", "Satu pinjaman × bulan laporan"),
             ("Label ke depan", "90+ hari / REO dalam 3 bulan"),
-            ("Evaluasi terpisah", "Vintage disjoint dan test terkunci"),
+            ("Evaluasi terpisah", "Kalibrasi terpisah dan test sekali"),
             ("Kontrol layanan", "Bundle, parity, akses dan rollback"),
         ]
     )
@@ -980,17 +978,18 @@ def _monthly_research(evidence: Evidence) -> None:
                 },
                 {
                     "Tahap": "Training dan validation",
-                    "Status": "SELESAI — KANDIDAT BELUM LOLOS",
+                    "Status": "V3 LULUS VALIDATION",
                     "Bukti / batas": (
-                        "Dua protokol terbatas; ranking membaik, gate probabilitas "
-                        "dan kapasitas belum terpenuhi"
+                        "Train diperluas, sigmoid pada cohort kalibrasi terpisah; "
+                        "gate validation v3 terpenuhi"
                     ),
                 },
                 {
                     "Tahap": "Test dan scoring",
                     "Status": "HOLD",
                     "Bukti / batas": (
-                        "Validation gagal; test 2020 tetap tertutup " "dan model belum dipromosikan"
+                        "Ujian independen v3 gagal gate recall; vintage 2020 terpakai "
+                        "dan model tidak dipromosikan"
                     ),
                 },
             ]
@@ -1012,12 +1011,12 @@ def _monthly_research(evidence: Evidence) -> None:
     )
     st.subheader("Hasil pengembangan lokal")
     st.write(
-        "Baseline konstan, Logistic Regression dan model pohon histogram dibandingkan "
-        "pada cohort yang sama. Versi berikutnya menambah credit score, LTV/CLTV dan DTI "
-        "origination. Tambahan informasi memperbaiki ranking, tetapi probabilitas dan "
-        "recall pada kapasitas alert yang ditetapkan belum memenuhi gate. "
-        "Hasil numerik dan artefak model disimpan privat. Test dipertahankan untuk "
-        "evaluasi independen kandidat yang memenuhi syarat."
+        "V1/v2 belum memenuhi gate validation. V3 memperluas periode train dan memakai "
+        "sigmoid pada cohort kalibrasi yang berbeda pinjaman serta lebih akhir waktunya. "
+        "Model pohon histogram terkalibrasi memenuhi seluruh gate validation, lalu diuji "
+        "sekali pada periode dan vintage yang terkunci. Gate recall ujian independen "
+        "gagal; kandidat tetap ditolak untuk rilis. Hasil numerik dan artefak model "
+        "disimpan privat. Perubahan berikutnya memerlukan holdout baru."
     )
     st.subheader("Evaluasi dan rilis berikutnya")
     st.write(
@@ -1037,7 +1036,9 @@ def _monthly_research(evidence: Evidence) -> None:
         f"[Protokol panel, split dan kontrol rilis]({REPOSITORY_URL}/blob/"
         "codex/m0-mentoring/docs/FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md) · "
         f"[Hasil training dan keputusan]({REPOSITORY_URL}/blob/"
-        "codex/m0-mentoring/docs/FREDDIE_TRAINING_VALIDATION_2026-10-13.md)"
+        "codex/m0-mentoring/docs/FREDDIE_TRAINING_VALIDATION_2026-10-13.md) · "
+        f"[V3 dan ujian independen]({REPOSITORY_URL}/blob/"
+        "codex/m0-mentoring/docs/FREDDIE_V3_CALIBRATION_PROTOCOL.md)"
     )
 
 
