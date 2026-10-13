@@ -183,6 +183,8 @@ def validation_worker(
         validation_gates,
     )
 
+    if sha256(protocol) == "f4eef57a25e638f9a4c694a16f3d93d2bd8ee8f50440d5c9758cbd440eee0411":
+        raise ValueError("V3 requires the separate calibrated research executor")
     source = require_training_admission(manifest, protocol)
     config = read_object(protocol)
     for role, panel in (("train", train_panel), ("validation", validation_panel)):
@@ -430,6 +432,8 @@ def main() -> None:
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--worker", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
+    if sha256(args.protocol) == "f4eef57a25e638f9a4c694a16f3d93d2bd8ee8f50440d5c9758cbd440eee0411":
+        raise ValueError("V3 requires the separate calibrated research executor")
     source = require_training_admission(args.manifest, args.protocol)
     if args.worker:
         validation_worker(

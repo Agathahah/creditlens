@@ -195,3 +195,18 @@ def test_synthetic_v3_worker_keeps_test_opaque_and_calibration_disjoint(tmp_path
     assert result["validation_decision"] == "REJECT_VALIDATION"
     assert result["support_checks"]["calibration"] is True
     assert result["roundtrip_max_absolute_difference"] <= 1e-12
+
+
+def test_classic_runner_rejects_v3_before_panels_or_manifest_are_read(tmp_path: Path) -> None:
+    """A legacy command must not accidentally fit v3 without its separate calibration role."""
+    from src.research.freddie_train import validation_worker
+
+    with pytest.raises(ValueError, match="separate calibrated"):
+        validation_worker(
+            tmp_path / "missing-manifest.json",
+            ROOT / "config/research/freddie_experiment_v3.json",
+            tmp_path / "missing-train.sqlite",
+            tmp_path / "missing-later.sqlite",
+            tmp_path,
+        )
+    assert not (tmp_path / "validation_report.json").exists()
