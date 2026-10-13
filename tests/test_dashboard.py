@@ -142,6 +142,10 @@ def test_monthly_research_never_implies_a_released_model() -> None:
     app = AppTest.from_file(str(ROOT / "src/dashboard/app.py")).run(timeout=20)
     app.radio[0].set_value("Riset panel bulanan").run(timeout=20)
     assert not app.exception
-    assert any("Evaluasi independen belum dijalankan" in item.value for item in app.caption)
+    assert any("Training dan validation selesai" in item.value for item in app.caption)
+    assert any("Test belum dibuka" in item.value for item in app.caption)
+    status = app.dataframe[0].value
+    assert "HOLD" in status["Status"].tolist()
+    assert "DITERIMA UNTUK RISET PRIVAT" in status["Status"].tolist()
     assert any("Horizon 3 bulan" in item.value for item in app.info)
     assert any("tidak mengesahkan model untuk fintech" in item.value for item in app.warning)

@@ -951,7 +951,9 @@ def _monthly_research(evidence: Evidence) -> None:
         "Studi Freddie Mac yang terpisah mengembangkan pola panel bulanan untuk "
         "pemantauan setelah pencairan, dengan populasi hipotek AS."
     )
-    st.caption("Status implementasi lokal: 7 Oktober 2026 · Evaluasi independen belum dijalankan")
+    st.caption(
+        "Status lokal: 13 Oktober 2026 · Training dan validation selesai · Test belum dibuka"
+    )
     _flow(
         [
             ("Panel bulanan", "Satu pinjaman × bulan laporan"),
@@ -970,18 +972,26 @@ def _monthly_research(evidence: Evidence) -> None:
                 },
                 {
                     "Tahap": "Admission sumber",
-                    "Status": "TERTAHAN",
-                    "Bukti / batas": "Release/cutoff, hak penggunaan dan point-in-time terbuka",
+                    "Status": "DITERIMA UNTUK RISET PRIVAT",
+                    "Bukti / batas": (
+                        "Cutoff portal dan ketentuan ditinjau; release diinferensikan, "
+                        "point-in-time belum terbukti"
+                    ),
                 },
                 {
-                    "Tahap": "Train / validation / test",
-                    "Status": "BELUM DIJALANKAN",
-                    "Bukti / batas": "Rancangan vintage 2018 / 2019 / 2020; test 2020 disegel",
+                    "Tahap": "Training dan validation",
+                    "Status": "SELESAI — KANDIDAT BELUM LOLOS",
+                    "Bukti / batas": (
+                        "Dua protokol terbatas; ranking membaik, gate probabilitas "
+                        "dan kapasitas belum terpenuhi"
+                    ),
                 },
                 {
-                    "Tahap": "Scoring",
-                    "Status": "TERTAHAN",
-                    "Bukti / batas": "Belum ada model lolos evaluasi atau bundle real diterima",
+                    "Tahap": "Test dan scoring",
+                    "Status": "HOLD",
+                    "Bukti / batas": (
+                        "Validation gagal; test 2020 tetap tertutup " "dan model belum dipromosikan"
+                    ),
                 },
             ]
         ),
@@ -1000,6 +1010,15 @@ def _monthly_research(evidence: Evidence) -> None:
         "belum terbukti optimal. Data historis dapat dikoreksi; bulan laporan belum "
         "membuktikan tanggal informasi tersedia. Tidak ada alert pinjaman aktif saat ini."
     )
+    st.subheader("Hasil pengembangan lokal")
+    st.write(
+        "Baseline konstan, Logistic Regression dan model pohon histogram dibandingkan "
+        "pada cohort yang sama. Versi berikutnya menambah credit score, LTV/CLTV dan DTI "
+        "origination. Tambahan informasi memperbaiki ranking, tetapi probabilitas dan "
+        "recall pada kapasitas alert yang ditetapkan belum memenuhi gate. "
+        "Hasil numerik dan artefak model disimpan privat. Test dipertahankan untuk "
+        "evaluasi independen kandidat yang memenuhi syarat."
+    )
     st.subheader("Evaluasi dan rilis berikutnya")
     st.write(
         "Preprocessing hanya di-fit pada train. Kandidat dan kalibrasi dipilih pada "
@@ -1016,7 +1035,9 @@ def _monthly_research(evidence: Evidence) -> None:
     )
     st.markdown(
         f"[Protokol panel, split dan kontrol rilis]({REPOSITORY_URL}/blob/"
-        "codex/m0-mentoring/docs/FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md)"
+        "codex/m0-mentoring/docs/FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md) · "
+        f"[Hasil training dan keputusan]({REPOSITORY_URL}/blob/"
+        "codex/m0-mentoring/docs/FREDDIE_TRAINING_VALIDATION_2026-10-13.md)"
     )
 
 
