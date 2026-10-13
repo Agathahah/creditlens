@@ -372,3 +372,32 @@ termasuk test files; non-test src 84,45%. Modul baru metrics/origination/release
 93%/92%/72%/74%. CLI/malformed/abort branches dan integration skips tetap gap yang dilaporkan.
 Tes sintetis tidak mengesahkan model real, bundle serving atau produksi. CI pada head baru
 akan dicatat sebagai bukti terpisah; tidak ada merge/tag/scoring deployment.
+
+
+## 13 Oktober 2026 — v3 kalibrasi dan ujian independen sekali
+
+Protokol v3 temporal/sigmoid dikunci sebelum statistik window baru/fit. Gate utama/budget
+v2 tetap; calibration unique-event minimum dan pembanding constant-calibration ditambah.
+Train 2018 diperluas; calibration/validation 2019 berbeda kalender dan loan-hash. Rencana
+test 2020 digeser ke kalender sesudah outcome validation selesai, sebelum source dibuka.
+Base pipeline fit train; FrozenEstimator melindungi model/median/scaling saat calibrator
+fit cohort tersendiri. sklearn minimum 1.6 untuk public FrozenEstimator API; runtime aktual
+tercatat pada private reports. Tidak ada pencarian model/threshold pada test.
+
+V3 nyata selesai: 13,478 detik/sekitar1,532 GiB RSS worker tersampel; HGB+sigmoid lulus gate
+validation dan checker. Kontrak test tersendiri mengikat candidate/report/protocol/source
+hash. Ledger2020 consumed dibuat sebelum akses member, panel privat diaudit dan kandidat
+predict sekali:33,346 detik/656,4 MiB. Test lulus semua gate kecuali fixed-capacity recall;
+REJECT_TEST/HOLD. Seluruh vintage 2020 terpakai. Historical manifests/code snapshots dijaga;
+current manifests mencatat consumption, mencegah penggunaan protokol tersebut kembali.
+
+Notebook11 privat dengan6 code cells dieksekusi, cohort reconciliation dan konsumsi test
+lulus; dua grafik hasil dibuat. Numeric/model/data tidak diunggah. Dashboard research
+page dan public docs hanya status/metode/batas, termasuk penolakan ujian independen.
+
+Verifikasi lokal final:237 passed,4 skipped,8 warnings dalam20,08 detik. Black/isort/ruff lulus;
+strict mypy88 source files. Coverage total 88% termasuk test; non-test 83,31%. Calibrated/test
+orchestrators74% / 66%; CLI/invalid admission/support/abort gaps tetap dicatat. Penamaan
+worker memicu koleksi pytest dan fixture sintetis awal kurang scope; diperbaiki, lalu
+seluruh suite lulus. Fit/test nyata tidak diulang untuk perbaikan. CI head/publik dashboard
+akan diverifikasi terpisah; model/API release bukan konsekuensi software PASS.

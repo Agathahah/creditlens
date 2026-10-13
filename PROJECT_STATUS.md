@@ -1,8 +1,10 @@
 # CreditLens project status
 
-Updated 2026-10-13. M0 data recovery is implemented and the approved bounded M1 local
-experiment has completed. The candidate failed release gates. The next holdout direction is approved,
-but a new auditable dataset/snapshot has not been admitted; the project is not production ready.
+Updated 2026-10-13. M0 recovery and the bounded LendingClub M1 experiment are complete;
+the historical LendingClub model remains rejected. Freddie source admission and v3 local
+calibrated research are complete. V3 passed development validation but failed the one-shot
+independent test recall gate. Vintage 2020 is consumed; scoring remains HOLD and the project
+is not production ready.
 
 **Current product direction (30 September):** portfolio monitoring after disbursement.
 The old application-time M1 experiment and its gate are historical evidence, not an
@@ -45,7 +47,29 @@ preliminary source intake, not admission for training or a CreditLens fintech sc
 See the [sanitized intake report](docs/audit/FREDDIE_SAMPLE_INTAKE_2026-10-05.md).
 
 
-## Current — 2026-10-13: bounded mortgage training completed
+## Current — v3 calibration and independent test completed
+
+The v3 protocol was locked before new development-window statistics or fit. Train vintage2018
+was expanded across pre-crisis/crisis periods; calibration and validation vintage2019 are
+separate in calendar and loan identity. HGB plus frozen-base sigmoid passed all validation
+criteria. A separate checksum-bound test contract was then locked and executed once on
+vintage2020 at a later calendar window, with no fitting or threshold/model changes.
+
+Independent test passed ranking, uncertainty, support and both Brier-baseline criteria but
+failed fixed top1% capacity recall: **REJECT_TEST**. The consumption ledger was created before
+first ZIP-member access; all vintage2020 is now consumed, including unused calendar windows.
+Current private manifests record consumption and preserve their previous bytes as evidence.
+This supersedes the earlier sealed-test statements below. No retraining/retesting on this
+source, bundle promotion, API scoring activation or production acceptance occurred.
+
+The public research page reports completed validation/test and the specific failure without
+loading private numerical outputs. [V3 design and results](docs/FREDDIE_V3_CALIBRATION_PROTOCOL.md)
+and [next research/service sequence](docs/FREDDIE_NEXT_RESEARCH_AND_SERVICE.md) describe the
+implemented evidence, private-source boundaries and next independent-data requirement.
+Local software suite: 237 passed, 4 skipped; black/isort/ruff and mypy pass. CI/public dashboard
+revision checks remain separate. Numeric results, models, manifests and notebook11 stay private.
+
+## Earlier 2026-10-13 — v1/v2 bounded mortgage training
 
 Private/internal mortgage research terms have been accepted. Freddie source admission is
 complete for corrected retrospective research with inferred Release 47 binding; publisher
