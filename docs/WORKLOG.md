@@ -339,3 +339,36 @@ The owner subsequently approved the exact experiment protocol hash and retrospec
 on 9 October. Private review records reflect that approval, while source release binding and
 terms remain unconfirmed. A fresh advisory preflight reports exactly those two blockers.
 Configuration bytes and frozen-test contents remain unchanged; no fit/evaluation was started.
+
+
+## 13 Oktober 2026 — admission privat, training nyata dan penolakan validation
+
+Sumber diterima untuk riset pribadi/internal hipotek. Portal mengonfirmasi cutoff/populasi;
+Release 47 diinferensikan dengan referensi resmi dan layout lokal, tanpa checksum penerbit.
+Batas corrected retrospective/point-in-time dan distribusi publik tetap eksplisit.
+Status pending 9 Oktober kini digantikan hasil admission, bukan alasan meminta review ulang.
+
+Panel validation 2019 dibangun privat. Protokol v1 yang disetujui dijalankan dengan constant,
+Logistic Regression dan HistGradientBoosting. Setelah validation development gagal, protokol
+v2 terkunci menambah empat covariate origination dengan sentinel resmi dan join loan key.
+Gate/split/budget tidak berubah. Keduanya REJECT_VALIDATION; frozen ZIP 2020 hanya di-hash
+sebagai byte dan member/outcome tidak dibuka. Kandidat tidak digunakan oleh API.
+
+Runner mengawasi dua thread, 15 menit dan worker RSS 2 GiB; monitor gagal menyebabkan abort.
+Run nyata v1: 15,476 detik/740,5 MiB RSS tersampel; v2: 13,647 detik/1.023,5 MiB.
+Angka RSS bukan peak instan atau pengukuran seluruh service. Code snapshot, source/protocol
+hash, private pipeline/predictions/reports dan parity probe disimpan di luar Git.
+Checker candidate menghitung ulang gate tanpa memuat bobot: v1 gagal AP/Brier/recall;
+v2 gagal Brier/recall. Preflight hanya menilai admission, bukan hasil model.
+
+Dokumen teknis mencatat sumber ilmiah/metode/keterbatasan. Notebook privat dengan tujuh
+code cells dieksekusi, rekonsiliasi cohort lulus, tiga grafik ditinjau. Sensitivitas kapasitas
+adalah eksplorasi, tidak mengganti kebijakan rilis 1%. Numeric output/model tidak dipublikasi.
+Dashboard research status diperbarui tanpa membaca data Freddie privat.
+
+Suite lokal 219 passed, 4 skipped, 8 dependency warnings dalam 22,63 detik. Black/isort/ruff
+lulus seluruh source/tests/scripts dan mypy lulus 86 source files. Coverage total 89%
+termasuk test files; non-test src 84,45%. Modul baru metrics/origination/release/train:
+93%/92%/72%/74%. CLI/malformed/abort branches dan integration skips tetap gap yang dilaporkan.
+Tes sintetis tidak mengesahkan model real, bundle serving atau produksi. CI pada head baru
+akan dicatat sebagai bukti terpisah; tidak ada merge/tag/scoring deployment.

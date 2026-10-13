@@ -1,6 +1,6 @@
 # CreditLens technical documentation
 
-Updated 2026-09-30. Documentation records implemented behavior, decisions, validation evidence and remaining work. The current product direction is portfolio monitoring after disbursement; older application-time plans remain dated historical context.
+Updated 2026-10-13. Documentation records implemented behavior, decisions, validation evidence and remaining work. The current product direction is portfolio monitoring after disbursement; older application-time plans remain dated historical context.
 
 | Document | Purpose |
 |---|---|
@@ -51,3 +51,5 @@ Raw data, credentials and backup archives are not repository deliverables. Histo
 - [Monthly mortgage research protocol](FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md): private panel builder, three-month labels, censored outcomes, sealed test and service release gates.
 
 - [Mortgage admission and release preparation](FREDDIE_RELEASE_PREPARATION_2026-10-09.md): official release evidence, proposed hash-bound experiment, advisory admission and request/CORS limits.
+
+- [Mortgage training and validation evidence](FREDDIE_TRAINING_VALIDATION_2026-10-13.md): accepted private source, real bounded v1/v2 runs, rejected candidates, untouched test and remaining service gates.

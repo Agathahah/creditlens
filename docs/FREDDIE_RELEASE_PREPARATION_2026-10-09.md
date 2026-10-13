@@ -1,5 +1,7 @@
 # Persiapan admission dan rilis riset hipotek
 
+> Pembaruan 13 Oktober: sumber telah diterima untuk riset privat dan training/validation v1/v2 selesai, keduanya ditolak. Test belum dibuka. [Bukti terbaru](FREDDIE_TRAINING_VALIDATION_2026-10-13.md) menggantikan status pending di bawah; bagian bertanggal 9 Oktober adalah riwayat.
+
 Tanggal: 9 Oktober 2026. Status: **protokol eksperimen lokal disetujui per hash; penerimaan sumber belum lengkap**.
 Scoring LendingClub tetap HOLD. Dokumen ini tidak mengizinkan training penuh, membuka test,
 merge, tag, deployment atau penggunaan model hipotek pada pinjaman fintech.

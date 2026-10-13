@@ -1,6 +1,6 @@
 # CreditLens project status
 
-Updated 2026-10-09. M0 data recovery is implemented and the approved bounded M1 local
+Updated 2026-10-13. M0 data recovery is implemented and the approved bounded M1 local
 experiment has completed. The candidate failed release gates. The next holdout direction is approved,
 but a new auditable dataset/snapshot has not been admitted; the project is not production ready.
 
@@ -43,6 +43,28 @@ bounded structural inspection: 50,000 unique origination loans, 2,059,564 monthl
 rows, period 2018-01 through 2026-03, and no basic key/period defects observed. This is a
 preliminary source intake, not admission for training or a CreditLens fintech scoring release.
 See the [sanitized intake report](docs/audit/FREDDIE_SAMPLE_INTAKE_2026-10-05.md).
+
+
+## Current — 2026-10-13: bounded mortgage training completed
+
+Private/internal mortgage research terms have been accepted. Freddie source admission is
+complete for corrected retrospective research with inferred Release 47 binding; publisher
+checksums and operational point-in-time validity are not established. This supersedes the
+source-pending entries below, which retain their dated historical context.
+
+Real bounded training and development validation completed for v1 and a locked, domain-motivated
+v2 adding four origination features. Both validation decisions are **REJECT_VALIDATION**.
+V2 improves ranking but still fails probability-quality and fixed alert-capacity recall gates.
+Frozen-test vintage 2020 remains unopened; there is no accepted mortgage serving bundle.
+The LendingClub historical model remains rejected. Scoring release remains HOLD.
+
+Software includes supervised training, train-only preprocessing, private artifact checksums,
+loan-cluster uncertainty and a candidate eligibility checker that recomputes validation gates.
+The dashboard research page now reports completed training and failed validation without
+loading private data. Numeric mortgage results/models/notebooks stay outside publication.
+[Training evidence and limits](docs/FREDDIE_TRAINING_VALIDATION_2026-10-13.md) record methods,
+resource measurements, validation and the actual release blockers. Local suite: 219 passed,
+4 skipped; CI/public deployment for the new revision require separate evidence.
 
 ## 2026-10-09 — admission and request boundary preparation
 
