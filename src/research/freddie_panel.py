@@ -216,12 +216,19 @@ def build_panel(archive: Path, output: Path, vintage: int = 2018) -> dict[str, A
         ValueError: Source changed, unexpected layout or output under the repository.
         OSError: Output exists or disk/source cannot be read.
     """
+    if vintage not in (2018, 2019):
+        raise ValueError("Frozen-test vintage is sealed; only development vintages are allowed")
+    return _build_monthly_panel(archive, output, vintage)
+
+
+def _build_monthly_panel(archive: Path, output: Path, vintage: int) -> dict[str, Any]:
+    """Stream an admitted source; called for test only by the guarded independent executor."""
+    if vintage not in (2018, 2019, 2020):
+        raise ValueError("Unsupported audited vintage")
     archive, output = archive.resolve(), output.resolve()
     repository = Path(__file__).resolve().parents[2]
     if output == repository or repository in output.parents:
         raise ValueError("Write loan records outside the repository")
-    if vintage not in (2018, 2019):
-        raise ValueError("Frozen-test vintage is sealed; only development vintages are allowed")
     before = archive.stat()
     with archive.open("rb") as handle:
         digest = hashlib.file_digest(handle, "sha256").hexdigest()

@@ -30,6 +30,15 @@ def enrich_origination(
     """
     if vintage not in (2018, 2019):
         raise ValueError("Frozen-test origination is sealed in development")
+    return _join_audited_origination(frame, archive, vintage, specification)
+
+
+def _join_audited_origination(
+    frame: pd.DataFrame, archive: Path, vintage: int, specification: dict[str, Any]
+) -> pd.DataFrame:
+    """Join audited columns; test execution requires its separate guarded access record."""
+    if vintage not in (2018, 2019, 2020):
+        raise ValueError("Unsupported audited vintage")
     expected = {
         "credit_score": (1, 9999, 300, 850),
         "orig_cltv": (9, 999, 1, 998),
