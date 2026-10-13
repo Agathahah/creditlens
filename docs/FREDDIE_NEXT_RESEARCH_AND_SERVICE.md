@@ -9,9 +9,10 @@ dikonfirmasi ulang. Data Freddie tetap riset hipotek retrospektif privat.
 1. **Audit fitur ke belakang pada development 2018/2019.** Kandidat fitur: worst/number
    of delinquency observations dalam 6/12bulan sebelumnya, waktu sejak tunggakan terakhir,
    completeness riwayat dan perubahan UPB. Semua menggunakan bulan sebelum/as-of yang
-   terkunci; tidak memakai future status, recovery atau outcome. Whitelist, kalender,
-   missingness dan availability harus dikunci sebelum fit. Ini usulan, belum implementasi
-   atau bukti recall akan meningkat.
+   terkunci; tidak memakai future status, recovery atau outcome. Audit development
+   kini diimplementasikan dengan [kontrak eksplisit](FREDDIE_DEVELOPMENT_HISTORY_AUDIT.md).
+   Whitelist baru, kalender, missingness dan availability masih harus dikunci sebelum
+   fit baru; audit bukan bukti recall akan meningkat.
 2. **Sediakan holdout baru.** Sample 2021/2022 SFLLD adalah kandidat intake berikutnya,
    belum ditemukan lokal. Simpan privat; hash sumber, layout, release/cutoff dan batas
    penggunaan harus tercatat. Jangan memakai outcome holdout untuk memilih fitur,

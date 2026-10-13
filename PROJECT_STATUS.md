@@ -69,6 +69,21 @@ implemented evidence, private-source boundaries and next independent-data requir
 Local software suite: 237 passed, 4 skipped; black/isort/ruff and mypy pass. CI/public dashboard
 revision checks remain separate. Numeric results, models, manifests and notebook11 stay private.
 
+## Current follow-up — development history audit
+
+A bounded past-history candidate audit is implemented and exercised on admitted development
+2018/2019 only. Its eligible observation counts reconcile with the v3 development cohorts;
+no future labels, fitting, test archive access or candidate promotion occurs. Calendar gaps
+and unknown statuses remain explicit. Quantiles are approximate bounded-reservoir summaries;
+counts and moments use the full eligible development observations. Numeric profiles remain
+private. See [the audit contract](docs/FREDDIE_DEVELOPMENT_HISTORY_AUDIT.md).
+
+The remaining owner action is private metadata intake for new samples 2021/2022 and public UI
+verification. They are not available locally at this checkpoint. A fresh experiment must lock
+availability, features, cohort, calibration, alert policy and independent test before fitting.
+The local disk has less than the documented 8-GiB dashboard-build guard; Docker packaging is
+verified separately by CI. Source admission already accepted is not requested again.
+
 ## Earlier 2026-10-13 — v1/v2 bounded mortgage training
 
 Private/internal mortgage research terms have been accepted. Freddie source admission is

@@ -401,3 +401,20 @@ orchestrators74% / 66%; CLI/invalid admission/support/abort gaps tetap dicatat. 
 worker memicu koleksi pytest dan fixture sintetis awal kurang scope; diperbaiki, lalu
 seluruh suite lulus. Fit/test nyata tidak diulang untuk perbaikan. CI head/publik dashboard
 akan diverifikasi terpisah; model/API release bukan konsekuensi software PASS.
+
+## 2026-10-13 — development history profiling
+
+Implemented a development-only, checksum-bound streaming audit of exact past-calendar
+6/12-month delinquency/completeness and 3/6/12-month UPB stock-change candidates. It uses the
+locked v3 development windows and loan partition, no future label calculation or fitting,
+and does not access consumed vintage2020 or future holdout candidates. A real bounded audit
+completed and reconciled eligible counts with prior development evidence. Profiles and
+resource logs remain private; the feature whitelist and a new fit protocol are not accepted
+by this audit. Numeric sample outputs and learning notes are not repository deliverables.
+
+Synthetic tests cover missing-calendar/unknown-status semantics, future-record invariance,
+recency/balance calculations, identity ordering, bounded approximate quantiles and rejecting
+nondevelopment sources before reading them, private output boundaries, no identifier export
+and preserved reports on repeated calls. New audit suite: 11 passed; related integration/UI
+contracts: 52 passed. Black/isort/ruff and mypy on 89 source files pass. Scoring remains HOLD;
+public Streamlit revision verification and new-sample intake remain separate owner actions.

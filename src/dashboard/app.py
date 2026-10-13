@@ -1018,6 +1018,14 @@ def _monthly_research(evidence: Evidence) -> None:
         "gagal; kandidat tetap ditolak untuk rilis. Hasil numerik dan artefak model "
         "disimpan privat. Perubahan berikutnya memerlukan holdout baru."
     )
+    st.subheader("Pengembangan riwayat sebelum prediksi")
+    st.write(
+        "Audit lokal pada data pengembangan telah memeriksa kelengkapan riwayat "
+        "6/12 bulan, tunggakan sebelumnya dan perubahan saldo. Bulan yang hilang "
+        "tetap dibedakan dari bulan lancar. Audit tidak melatih ulang model atau "
+        "membaca vintage ujian; dampaknya pada kualitas model belum diuji. "
+        "Sampel 2021/2022 masih calon sumber untuk intake, bukan model yang telah dirilis."
+    )
     st.subheader("Evaluasi dan rilis berikutnya")
     st.write(
         "Preprocessing hanya di-fit pada train. Kandidat dan kalibrasi dipilih pada "

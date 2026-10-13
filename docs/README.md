@@ -56,3 +56,5 @@ Raw data, credentials and backup archives are not repository deliverables. Histo
 
 - [Mortgage v3 calibration and independent test](FREDDIE_V3_CALIBRATION_PROTOCOL.md): locked temporal/loan splits, sigmoid calibration, validation acceptance and one-shot test rejection.
 - [Next mortgage research and service acceptance](FREDDIE_NEXT_RESEARCH_AND_SERVICE.md): backward-feature audit, new holdout and concrete bundle/API/operations gates.
+
+- [Development history audit](FREDDIE_DEVELOPMENT_HISTORY_AUDIT.md): past-calendar candidates, private aggregate profiling, frozen-source exclusion and bounded execution.
