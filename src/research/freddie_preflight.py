@@ -108,7 +108,21 @@ def assess_admission(manifest_path: Path, protocol_path: Path) -> dict[str, Any]
         blockers.append("owner_review_date_missing_or_invalid")
     if manifest.get("frozen_test_opened") is not False:
         blockers.append("frozen_test_not_sealed")
-    if manifest.get("validation_outcomes_inspected") is not False:
+    validation_opened_under_lock = False
+    if manifest.get("validation_outcomes_inspected") is True:
+        try:
+            opened_at = date.fromisoformat(str(manifest.get("validation_opened_at_local_date")))
+            approved_at = date.fromisoformat(str(review.get("reviewed_at")))
+            validation_opened_under_lock = (
+                review.get("experiment_protocol_approved") is True
+                and manifest.get("validation_opened_under_protocol_sha256") == sha256(protocol_path)
+                and approved_at <= opened_at <= date.today()
+            )
+        except ValueError:
+            pass
+        if not validation_opened_under_lock:
+            blockers.append("validation_inspected_before_protocol_lock")
+    elif manifest.get("validation_outcomes_inspected") is not False:
         blockers.append("validation_inspected_before_protocol_lock")
     if manifest.get("point_in_time_verified") is not False:
         blockers.append("retrospective_scope_requires_explicit_pit_limitation")
@@ -151,8 +165,9 @@ def assess_admission(manifest_path: Path, protocol_path: Path) -> dict[str, Any]
         "training_preflight": "BLOCKED" if blockers else "ELIGIBLE_FOR_REVIEW",
         "blockers": blockers,
         "scoring_release": "HOLD",
-        "model_evaluation": "NOT_RUN",
+        "model_evaluation": "NOT_ASSESSED_BY_PREFLIGHT",
         "frozen_test_contents_opened_by_preflight": False,
+        "validation_opened_under_protocol_lock": validation_opened_under_lock,
         "limitations": [
             "Owner review and intake fields are recorded assertions, not signatures",
             "Corrected snapshot; point-in-time operational validity is not established",

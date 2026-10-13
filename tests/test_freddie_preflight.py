@@ -63,7 +63,7 @@ def test_complete_admission_never_releases_scoring_or_opens_zip(
     result = assess_admission(path, protocol)
     assert result["training_preflight"] == "ELIGIBLE_FOR_REVIEW"
     assert result["scoring_release"] == "HOLD"
-    assert result["model_evaluation"] == "NOT_RUN"
+    assert result["model_evaluation"] == "NOT_ASSESSED_BY_PREFLIGHT"
     assert result["frozen_test_contents_opened_by_preflight"] is False
 
 
