@@ -194,7 +194,7 @@ def validation_gates(
         Named boolean results; any false result prevents opening frozen test.
     """
     lower = uncertainty["ap_lift_95pct_interval"][0]
-    return {
+    checks = {
         "unique_event_support": unique_events
         >= gates["minimum_unique_adverse_loans"]["validation"],
         "ap_lift": metrics["ap_lift"] >= gates["ap_lift_over_prevalence_minimum"],
@@ -210,3 +210,9 @@ def validation_gates(
         >= gates["alert_precision_lift_over_prevalence_minimum"],
         "nonempty_alerts": metrics["capacity"]["alerts"] > 0,
     }
+    if "calibration_constant_brier_skill_minimum_exclusive" in gates:
+        checks["calibration_constant_brier_skill"] = (
+            metrics["calibration_constant_brier_skill"]
+            > gates["calibration_constant_brier_skill_minimum_exclusive"]
+        )
+    return checks

@@ -67,7 +67,7 @@ def test_complete_validation_is_only_eligible_for_test_not_serving(
     assert result["eligible_for_test_consideration"] is True
     assert result["scoring_release"] == "HOLD"
     assert result["weights_deserialized"] is False
-    assert result["independent_test_evaluation"] == "NOT_RUN"
+    assert result["independent_test_evaluation"] == "NOT_ASSESSED_BY_VALIDATION_CHECKER"
 
 
 def test_false_pass_does_not_override_failed_capacity(
@@ -106,3 +106,45 @@ def test_missing_or_changed_identity_blocks_progress(
     result = assess_validation_candidate(directory, protocol)
     assert reason in result["blockers"]
     assert result["eligible_for_test_consideration"] is False
+
+
+@pytest.mark.parametrize("change", ["none", "skill", "support", "overlap"])
+def test_v3_calibration_evidence_is_recomputed_before_test_consideration(
+    candidate_evidence: tuple[Path, Path, dict[str, Any]], change: str
+) -> None:
+    """Calibration skill/support/identity cannot be replaced by a fabricated PASS flag."""
+    directory, protocol, report = candidate_evidence
+    root = Path(__file__).resolve().parents[1]
+    protocol.write_bytes((root / "config/research/freddie_experiment_v3.json").read_bytes())
+    report["protocol_sha256"] = sha256(protocol)
+    metrics = report["candidates"]["logistic_regression"]
+    baseline = 0.01 * 0.99**2 + 0.99 * 0.01**2
+    metrics.update(
+        calibration_constant_brier=baseline, calibration_constant_brier_skill=1 - 0.008 / baseline
+    )
+    report["counts"]["calibration"] = {
+        "adverse_observations": 100,
+        "labeled": 10000,
+        "unique_adverse_loans": 60,
+    }
+    report["support_checks"] = {"calibration": True}
+    report["loan_identity_overlap"] = 0
+    report["validation_gates"] = validation_gates(
+        metrics,
+        report["uncertainty"],
+        50,
+        json.loads(protocol.read_text())["proposed_research_gates"],
+    )
+    if change == "skill":
+        metrics["calibration_constant_brier_skill"] = 0.2
+    elif change == "support":
+        report["counts"]["calibration"]["unique_adverse_loans"] = 10
+    elif change == "overlap":
+        report["loan_identity_overlap"] = 1
+    (directory / "validation_report.json").write_text(json.dumps(report))
+    result = assess_validation_candidate(directory, protocol)
+    assert result["eligible_for_test_consideration"] is (change == "none")
+    if change != "none":
+        assert "invalid_calibration_evidence" in result["blockers"]
+    assert result["weights_deserialized"] is False
+    assert result["scoring_release"] == "HOLD"

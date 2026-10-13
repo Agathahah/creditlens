@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import signal
@@ -24,6 +25,7 @@ APPROVED_PROTOCOL_SHA = "c17999bce05357b4ef937eee474b0549702c811de91ccd43a8017a1
 
 APPROVED_PROTOCOL_SHAS = {
     APPROVED_PROTOCOL_SHA,
+    "f4eef57a25e638f9a4c694a16f3d93d2bd8ee8f50440d5c9758cbd440eee0411",
     "01f06de390b6b64503e23f5926f3f143d1d86cdcd3cee221e0dd9853c8f2c975",
 }
 
@@ -96,6 +98,23 @@ def load_window(panel: Path, split: dict[str, Any]) -> tuple[pd.DataFrame, dict[
         raise ValueError("Empty or invalid loan-month cohort")
     if not frame["vintage"].eq(split["vintage"]).all() or not frame["horizon_months"].eq(3).all():
         raise ValueError("Wrong panel contract")
+    partition = split.get("loan_partition")
+    if partition is not None:
+        if (
+            partition.get("method") != "sha256_mod_2"
+            or type(partition.get("bucket")) is not int
+            or partition.get("bucket") not in (0, 1)
+            or not isinstance(partition.get("salt"), str)
+            or not partition["salt"]
+        ):
+            raise ValueError("Invalid deterministic loan partition")
+        buckets = {
+            key: int(hashlib.sha256((partition["salt"] + ":" + key).encode()).hexdigest(), 16) % 2
+            for key in frame["loan_id"].unique()
+        }
+        frame = frame.loc[frame["loan_id"].map(buckets).eq(partition["bucket"])].copy()
+        if frame.empty:
+            raise ValueError("Empty loan partition")
     labeled = frame.loc[frame["label"].notna()].copy()
     if not labeled["label"].isin([0, 1]).all() or labeled["label_observed_period"].isna().any():
         raise ValueError("Invalid labels or missing establishment dates")

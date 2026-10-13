@@ -63,6 +63,29 @@ def assess_validation_candidate(run: Path, protocol: Path) -> dict[str, Any]:
             abs_tol=1e-12,
         ):
             blockers.append("derived_metric_mismatch")
+        if (
+            "calibration_constant_brier_skill_minimum_exclusive"
+            in config["proposed_research_gates"]
+        ):
+            calibration = report["counts"]["calibration"]
+            cal_pi = calibration["adverse_observations"] / calibration["labeled"]
+            baseline = (
+                metrics["prevalence"] * (1 - cal_pi) ** 2 + (1 - metrics["prevalence"]) * cal_pi**2
+            )
+            if (
+                calibration["unique_adverse_loans"]
+                < config["calibration"]["minimum_unique_adverse_loans"]
+                or not report.get("support_checks", {}).get("calibration", False)
+                or report.get("loan_identity_overlap") != 0
+                or not math.isclose(metrics["calibration_constant_brier"], baseline, rel_tol=1e-10)
+                or not math.isclose(
+                    metrics["calibration_constant_brier_skill"],
+                    1 - metrics["brier"] / baseline,
+                    rel_tol=1e-10,
+                    abs_tol=1e-12,
+                )
+            ):
+                blockers.append("invalid_calibration_evidence")
         capacity = metrics["capacity"]
         alerts = capacity["alerts"]
         hits = capacity["true_positive_alerts"]
@@ -110,7 +133,7 @@ def assess_validation_candidate(run: Path, protocol: Path) -> dict[str, Any]:
         "eligible_for_test_consideration": not blockers,
         "blockers": blockers,
         "scoring_release": "HOLD",
-        "independent_test_evaluation": "NOT_RUN",
+        "independent_test_evaluation": "NOT_ASSESSED_BY_VALIDATION_CHECKER",
         "weights_deserialized": False,
         "limitations": [
             "Trusted operator evidence, not a cryptographic release attestation",
