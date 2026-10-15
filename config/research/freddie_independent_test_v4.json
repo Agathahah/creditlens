@@ -1,0 +1,60 @@
+{
+  "execution_id": "freddie_v4_history_independent_test_once_20261014",
+  "scope": "PRIVATE_RETROSPECTIVE_MORTGAGE_RESEARCH_ONLY",
+  "experiment_protocol_sha256": "2b034c94ca49445793a9c5e3f1d598cdbbdd9f45aa12070b2fc544051202535b",
+  "validation_report_sha256": "60b567ad1957bf70c52b6300ee57fe5510d6b9f29cd3d50f423acc7fd7646643",
+  "candidate_sha256": "d2554d0557e928d1e238af30e1c3cd23548207b881d488caa1df204f6e4484f6",
+  "source_manifest_sha256": "8ef74fbf0c816c2dec6380a40e6046926a299b3b79cfb78756570cf710d5c77f",
+  "test_source_sha256": "d0d33da246a318ee43639f19aad904e9208076143381a40f0666452cb5de6964",
+  "development_identity_sha256": "832e5d8ed66898224f52cd2697254cd2a6352b7eb644d0d91735248a615f755b",
+  "test_window": {
+    "vintage": 2022,
+    "as_of_start": "202504",
+    "as_of_end": "202512",
+    "last_outcome": "202603"
+  },
+  "features": [
+    "upb",
+    "loan_age",
+    "remaining_months",
+    "interest_rate",
+    "prior_dq_1",
+    "prior_dq_2",
+    "credit_score",
+    "orig_cltv",
+    "orig_dti",
+    "orig_ltv",
+    "worst_dq_6",
+    "dq_months_6",
+    "complete_status_6",
+    "worst_dq_12",
+    "dq_months_12",
+    "complete_status_12",
+    "months_since_known_dq_12",
+    "upb_change_ratio_3",
+    "upb_change_ratio_12"
+  ],
+  "feature_dtype": "float32",
+  "resource_budget": {
+    "threads": 2,
+    "max_elapsed_minutes": 15,
+    "max_rss_gib": 2,
+    "seed": 42
+  },
+  "fit_or_threshold_mutations_allowed": false,
+  "all_test_vintage_contents_consumed_on_first_access": true,
+  "public_scoring_authorized": false,
+  "normalized_executor_sha256": "f68de3e03d1c85bc229d92fe8cabbcba19411cc9217199e466778dca04da667b",
+  "test_module_sha256": {
+    "freddie_history_train": "eec707d646aa1a4842983fce2604dc6ca0dbbde93007d6a8a2826c608f6119bc",
+    "freddie_history_audit": "75ffd3e499cdc434d567ad054470fb7955981bd9b86578543b8bbc1a7df796d8",
+    "freddie_calibrated": "f8d1e36a61031d4126b2cabab8474882a2aa0b01eed28b8093d6b60be1f5b7ca",
+    "freddie_panel": "2a11024069e4b414ae69ce8f91d6f95f8a4809dec86b86ffec1136f00396a306",
+    "freddie_metrics": "7358f814900b6fc5b0448a9bbdaefbda8a9f0039a98b446d3795b008439123c5",
+    "freddie_preflight": "c68cc586e02b45c136df1058b39c5a1c3d8fcc40956673043fb22b5639ac9a29",
+    "freddie_train": "f4bd2a76a4cfb5fec9cc7185eb9de84912816a547af5eea6a2a94de14e5cb110",
+    "freddie_release": "8b85004a620116ce7890592866d600d8191994e382ba8b6eae263ddf5edb8bf0",
+    "freddie_independent_test": "54ce3dfca3d5ae96886681602a58f227ebb7204821530faf8a62e4aa4c52d704"
+  },
+  "authorization_basis": "Conditional one-shot private research test under delegated continuation; validation recomputed and candidate locked; not production authorization."
+}
