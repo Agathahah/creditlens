@@ -418,3 +418,28 @@ nondevelopment sources before reading them, private output boundaries, no identi
 and preserved reports on repeated calls. New audit suite: 11 passed; related integration/UI
 contracts: 52 passed. Black/isort/ruff and mypy on 89 source files pass. Scoring remains HOLD;
 public Streamlit revision verification and new-sample intake remain separate owner actions.
+
+## 2026-10-14/15 — v4 accepted mortgage research and private HTTP verification
+
+Locked v4 before new vintage2021 outcome inspection or fit. Added calendar-exact past-history
+features, compact float32 streaming cohorts, recent calibration/validation with complementary
+loan partitions, explicit support/censoring and the unchanged numeric gates/resource budget.
+The bounded real development run selected calibrated HGB and passed all validation criteria.
+The separate checker recomputed acceptance before a candidate/source/code/runtime/schema-bound
+one-shot contract opened vintage2022. All independent research gates passed without fitting or
+selection changes. Entire vintage2022 is consumed; vintage2020 was not reopened. Source/code
+snapshots, numeric reports, weights, predictions, resource reports and usage ledgers stay private.
+
+An isolated private loopback feature-scoring app verifies the accepted research bundle before
+loading trusted weights. It uses bearer auth, actual body-byte and per-process rate limits,
+float32 exact schema/domain/missing checks and a no-input-echo validation handler. A real
+HTTP smoke on synthetic features matched offline/reload probability exactly, exercised
+401/422/413 (including NaN), and stopped its temporary server. Synthetic tests also exercised
+429 and retained production HOLD. This is feature-only parity, not raw-record/online-history
+availability, HTTPS, load/SLO, distributed rate limiting, delayed-label monitoring or operating
+rollback acceptance. No public API/model/data distribution, merge, tag or hosting spend.
+
+Local software suite: 275 passed, 4 skipped, 8 dependency/deprecation warnings. Black/isort/ruff
+and mypy on92sourcefiles pass. CI and public Streamlit revision verification remain separate;
+the research page records v4 acceptance and the remaining operating boundaries. Private learning
+notes/notebook/credential instructions are not repository deliverables.

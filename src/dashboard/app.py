@@ -951,7 +951,7 @@ def _monthly_research(evidence: Evidence) -> None:
         "Studi Freddie Mac yang terpisah mengembangkan pola panel bulanan untuk "
         "pemantauan setelah pencairan, dengan populasi hipotek AS."
     )
-    st.caption("Status lokal: 13 Oktober 2026 · V3 validation lulus · Ujian independen selesai")
+    st.caption("Status lokal: 15 Oktober 2026 · V4 validation lulus · Ujian independen lulus")
     _flow(
         [
             ("Panel bulanan", "Satu pinjaman × bulan laporan"),
@@ -978,18 +978,29 @@ def _monthly_research(evidence: Evidence) -> None:
                 },
                 {
                     "Tahap": "Training dan validation",
-                    "Status": "V3 LULUS VALIDATION",
+                    "Status": "V4 LULUS VALIDATION",
                     "Bukti / batas": (
-                        "Train diperluas, sigmoid pada cohort kalibrasi terpisah; "
-                        "gate validation v3 terpenuhi"
+                        "Fitur riwayat sebelum prediksi dan sigmoid pada cohort 2021 "
+                        "yang terpisah menurut pinjaman dan waktu"
                     ),
                 },
                 {
-                    "Tahap": "Test dan scoring",
+                    "Tahap": "Ujian independen v4",
+                    "Status": "LULUS RISET",
+                    "Bukti / batas": "Sampel 2022 diuji sekali; vintage 2020 dan 2022 terpakai",
+                },
+                {
+                    "Tahap": "API riset privat",
+                    "Status": "TERUJI LOKAL",
+                    "Bukti / batas": (
+                        "Loopback, bearer auth, batas request dan feature-only HTTP parity"
+                    ),
+                },
+                {
+                    "Tahap": "Layanan scoring fintech",
                     "Status": "HOLD",
                     "Bukti / batas": (
-                        "Ujian independen v3 gagal gate recall; vintage 2020 terpakai "
-                        "dan model tidak dipromosikan"
+                        "Availability, penggunaan operasional dan penerimaan layanan belum lengkap"
                     ),
                 },
             ]
@@ -1009,22 +1020,24 @@ def _monthly_research(evidence: Evidence) -> None:
         "belum terbukti optimal. Data historis dapat dikoreksi; bulan laporan belum "
         "membuktikan tanggal informasi tersedia. Tidak ada alert pinjaman aktif saat ini."
     )
-    st.subheader("Hasil pengembangan lokal")
+    st.subheader("Hasil v4 dan riwayat eksperimen")
     st.write(
-        "V1/v2 belum memenuhi gate validation. V3 memperluas periode train dan memakai "
-        "sigmoid pada cohort kalibrasi yang berbeda pinjaman serta lebih akhir waktunya. "
-        "Model pohon histogram terkalibrasi memenuhi seluruh gate validation, lalu diuji "
-        "sekali pada periode dan vintage yang terkunci. Gate recall ujian independen "
-        "gagal; kandidat tetap ditolak untuk rilis. Hasil numerik dan artefak model "
-        "disimpan privat. Perubahan berikutnya memerlukan holdout baru."
+        "V1/v2 gagal validation dan v3 gagal recall ujian independen. V4 menambahkan "
+        "riwayat tunggakan serta perubahan saldo, dengan kalibrasi dan validation "
+        "pada pinjaman berbeda dari sampel 2021. Model pohon histogram terkalibrasi "
+        "lulus seluruh gate validation, kemudian lulus ujian sekali pada sampel 2022. "
+        "Parameter dan daftar alert 1% tetap terkunci selama ujian. Perubahan cohort "
+        "dan fitur dilakukan bersama sehingga hasilnya belum mengisolasi kontribusi "
+        "masing-masing fitur. Angka evaluasi dan model tetap privat."
     )
-    st.subheader("Pengembangan riwayat sebelum prediksi")
+    st.subheader("Dari fitur ke API riset")
     st.write(
-        "Audit lokal pada data pengembangan telah memeriksa kelengkapan riwayat "
-        "6/12 bulan, tunggakan sebelumnya dan perubahan saldo. Bulan yang hilang "
-        "tetap dibedakan dari bulan lancar. Audit tidak melatih ulang model atau "
-        "membaca vintage ujian; dampaknya pada kualitas model belum diuji. "
-        "Sampel 2021/2022 masih calon sumber untuk intake, bukan model yang telah dirilis."
+        "Bundle privat mengikat model, urutan fitur, versi library dan bukti evaluasi. "
+        "Skor offline dan HTTP pada input fitur sintetis yang sama telah dibandingkan. "
+        "API memakai token terpisah, batas ukuran/rate request dan penolakan input "
+        "invalid. Endpoint ini menerima fitur yang sudah dibentuk; adapter dari "
+        "riwayat bulanan operasional dan bukti kapan informasi tersedia masih diperlukan. "
+        "Tidak ada token, data pinjaman atau model yang dimuat oleh dashboard publik."
     )
     st.subheader("Evaluasi dan rilis berikutnya")
     st.write(
@@ -1035,10 +1048,10 @@ def _monthly_research(evidence: Evidence) -> None:
         "dipindahkan otomatis ke hipotek."
     )
     st.warning(
-        "Riset hipotek tidak mengesahkan model untuk fintech. Rilis scoring memerlukan "
-        "sumber dan evaluasi yang sesuai penggunaan, bundle/parity, autentikasi API, "
-        "HTTPS, batas request, monitoring dan rollback. Login GitHub/Tableau bukan "
-        "autentikasi API scoring."
+        "V4 lulus evaluasi hipotek retrospektif. Rilis layanan fintech menunggu "
+        "timestamp ketersediaan data, kesesuaian populasi/hak penggunaan, adapter "
+        "riwayat online, HTTPS, uji beban, monitoring dan rollback. API lokal dibatasi "
+        "untuk riset pribadi; tidak ada scoring pinjaman aktif di dashboard ini."
     )
     st.markdown(
         f"[Protokol panel, split dan kontrol rilis]({REPOSITORY_URL}/blob/"
@@ -1046,7 +1059,9 @@ def _monthly_research(evidence: Evidence) -> None:
         f"[Hasil training dan keputusan]({REPOSITORY_URL}/blob/"
         "codex/m0-mentoring/docs/FREDDIE_TRAINING_VALIDATION_2026-10-13.md) · "
         f"[V3 dan ujian independen]({REPOSITORY_URL}/blob/"
-        "codex/m0-mentoring/docs/FREDDIE_V3_CALIBRATION_PROTOCOL.md)"
+        "codex/m0-mentoring/docs/FREDDIE_V3_CALIBRATION_PROTOCOL.md) · "
+        f"[V4 dan penerimaan API riset]({REPOSITORY_URL}/blob/"
+        "codex/m0-mentoring/docs/FREDDIE_V4_HISTORY_PROTOCOL.md)"
     )
 
 

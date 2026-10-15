@@ -1,10 +1,11 @@
 # CreditLens project status
 
-Updated 2026-10-13. M0 recovery and the bounded LendingClub M1 experiment are complete;
-the historical LendingClub model remains rejected. Freddie source admission and v3 local
-calibrated research are complete. V3 passed development validation but failed the one-shot
-independent test recall gate. Vintage 2020 is consumed; scoring remains HOLD and the project
-is not production ready.
+Updated 2026-10-15. M0 recovery and bounded LendingClub M1 are complete; the historical
+LendingClub model remains rejected. Separate Freddie v4 past-history research has passed
+both development validation and its one-shot independent vintage2022 test. Vintage2020/2022
+are consumed. A private loopback feature-scoring API and real offline/reload/HTTP parity
+smoke are implemented and verified. Fintech production scoring remains HOLD: source
+availability, operating usage and full service acceptance are not established.
 
 **Current product direction (30 September):** portfolio monitoring after disbursement.
 The old application-time M1 experiment and its gate are historical evidence, not an
@@ -47,7 +48,28 @@ preliminary source intake, not admission for training or a CreditLens fintech sc
 See the [sanitized intake report](docs/audit/FREDDIE_SAMPLE_INTAKE_2026-10-05.md).
 
 
-## Current — v3 calibration and independent test completed
+## Current — v4 research accepted, private HTTP path verified
+
+The v4 protocol was locked before new 2021 outcomes or fit. It retains train2018, adds
+nine exact past-history candidates and uses disjoint loan partitions of vintage2021
+for 2023 calibration and 2024 validation. The same fixed calibrated HGB candidate then
+passed all unchanged research criteria on the new vintage2022 2025 window, tested once.
+Metadata, layout/keys/cutoff/source hashes reconcile; publisher attestation and operational
+point-in-time validity remain absent. Vintage2021 is development and vintage2022 is now
+consumed, including unused windows. Neither is a fresh holdout for model revision.
+
+A private research bundle binds candidate, protocol, validation/test evidence, schema and
+runtime. The separate API binds only loopback with owner-file bearer credentials, byte/rate
+limits, invalid-input handling and explicit research versus production status. A real local
+HTTP smoke with synthetic domain features matched the offline/reloaded score, exercised
+401/422/413 failures and stopped its temporary server. Feature-only parity is not a verified
+raw monthly-record/online-history adapter. No public model/data/API deployment occurred.
+
+[The v4 contract and evidence](docs/FREDDIE_V4_HISTORY_PROTOCOL.md) records the exact scope,
+limitations and remaining operational gates. Numerical mortgage outputs, weights, tokens,
+notebooks and owner learning instructions stay private.
+
+## Earlier 2026-10-13 — v3 calibration and independent test completed
 
 The v3 protocol was locked before new development-window statistics or fit. Train vintage2018
 was expanded across pre-crisis/crisis periods; calibration and validation vintage2019 are
@@ -69,7 +91,7 @@ implemented evidence, private-source boundaries and next independent-data requir
 Local software suite: 237 passed, 4 skipped; black/isort/ruff and mypy pass. CI/public dashboard
 revision checks remain separate. Numeric results, models, manifests and notebook11 stay private.
 
-## Current follow-up — development history audit
+## Earlier 2026-10-13 — development history audit
 
 A bounded past-history candidate audit is implemented and exercised on admitted development
 2018/2019 only. Its eligible observation counts reconcile with the v3 development cohorts;

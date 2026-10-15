@@ -79,3 +79,12 @@ not established point-in-time availability. See [protocol and local commands](do
 [Tableau portfolio dashboard](https://public.tableau.com/app/profile/agatha.silalahi/viz/creditlens/CreditLensPortofoliodanBuktiModel)
 was published on 6 October 2026; the owner confirmed it works on 7 October. This is a
 historical aggregate exhibit, not a scoring-model release.
+
+## Separate mortgage research — 15 October 2026
+
+Freddie v4 passed bounded development validation and a one-shot independent mortgage test.
+A separate authenticated loopback API verifies feature-only offline/HTTP parity with the
+private accepted candidate. This does not promote LendingClub scoring or establish operational
+fintech readiness. Models, source records, numeric mortgage reports and credentials remain
+private. See [the v4 protocol](docs/FREDDIE_V4_HISTORY_PROTOCOL.md) and
+[remaining service gates](docs/FREDDIE_NEXT_RESEARCH_AND_SERVICE.md).

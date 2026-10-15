@@ -58,3 +58,7 @@ Raw data, credentials and backup archives are not repository deliverables. Histo
 - [Next mortgage research and service acceptance](FREDDIE_NEXT_RESEARCH_AND_SERVICE.md): backward-feature audit, new holdout and concrete bundle/API/operations gates.
 
 - [Development history audit](FREDDIE_DEVELOPMENT_HISTORY_AUDIT.md): past-calendar candidates, private aggregate profiling, frozen-source exclusion and bounded execution.
+
+- [Mortgage v4 history and private API](FREDDIE_V4_HISTORY_PROTOCOL.md): locked recent development, accepted independent research test and bounded local feature-scoring verification.
+
+- [Private mortgage API contract](FREDDIE_PRIVATE_API_CONTRACT.md): accepted research bundle, loopback bearer access, bounded requests and feature-only HTTP parity limitations.
