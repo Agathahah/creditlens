@@ -8,15 +8,15 @@
 
 /*
   Staging: Lending Club loans — clean, deduplicate, add ML target.
-  Source: raw.lc_loans (2.9M rows, 2007-2018 Q4)
+  Source: raw.lc_loans (accepted loan snapshot)
   Target: staging.lc_loans_clean
 
   Transformations:
   - Deduplicate by loan_id (keep latest loaded_at)
   - Filter: require loan_id, loan_amnt > 0, issue_date
   - Parse emp_length text → integer years
-  - Add is_default binary target (1=default/charged-off, 0=fully-paid, NULL=ongoing)
-  - Exclude rows without definitive outcome for ML training
+  - Add retrospective target: 1=Charged Off/Default, 0=Fully Paid, NULL=all other statuses
+  - Preserve NULL-label rows in the warehouse; model eligibility is a separate step
 */
 
 WITH source AS (
@@ -62,7 +62,7 @@ cleaned AS (
         EXTRACT(MONTH FROM issue_date)::INTEGER AS issue_month,
         loan_status,
         CASE
-            WHEN loan_status IN ('Charged Off', 'Default', 'Late (31-120 days)')
+            WHEN loan_status IN ('Charged Off', 'Default')
                 THEN 1
             WHEN loan_status = 'Fully Paid'
                 THEN 0

@@ -1,0 +1,128 @@
+{
+  "tanggal": "2026-09-11",
+  "status": "passed",
+  "server_version": "14.22 (Homebrew)",
+  "postgres_bin": "/opt/homebrew/Cellar/postgresql@14/14.22/bin",
+  "workspace": "/private/tmp/creditlens-m0-3nz2wiht",
+  "transport": "private Unix socket; TCP disabled",
+  "cluster_stopped": true,
+  "source_sha256": {
+    "models/staging/lc_loans_clean.sql": "8287e14da4c45d9395527887c290770dc8ab8c6c1b3fbaffb12d558b997d8d45",
+    "models/mart/loan_features.sql": "b80edb49d2e4ef1d375f2846c9683c60f8b9eda0739e500b83c53df5986eec7f",
+    "models/mart/final_features.sql": "702169155ee4cad880286e2938bdeca545fcd2cbcc38936d86cb2e60dd65617e",
+    "tests/dbt/loan_label_contract.sql": "2d0e521f5232cd48d44af03a140ca84a012101300ef6d912c2e22a707f9c0967",
+    "scripts/verify_m0_dbt.py": "91cb334d0041ecbe9004a17bd859b3bf6ba30a8a7f9e5edc1adff89dbdd74e52"
+  },
+  "models": 5,
+  "tests_passed": 27,
+  "langkah": [
+    {
+      "step": "initdb",
+      "exit_code": 0
+    },
+    {
+      "step": "start",
+      "exit_code": 0
+    },
+    {
+      "step": "createdb",
+      "exit_code": 0
+    },
+    {
+      "step": "empty_build",
+      "exit_code": 0
+    },
+    {
+      "step": "empty_counts"
+    },
+    {
+      "step": "legacy_tests_empty",
+      "exit_code": 0
+    },
+    {
+      "step": "nonempty_rejects_empty",
+      "exit_code": 1
+    },
+    {
+      "step": "after_ingestion_before_rebuild"
+    },
+    {
+      "step": "reconciliation_rejects_stale_mart",
+      "exit_code": 1
+    },
+    {
+      "step": "populated_build_and_tests",
+      "exit_code": 0
+    },
+    {
+      "step": "populated_counts"
+    },
+    {
+      "step": "reconciliation_rejects_missing_final",
+      "exit_code": 1
+    },
+    {
+      "step": "restore_final",
+      "exit_code": 0
+    },
+    {
+      "step": "restored_counts"
+    },
+    {
+      "step": "label_fixture_build",
+      "exit_code": 0
+    },
+    {
+      "step": "label_contract_all_statuses",
+      "exit_code": 0
+    },
+    {
+      "step": "label_ids_statuses_and_nulls_preserved",
+      "rows_per_layer": 13,
+      "raw_unchanged": true
+    },
+    {
+      "step": "label_contract_rejects_current_and_late_labels",
+      "exit_code": 1
+    },
+    {
+      "step": "restore_label_final",
+      "exit_code": 0
+    },
+    {
+      "step": "label_contract_rejects_missing_paid_label",
+      "exit_code": 1
+    },
+    {
+      "step": "restore_labels_with_null_fixture",
+      "exit_code": 0
+    },
+    {
+      "step": "null_status_preserved_without_invented_label",
+      "rows_per_layer": 13,
+      "raw_unchanged": true
+    },
+    {
+      "step": "source_guard_rejects_null_status",
+      "exit_code": 1
+    },
+    {
+      "step": "remove_null_source_fixture"
+    },
+    {
+      "step": "restore_label_all_and_tests",
+      "exit_code": 0
+    },
+    {
+      "step": "final_label_contract_and_raw_preserved",
+      "rows_per_layer": 12,
+      "raw_unchanged": true
+    },
+    {
+      "step": "stop",
+      "exit_code": 0
+    }
+  ],
+  "finished_at_utc": "2026-09-11T08:27:35.416050+00:00",
+  "batas": "Data sintetis dalam cluster privat versi 14.22; bukan penerapan pada database aktif. Backup baru dan restore drill data aktif masih perlu dilakukan."
+}

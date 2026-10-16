@@ -1,0 +1,36 @@
+{
+  "checked_at_utc": "2026-09-09T08:23:37.828898+00:00",
+  "source": "data/raw/accepted_2007_to_2018Q4.csv.gz",
+  "compressed_bytes": 392582231,
+  "compressed_sha256": "55c16f75120f897683f02e7aabcf080d0e4a20c4832feb1d592cfa941bd62a2d",
+  "csv_records": 2260701,
+  "numeric_id_amount_and_issue_present": 2260668,
+  "missing_or_nonnumeric_id": 33,
+  "missing_issue": 33,
+  "year_counts_for_present_fields": {
+    "2007": 603,
+    "2008": 2393,
+    "2009": 5281,
+    "2010": 12537,
+    "2011": 21721,
+    "2012": 53367,
+    "2013": 134814,
+    "2014": 235629,
+    "2015": 421095,
+    "2016": 434407,
+    "2017": 443579,
+    "2018": 495242
+  },
+  "status_counts_for_present_fields": {
+    "Fully Paid": 1076751,
+    "Charged Off": 268559,
+    "Current": 878317,
+    "Late (31-120 days)": 21467,
+    "In Grace Period": 8436,
+    "Late (16-30 days)": 4349,
+    "Default": 40,
+    "Does not meet the credit policy. Status:Fully Paid": 1988,
+    "Does not meet the credit policy. Status:Charged Off": 761
+  },
+  "limits": "Streaming metadata profile only; not an exact ID reconciliation, source license verification, or final eligibility rule. No ingestion/training/database writes."
+}

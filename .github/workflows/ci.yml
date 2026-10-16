@@ -7,6 +7,9 @@ on:
     branches: [main]
     tags: ['v*']
 
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -88,9 +91,33 @@ jobs:
 
       - name: Upload coverage
         uses: codecov/codecov-action@v4
+        # Coverage.xml is produced by the required test step; a Codecov TLS outage
+        # must not block the independent dashboard smoke check.
+        continue-on-error: true
         with:
           file: ./coverage.xml
           fail_ci_if_error: false
+
+  dashboard-smoke:
+    name: Dashboard Docker Smoke
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build isolated dashboard image
+        run: docker build -f infra/docker/Dockerfile.dashboard -t creditlens-dashboard:ci .
+
+      - name: Verify dashboard packaging
+        run: bash scripts/smoke_dashboard_image.sh creditlens-dashboard:ci dashboard-smoke.json
+
+      - name: Upload packaging evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-packaging-${{ github.sha }}
+          path: dashboard-smoke.json
+          if-no-files-found: error
 
   eval-gate:
     name: Model Evaluation Gate
@@ -125,8 +152,6 @@ jobs:
         run: docker build -f infra/docker/Dockerfile.api -t creditlens:${{ github.ref_name }} .
 
       - name: Test Docker image
-        run: |
-          docker run -d --name creditlens-test -p 8000:8000 creditlens:${{ github.ref_name }}
-          sleep 10
-          curl -f http://localhost:8000/health || exit 1
-          docker stop creditlens-test
+        # /health may be 200 when no verified scoring model exists.
+        # This smoke fails closed; real bundle admission remains a separate gate.
+        run: bash scripts/smoke_api_image.sh creditlens:${{ github.ref_name }}

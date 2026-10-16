@@ -1,0 +1,4 @@
+# Isolated UI dependencies; no ML training, database, or API stack.
+# Full transitive lock/image digest remains a release gate.
+streamlit==1.49.1
+pandas==2.2.3
