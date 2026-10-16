@@ -951,7 +951,7 @@ def _monthly_research(evidence: Evidence) -> None:
         "Studi Freddie Mac yang terpisah mengembangkan pola panel bulanan untuk "
         "pemantauan setelah pencairan, dengan populasi hipotek AS."
     )
-    st.caption("Status lokal: 15 Oktober 2026 · V4 validation lulus · Ujian independen lulus")
+    st.caption("Status lokal: 16 Oktober 2026 · V4 validation lulus · Ujian independen lulus")
     _flow(
         [
             ("Panel bulanan", "Satu pinjaman × bulan laporan"),
@@ -993,7 +993,7 @@ def _monthly_research(evidence: Evidence) -> None:
                     "Tahap": "API riset privat",
                     "Status": "TERUJI LOKAL",
                     "Bukti / batas": (
-                        "Loopback, bearer auth, batas request dan feature-only HTTP parity"
+                        "Loopback, bearer auth, batas request dan parity snapshot bulanan sintetis"
                     ),
                 },
                 {
@@ -1035,8 +1035,10 @@ def _monthly_research(evidence: Evidence) -> None:
         "Bundle privat mengikat model, urutan fitur, versi library dan bukti evaluasi. "
         "Skor offline dan HTTP pada input fitur sintetis yang sama telah dibandingkan. "
         "API memakai token terpisah, batas ukuran/rate request dan penolakan input "
-        "invalid. Endpoint ini menerima fitur yang sudah dibentuk; adapter dari "
-        "riwayat bulanan operasional dan bukti kapan informasi tersedia masih diperlukan. "
+        "invalid. Adapter lokal kini membentuk fitur dari snapshot bulanan dan memilih "
+        "revisi yang tersedia menurut timestamp input. Hasil fitur cocok dengan jalur "
+        "training; skor offline dan HTTP cocok pada riwayat sintetis. Timestamp input "
+        "belum menjadi bukti waktu ketersediaan data sumber yang sebenarnya. "
         "Tidak ada token, data pinjaman atau model yang dimuat oleh dashboard publik."
     )
     st.subheader("Evaluasi dan rilis berikutnya")

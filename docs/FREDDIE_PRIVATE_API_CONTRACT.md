@@ -26,8 +26,10 @@ permitted for arbitrary remote/user models.
   No approved/denied/tier/credit-limit decision is produced.
 
 Inputs are **engineered domain features**, not verified operational monthly records.
-The timestamped history store and raw-record feature adapter remain required for service
-acceptance. Public documentation does not contain the private manifest, token, weights,
+A separate [monthly adapter](FREDDIE_MONTHLY_ADAPTER_CONTRACT.md) now derives these features
+from normalized records with supplied-availability checks and synthetic batch/reload/HTTP
+parity. Authentic operational availability and a persistent history store remain required
+for service acceptance. Public documentation does not contain the private manifest, token, weights,
 source records, predictions or numerical mortgage reports.
 
 ## Access and resource boundaries

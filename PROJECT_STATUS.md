@@ -1,6 +1,6 @@
 # CreditLens project status
 
-Updated 2026-10-15. M0 recovery and bounded LendingClub M1 are complete; the historical
+Updated 2026-10-16. M0 recovery and bounded LendingClub M1 are complete; the historical
 LendingClub model remains rejected. Separate Freddie v4 past-history research has passed
 both development validation and its one-shot independent vintage2022 test. Vintage2020/2022
 are consumed. A private loopback feature-scoring API and real offline/reload/HTTP parity
@@ -68,6 +68,22 @@ raw monthly-record/online-history adapter. No public model/data/API deployment o
 [The v4 contract and evidence](docs/FREDDIE_V4_HISTORY_PROTOCOL.md) records the exact scope,
 limitations and remaining operational gates. Numerical mortgage outputs, weights, tokens,
 notebooks and owner learning instructions stay private.
+
+## 2026-10-16 — monthly adapter and authenticated client integration
+
+A bounded single-loan monthly adapter now reconstructs locked v4 features from normalized
+records, selecting the latest supplied correction available by prediction time. Future
+records and late corrections cannot affect features; missing calendar/status remains
+explicit. The authenticated client sends only features to literal loopback and rejects
+redirects, failed readiness and inconsistent model/scope/output. Private owner-only inputs
+and tokens remain outside Git.
+
+Synthetic float32 features match the existing batch training collector. The accepted-model
+reload score and actual HTTP score from a synthetic monthly snapshot match exactly on the
+owner's local server. Supplied timestamp checks do not attest real source availability;
+authentic history/correction evidence, history storage and operating acceptance remain open.
+There was no training, test-source access, production promotion or public model publication.
+See [the adapter contract](docs/FREDDIE_MONTHLY_ADAPTER_CONTRACT.md).
 
 ## Earlier 2026-10-13 — v3 calibration and independent test completed
 

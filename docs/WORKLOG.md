@@ -458,3 +458,26 @@ the accepted private bundle and returned authenticated readiness/scoring HTTP200
 synthetic features. Startup messages were visible, request access logs and token were
 absent, and the temporary server was stopped. No model fitting or test archive access
 occurred. The receipt and owner guide remain private; production scoring remains HOLD.
+
+## 2026-10-16 — timestamped monthly adapter and loopback client
+
+Added a bounded normalized monthly snapshot adapter without changing the accepted v4
+protocol/model/calibration/alert policy. It checks supplied aware availability timestamps,
+selects the latest eligible revision per calendar month, rejects ambiguous or mixed
+identities, excludes late/future versions and reuses exact training history formulas.
+Origination sentinel/missing rules and ordered 19-feature float32 serving parity are retained.
+The client validates private owner-only inputs outside Git, transmits only features to
+literal loopback, never follows redirects and rejects HTTP/scope/model/output failures.
+
+Synthetic fixtures compare features against the existing training collector and exercise
+availability, revisions, identity, eligibility, missingness, schema, domain and client
+boundaries. A real accepted-bundle reload and HTTP score from a synthetic monthly snapshot
+matched exactly on the owner's running server; the CLI succeeded and the server was not
+stopped. Receipt, example request, numeric outputs and owner guide remain private. No
+training or actual source/test archive access occurred. Supplied timestamps are not
+operational source attestation or a persistent history store; production scoring stays HOLD.
+
+Validation: 305 passed, 4 skipped, 8 existing dependency/deprecation warnings across the application
+suite; focused adapter/API contracts: 42 passed. Black/isort/Ruff pass; strict mypy passes on
+94 source files. Public dashboard copy records synthetic integration without loading private
+artifacts. Remote CI and public Streamlit revision checks remain separate evidence.

@@ -1,6 +1,6 @@
 # CreditLens technical documentation
 
-Updated 2026-10-13. Documentation records implemented behavior, decisions, validation evidence and remaining work. The current product direction is portfolio monitoring after disbursement; older application-time plans remain dated historical context.
+Updated 2026-10-16. Documentation records implemented behavior, decisions, validation evidence and remaining work. The current product direction is portfolio monitoring after disbursement; older application-time plans remain dated historical context.
 
 | Document | Purpose |
 |---|---|
@@ -62,3 +62,5 @@ Raw data, credentials and backup archives are not repository deliverables. Histo
 - [Mortgage v4 history and private API](FREDDIE_V4_HISTORY_PROTOCOL.md): locked recent development, accepted independent research test and bounded local feature-scoring verification.
 
 - [Private mortgage API contract](FREDDIE_PRIVATE_API_CONTRACT.md): accepted research bundle, loopback bearer access, bounded requests and feature-only HTTP parity limitations.
+
+- [Monthly record adapter](FREDDIE_MONTHLY_ADAPTER_CONTRACT.md): supplied availability/correction selection, locked feature parity and authenticated loopback client boundaries.

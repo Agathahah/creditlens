@@ -17,6 +17,15 @@ Tahap berikutnya adalah adapter riwayat operasional dengan availability yang dap
 dibuktikan, kesesuaian penggunaan sumber/populasi, transport/akses operasional, image+bundle
 parity/load, actual delayed-label monitoring dan rollback pada lingkungan yang dinyatakan.
 
+## Pembaruan integrasi — 16 Oktober 2026
+
+Adapter snapshot bulanan kini membentuk fitur v4 dengan memilih revisi yang tersedia
+menurut timestamp input sebelum waktu prediksi. Kalender, missingness, sentinel dan
+urutan fitur sesuai training; batch/reload/HTTP pada input sintetis cocok tepat.
+Client autentikasi lokal berhasil pada server pemilik. [Kontrak adapter](FREDDIE_MONTHLY_ADAPTER_CONTRACT.md)
+menjelaskan validasi, batas ukuran dan penolakan input. Ini belum history store operasional
+atau bukti timestamp asal. Tidak ada training atau pembukaan ulang test.
+
 ## Urutan penelitian sebelumnya — konteks 13 Oktober
 
 1. **Audit fitur ke belakang pada development 2018/2019.** Kandidat fitur: worst/number
@@ -47,7 +56,7 @@ parity/load, actual delayed-label monitoring dan rollback pada lingkungan yang d
 | Kesesuaian penggunaan | Produk/populasi/decision time dan hak penggunaan operator jelas | Freddie privat tidak mengesahkan scoring fintech |
 | Point-in-time | feature_available_at, label availability, reporting lag dan riwayat koreksi | Snapshot terkoreksi; timestamp asli belum terbukti |
 | Immutable bundle | Model+transform+calibrator+ordered schema/units/missing rules+versions+checksum | Bundle riset privat terikat evidence; belum bundle operasi fintech |
-| Training-serving parity | Domain record → reload → actual HTTP score yang sama, invalid inputs ditolak | Feature-only HTTP parity nyata lulus; adapter raw monthly records belum selesai |
+| Training-serving parity | Domain record → reload → actual HTTP score yang sama, invalid inputs ditolak | Feature-only HTTP parity nyata lulus; adapter snapshot bertimestamp teruji sintetis; history store/availability operasional belum diterima |
 | Kontrol API | Auth/HTTPS, byte/rate limits, request/event IDs, akses dan audit tanpa raw input | API riset: bearer/loopback/byte/rate teruji; HTTPS/event audit operasi belum lengkap |
 | Beban dan packaging | Lingkungan/digest/model yang sama, p50/p95/p99, error/RSS, cold/warm dan concurrency | Docker dashboard smoke terpisah; bukan API model release |
 | Monitoring | Actual inference, delayed labels, cohort/drift/quality per version dan prosedur respons | Prototype modul ada; belum bukti operasi layanan real |
