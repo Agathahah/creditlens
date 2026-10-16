@@ -443,3 +443,18 @@ Local software suite: 275 passed, 4 skipped, 8 dependency/deprecation warnings. 
 and mypy on92sourcefiles pass. CI and public Streamlit revision verification remain separate;
 the research page records v4 acceptance and the remaining operating boundaries. Private learning
 notes/notebook/credential instructions are not repository deliverables.
+
+## 2026-10-16 — private API startup visibility
+
+The research CLI now prints flushed bundle-verification progress and enables Uvicorn
+lifecycle INFO messages, including the successful listening address. Access logs remain
+disabled; credentials and feature payloads are not printed. Foreground server lifetime
+and Ctrl+C shutdown are documented. Model selection, research gates and release scope
+are unchanged.
+
+Verification: all 12 existing API contract tests passed (one dependency deprecation
+warning); focused Black, Ruff and mypy checks passed. A temporary loopback server loaded
+the accepted private bundle and returned authenticated readiness/scoring HTTP200 on
+synthetic features. Startup messages were visible, request access logs and token were
+absent, and the temporary server was stopped. No model fitting or test archive access
+occurred. The receipt and owner guide remain private; production scoring remains HOLD.

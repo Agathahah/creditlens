@@ -1,6 +1,6 @@
 # Private mortgage research API — implemented contract
 
-Updated15October2026. `src.research.freddie_shadow_api` is a separate loopback application
+Updated16October2026. `src.research.freddie_shadow_api` is a separate loopback application
 for the accepted v4 retrospective mortgage candidate. Public fintech scoring remains HOLD.
 It does not change the existing LendingClub model readiness or predict/explain endpoints.
 
@@ -14,6 +14,9 @@ permitted for arbitrary remote/user models.
 
 - CLI: explicit bundle/token-file, fixed host127.0.0.1 and configurable unprivileged port.
   Bundle/credential must be owner-only and outside the repository. Token is not printed.
+- Startup: flushed verification progress and Uvicorn lifecycle INFO logs show when the
+  server binds successfully. Access logs remain disabled; credentials and feature payloads
+  are not printed. The CLI stays in the foreground until interrupted.
 - `GET /ready`: requires bearer authentication; reports `research_ready=true` alongside
   `production_scoring_release=HOLD`, `point_in_time_verified=false`, private scope and model ID.
 - `POST /score`: requires the exact named feature object. Types are finite numeric/NULL;

@@ -272,8 +272,15 @@ def main() -> None:
             raise ValueError("Bundle and credential must be owner-only and outside Git")
     if not 1024 <= args.port <= 65535:
         raise ValueError("Invalid research port")
+    print("Memeriksa bundle model riset privat...", flush=True)
     app = create_app(args.bundle, args.token_file.read_text().strip())
-    uvicorn.run(app, host="127.0.0.1", port=args.port, access_log=False, log_level="warning")
+    print(
+        "Bundle terverifikasi. Memulai API lokal; tunggu pesan 'Uvicorn running on'. "
+        "Biarkan terminal ini terbuka dan gunakan terminal kedua untuk mencoba scoring. "
+        "Ctrl+C menghentikan server.",
+        flush=True,
+    )
+    uvicorn.run(app, host="127.0.0.1", port=args.port, access_log=False, log_level="info")
 
 
 if __name__ == "__main__":
