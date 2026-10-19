@@ -863,9 +863,14 @@ def _model(evidence: Evidence) -> None:
 def _api(evidence: Evidence) -> None:
     """Separate tested API rejection from unverified operational security controls."""
     st.write(
-        "API kelak dapat mengirim alert portofolio ke alur kerja analis. Saat ini "
-        "kontrak penolakan model tersedia; layanan prediksi dengan bundle yang "
-        "layak rilis belum dibuktikan."
+        "API utama LendingClub menolak model historis yang gagal rilis. API riset "
+        "Freddie Mac berjalan terpisah secara privat dan sudah melayani input sintetis "
+        "dengan bundle yang lolos evaluasi riset. Penerimaan layanan operasional "
+        "fintech masih memerlukan bukti data dan kontrol layanan."
+    )
+    st.caption(
+        "Tabel endpoint berikut merujuk API utama LendingClub. Status API riset "
+        "hipotek tercatat pada halaman Riset panel bulanan."
     )
     _flow(
         [
@@ -951,7 +956,7 @@ def _monthly_research(evidence: Evidence) -> None:
         "Studi Freddie Mac yang terpisah mengembangkan pola panel bulanan untuk "
         "pemantauan setelah pencairan, dengan populasi hipotek AS."
     )
-    st.caption("Status lokal: 16 Oktober 2026 · V4 validation lulus · Ujian independen lulus")
+    st.caption("Status lokal: 19 Oktober 2026 · V4 validation lulus · Ujian independen lulus")
     _flow(
         [
             ("Panel bulanan", "Satu pinjaman × bulan laporan"),
@@ -994,6 +999,14 @@ def _monthly_research(evidence: Evidence) -> None:
                     "Status": "TERUJI LOKAL",
                     "Bukti / batas": (
                         "Loopback, bearer auth, batas request dan parity snapshot bulanan sintetis"
+                    ),
+                },
+                {
+                    "Tahap": "Container API riset",
+                    "Status": "PARITY DAN RECOVERY LOKAL LULUS",
+                    "Bukti / batas": (
+                        "Image tanpa model/token; runtime privat network-none, "
+                        "uji input salah dan restart setelah checksum rusak"
                     ),
                 },
                 {
@@ -1040,6 +1053,13 @@ def _monthly_research(evidence: Evidence) -> None:
         "training; skor offline dan HTTP cocok pada riwayat sintetis. Timestamp input "
         "belum menjadi bukti waktu ketersediaan data sumber yang sebenarnya. "
         "Tidak ada token, data pinjaman atau model yang dimuat oleh dashboard publik."
+    )
+    st.write(
+        "Container riset kini diuji dengan versi dependency terkunci, user non-root, "
+        "filesystem read-only dan tanpa jaringan luar. Skor sesuai model lokal. "
+        "Bundle dengan checksum salah menahan startup, lalu restart dengan pasangan "
+        "image dan bundle yang baik memulihkan readiness. Beban sintetis kecil ini "
+        "belum membuktikan kapasitas layanan atau akses publik."
     )
     st.subheader("Evaluasi dan rilis berikutnya")
     st.write(
@@ -1142,7 +1162,15 @@ def _deployment(evidence: Evidence) -> None:
         "CreditLensPortofoliodanBuktiModel",
     )
     st.caption("Tableau diterbitkan 6 Oktober; pemilik mengonfirmasi berjalan 7 Oktober 2026.")
-    st.subheader("Urutan menuju layanan scoring")
+    st.subheader("Container API riset privat — 19 Oktober 2026")
+    st.write(
+        "Pengujian terpisah telah memverifikasi image API riset, bundle privat dan "
+        "skor sintetis yang sama dengan model lokal. Input tidak sah ditolak; "
+        "checksum rusak menahan startup dan pasangan image/bundle yang baik "
+        "berhasil dipulihkan melalui restart. Container tidak membuka port publik. "
+        "Ini terpisah dari bukti Docker dashboard di atas."
+    )
+    st.subheader("Urutan menuju layanan scoring fintech")
     _flow(
         [
             ("Sumber holdout baru", "Hak penggunaan, as-of, maturity"),
@@ -1153,8 +1181,9 @@ def _deployment(evidence: Evidence) -> None:
     )
     st.warning(
         "Dashboard ini sudah menyajikan riset historis secara publik. Layanan scoring "
-        "untuk memantau pinjaman aktif masih ditahan: data berkala, outcome yang "
-        "bertanggal, dan evaluasi independen belum tersedia."
+        "untuk memantau pinjaman aktif masih ditahan: data operasional dengan "
+        "waktu ketersediaan yang terbukti, kesesuaian penggunaan dan penerimaan "
+        "layanan belum lengkap. V4 telah lulus ujian riset hipotek terpisah."
     )
     st.subheader("Syarat sebelum rilis scoring portofolio")
     release = evidence["release_decision"]

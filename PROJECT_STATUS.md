@@ -1,6 +1,6 @@
 # CreditLens project status
 
-Updated 2026-10-16. M0 recovery and bounded LendingClub M1 are complete; the historical
+Updated 2026-10-19. M0 recovery and bounded LendingClub M1 are complete; the historical
 LendingClub model remains rejected. Separate Freddie v4 past-history research has passed
 both development validation and its one-shot independent vintage2022 test. Vintage2020/2022
 are consumed. A private loopback feature-scoring API and real offline/reload/HTTP parity
@@ -68,6 +68,23 @@ raw monthly-record/online-history adapter. No public model/data/API deployment o
 [The v4 contract and evidence](docs/FREDDIE_V4_HISTORY_PROTOCOL.md) records the exact scope,
 limitations and remaining operational gates. Numerical mortgage outputs, weights, tokens,
 notebooks and owner learning instructions stay private.
+
+## 2026-10-19 — isolated research API packaging and recovery
+
+A separate pinned research image now loads no model/credential at build time. A private
+runtime package relocates only manifest paths and retains accepted artifact hashes.
+The image was exercised locally with non-root, read-only root/mounts, network-none, no
+published ports and bounded CPU/RAM/PIDs. Synthetic monthly-feature/native/container HTTP
+scores agree exactly;401/422/413negative cases pass. A deliberately corrupt candidate
+checksum prevents startup, followed by successful restart on the known image+good bundle.
+Only test-owned containers were removed; original evidence and the local image remain.
+
+A small sequential/concurrency2diagnostic completed without request failures. It measures
+in-namespace HTTP and process RSS, not public ingress, lender SLOs or live credit quality.
+The new CI image job contains only public software/config and checks pinned versions,
+non-root/no-private-artifact content and refusal of missing bundles. Real accepted-model
+verification remains private and separate from that CI job. No test archive was reopened.
+See [the acceptance contract](docs/FREDDIE_CONTAINER_ACCEPTANCE.md).
 
 ## 2026-10-16 — monthly adapter and authenticated client integration
 

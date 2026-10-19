@@ -4,35 +4,30 @@ CreditLens is a public-data credit-risk project covering PostgreSQL/dbt transfor
 
 ## Business problem and intended workflow
 
-As of 30 September 2026, the next product direction is **monitoring funded loans after
-disbursement**: understand vintage quality and, when valid periodic data exists, help analysts
-prioritize review of active loans. The current dashboard is a historical portfolio analysis;
-it does not issue live alerts. See the [dated monitoring scope](docs/PORTFOLIO_MONITORING_SCOPE_2026-09-30.md).
+Updated19October2026. CreditLens studies **portfolio monitoring after disbursement**:
+organize monthly loan histories, distinguish missing outcomes from observed non-events,
+and evaluate whether risk ranking can help analysts prioritize a limited review workload.
+Its engineering flow is source reconciliation → temporal data contracts → independent
+model evaluation → verified serving artifacts → bounded API and recovery checks.
 
-The following application-time experiment remains historical evidence, not a validated model
-for monitoring active loans.
-
-An origination risk team must prioritize a limited amount of human application review. CreditLens
-asks whether features known **before pricing or a credit decision** can support a reliable risk
-ranking, and whether the data/evaluation/serving evidence is strong enough to release that ranking.
-The intended output is decision support for analysts, not automatic loan approval or pricing.
-
-The current accepted-loan dataset cannot establish performance for rejected applicants, a verified
-36-month default horizon, or measured profit/loss improvements. This is an auditable research and
-engineering case with an explicit release refusal when gates fail. See the
-[dated model release decision](docs/audit/MODEL_RELEASE_DECISION_2026-09-30.md).
+The public dashboard and Tableau describe the historical LendingClub portfolio. A separate
+private Freddie Mac mortgage study tests a three-month deterioration target for active,
+current loans. Mortgage evidence is not transferred to fintech applicants or used for
+live lending decisions. No measured loss reduction or operational business return is claimed.
 
 ## Current status
 
-M0 data recovery is implemented locally: raw, staging, and both loan marts each contain 2,260,668 records. Ingestion preserves full source statuses and can resume missing records without overwriting existing rows. Scoped backup/restore and targeted dbt checks passed.
+| Component | Implemented evidence | Boundary |
+|---|---|---|
+| LendingClub warehouse | 2,260,668 records reconciled across raw/staging/two loan marts; scoped recovery verified | Historical accepted-loan population |
+| Historical LendingClub M1 | Train-only temporal experiment; failed its model/operating gates | Rejected; consumed2015test; not served |
+| Separate mortgage v4 | Passed locked development validation and one-shot independent research test | Private retrospective research;2020/2022tests consumed |
+| Monthly adapter and API | Supplied-availability checks; batch/reload/HTTP parity on synthetic monthly input | Authentic operational timestamps/history store remain open |
+| Research API container | Pinned software-only image; isolated accepted-bundle parity, invalid-input and restart/recovery verification | Local network-none synthetic workload; not public ingress or an operating SLO |
+| Fintech production scoring | HOLD | Product/population/rights, real data availability and operating acceptance remain required |
 
-A bounded local M1 experiment implemented a train-only temporal pipeline for accepted 36-month loans. Its frozen-test average precision was 0.2197, below the historical 0.25 gate, and its initial operating threshold failed. The candidate is retained as local research evidence only; the 2015 test is consumed and the model is not served by the API.
-
-The earlier next-M1 direction was an educational application-time demo. The updated
-monitoring direction needs a periodic loan panel and an independently timed outcome before
-new training begins. No new dataset has been admitted.
-
-Production readiness has not been demonstrated. Label/feature-availability contracts, leakage-free evaluation, a versioned preprocessing/model bundle, API readiness, release gates, and operational monitoring remain open. Outputs are not intended for real lending decisions.
+The API candidate is unchanged by container verification. No new training, threshold selection
+or independent test run is triggered by startup, client execution, CI or dashboard hosting.
 
 - [Project status](PROJECT_STATUS.md)
 - [Technical documentation](docs/README.md)
@@ -65,26 +60,30 @@ Open http://localhost:8501 on the machine running the server. See the
 [packaging/public pilot runbook](docs/DASHBOARD_RELEASE_RUNBOOK.md).
 The [public dashboard pilot](https://creditlens-risk-evidence.streamlit.app/) shows the
 aggregate research story. Revision `084e524` passed dashboard CI and was checked on the public
-URL on 30 September 2026. The model remains below its release gate; the pilot provides no
-scoring API or credit decision.
+URL on 30 September 2026. The historical LendingClub model remains below its gate. The pilot provides no
+scoring API or credit decision; later source revisions require fresh public UI verification.
 
 ## Monthly mortgage research — separate from fintech scoring
 
-A private streaming builder now creates a Freddie Mac loan-month SQLite panel and a
-three-month prospective label, preserving missing follow-up and termination as censoring.
-It does not train or publish borrower records. The research dashboard explains implementation
-status; independent evaluation and scoring release remain on hold. The corrected source has
-not established point-in-time availability. See [protocol and local commands](docs/FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md).
+The streaming monthly panel and three-month label preserve missing follow-up and termination
+as censoring. The accepted v4 model is evaluated separately from the historical LendingClub
+experiment. A timestamped monthly adapter and authenticated client have passed synthetic
+batch/reload/HTTP parity. The [local container contract](docs/FREDDIE_CONTAINER_ACCEPTANCE.md)
+adds isolated packaging, a small diagnostic workload and restart/recovery evidence. Corrected
+source data still do not establish authentic point-in-time operational availability.
+See [the monthly protocol](docs/FREDDIE_MONTHLY_RESEARCH_PROTOCOL.md) and
+[adapter contract](docs/FREDDIE_MONTHLY_ADAPTER_CONTRACT.md).
 
 [Tableau portfolio dashboard](https://public.tableau.com/app/profile/agatha.silalahi/viz/creditlens/CreditLensPortofoliodanBuktiModel)
 was published on 6 October 2026; the owner confirmed it works on 7 October. This is a
 historical aggregate exhibit, not a scoring-model release.
 
-## Separate mortgage research — 15 October 2026
+## Separate mortgage research — current service boundaries
 
 Freddie v4 passed bounded development validation and a one-shot independent mortgage test.
-A separate authenticated loopback API verifies feature-only offline/HTTP parity with the
-private accepted candidate. This does not promote LendingClub scoring or establish operational
+A separate authenticated loopback API and monthly-record adapter verify offline/HTTP parity
+with the private accepted candidate on synthetic requests. The same candidate also passes
+isolated Docker serving/recovery checks. This does not promote LendingClub scoring or establish operational
 fintech readiness. Models, source records, numeric mortgage reports and credentials remain
 private. See [the v4 protocol](docs/FREDDIE_V4_HISTORY_PROTOCOL.md) and
 [remaining service gates](docs/FREDDIE_NEXT_RESEARCH_AND_SERVICE.md).

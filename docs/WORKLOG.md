@@ -481,3 +481,38 @@ Validation: 305 passed, 4 skipped, 8 existing dependency/deprecation warnings ac
 suite; focused adapter/API contracts: 42 passed. Black/isort/Ruff pass; strict mypy passes on
 94 source files. Public dashboard copy records synthetic integration without loading private
 artifacts. Remote CI and public Streamlit revision checks remain separate evidence.
+
+## 2026-10-19 — isolated research API image and restart recovery
+
+Fixed the acceptance contract before execution: private research only, immutable public
+image/build inputs, owner-only read-only artifact mounts, non-root/network-none runtime,
+two CPUs/2GiB/bounded PIDs, synthetic parity tolerance 1e-12, expected request failures,
+small diagnostic workload and corrupt-manifest/restart recovery. Model/protocol/threshold
+and source/test consumption decisions are unchanged. No dataset member or test predictions
+were opened and no fitting occurred.
+
+The separate image built successfully with a digest-pinned Python base and 24 pinned runtime
+packages. Source-tree identity, image ID, base reference, requirements hash, artifact hashes
+and runtime versions bind the private receipt. Accepted-model native and Linux arm64 container
+HTTP probabilities match exactly on the synthetic monthly request. Readiness 200 and request
+401/422/413 checks pass. Both diagnostic request groups completed without failures. A wrong
+candidate checksum exits nonzero before readiness; restart on the known image+good bundle
+restores readiness and the same probability. Only test-owned containers were removed;
+original evidence is unchanged and the image remains local. This is isolated local recovery
+and in-namespace diagnostics, not public TLS/load/SLO/zero-downtime rollout acceptance.
+
+Synthetic staging/gate/failure tests cover minimal copying, original preservation, private
+permissions, artifact tampering, output scope/model/probability mismatch, stale/wrong-scope
+images and retaining a failed receipt. The Research API Image Packaging CI job receives only
+public software/configuration and checks runtime pins, non-root/no-private-artifact content
+and missing-bundle refusal; it does not evaluate or receive private weights. Remote CI for
+the new commit remains separate evidence. The dashboard/README distinguish historical
+LendingClub rejection, accepted private mortgage research and operational fintech HOLD.
+
+The full local suite initially exposed a pre-existing smoke-script dependency on an
+unversioned python executable absent from the current Mac PATH. Switching that stdlib JSON
+check to python3 restored its positive/negative contracts. Final local suite: 318 passed,
+4 skipped, 8 dependency/deprecation warnings. Black/isort/Ruff and strict mypy on 94 source files
+pass; the two new typed scripts also pass mypy with explicit namespace-package mapping.
+Numeric mortgage/diagnostic reports, credentials, source, model and owner learning/execution
+instructions stay private. No public scoring/model publication, merge or hosting spend.

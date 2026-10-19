@@ -119,6 +119,31 @@ jobs:
           path: dashboard-smoke.json
           if-no-files-found: error
 
+  research-image-smoke:
+    name: Research API Image Packaging
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build public software image without private artifacts
+        run: |
+          research_source_sha=$(python3 scripts/research_image_source_hash.py)
+          docker build -f infra/docker/Dockerfile.research-api \
+            --build-arg SOURCE_TREE_SHA="$research_source_sha" \
+            -t creditlens-research-api:ci .
+
+      - name: Verify pinned runtime and fail-closed image
+        run: bash scripts/smoke_research_image.sh creditlens-research-api:ci research-image-smoke.json
+
+      - name: Upload software packaging evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-software-packaging-${{ github.sha }}
+          path: research-image-smoke.json
+          if-no-files-found: error
+
   eval-gate:
     name: Model Evaluation Gate
     runs-on: ubuntu-latest

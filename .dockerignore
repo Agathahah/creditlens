@@ -23,3 +23,11 @@ src/**/.env.*
 !docs/
 !docs/audit/
 !docs/audit/PORTFOLIO_RESEARCH_SNAPSHOT.json
+
+# Isolated private API image includes code/protocol only; runtime artifacts stay outside.
+!infra/docker/Dockerfile.research-api
+!infra/docker/requirements.research-api.txt
+!config/
+!config/research/
+!config/research/freddie_experiment_v4.json
+!config/research/freddie_independent_test_v4.json

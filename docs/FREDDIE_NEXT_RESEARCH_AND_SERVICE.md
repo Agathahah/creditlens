@@ -26,6 +26,17 @@ Client autentikasi lokal berhasil pada server pemilik. [Kontrak adapter](FREDDIE
 menjelaskan validasi, batas ukuran dan penolakan input. Ini belum history store operasional
 atau bukti timestamp asal. Tidak ada training atau pembukaan ulang test.
 
+## Penerimaan container lokal — 19 Oktober 2026
+
+Image riset terpisah dengan versi dependency terkunci sudah diuji secara terisolasi.
+Model diterima dan token dipasang sebagai file privat read-only saat runtime; tidak
+masuk image. Skor native/container pada input sintetis cocok tepat, kontrak invalid
+lulus, dan checksum bundle rusak menahan startup. Restart memakai pasangan image/bundle
+baik memulihkan readiness serta skor yang sama. Pengukuran kecil tanpa kegagalan bukan
+SLO layanan. [Kontrak container](FREDDIE_CONTAINER_ACCEPTANCE.md) mencatat batas jaringan,
+resource, diagnostic load dan recovery. Timestamp asal, hak operasional, history store,
+HTTPS, audit inference, label matang dan penerimaan operator tetap terbuka.
+
 ## Urutan penelitian sebelumnya — konteks 13 Oktober
 
 1. **Audit fitur ke belakang pada development 2018/2019.** Kandidat fitur: worst/number
@@ -58,9 +69,9 @@ atau bukti timestamp asal. Tidak ada training atau pembukaan ulang test.
 | Immutable bundle | Model+transform+calibrator+ordered schema/units/missing rules+versions+checksum | Bundle riset privat terikat evidence; belum bundle operasi fintech |
 | Training-serving parity | Domain record → reload → actual HTTP score yang sama, invalid inputs ditolak | Feature-only HTTP parity nyata lulus; adapter snapshot bertimestamp teruji sintetis; history store/availability operasional belum diterima |
 | Kontrol API | Auth/HTTPS, byte/rate limits, request/event IDs, akses dan audit tanpa raw input | API riset: bearer/loopback/byte/rate teruji; HTTPS/event audit operasi belum lengkap |
-| Beban dan packaging | Lingkungan/digest/model yang sama, p50/p95/p99, error/RSS, cold/warm dan concurrency | Docker dashboard smoke terpisah; bukan API model release |
+| Beban dan packaging | Lingkungan/digest/model yang sama, p50/p95/p99, error/RSS, cold/warm dan concurrency | Image API riset/parity dan diagnostic kecil lokal lulus; ingress/SLO operasi belum diterima |
 | Monitoring | Actual inference, delayed labels, cohort/drift/quality per version dan prosedur respons | Prototype modul ada; belum bukti operasi layanan real |
-| Rollback/pilot | Model+image sebelumnya, failure injection terisolasi dan recovery smoke | Belum dibuktikan pada layanan model yang diterima |
+| Rollback/pilot | Model+image sebelumnya, failure injection terisolasi dan recovery smoke | Penolakan bundle rusak dan restart pasangan baik teruji lokal; pilot/operating rollback belum diterima |
 
 Rilis hanya mengacu lingkungan, beban dan scope yang benar-benar diuji. Tidak ada klaim
 production atau regulatory compliance dari CI, jumlah baris, deployment dashboard atau
