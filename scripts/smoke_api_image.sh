@@ -18,7 +18,7 @@ for attempt in $(seq 1 30); do
     exit 1
   fi
   if curl --fail --silent --max-time 3 "http://$port/ready" > "$response"; then
-    if python - "$response" <<'CHECK'
+    if python3 - "$response" <<'CHECK'
 import json
 import sys
 with open(sys.argv[1]) as handle:
