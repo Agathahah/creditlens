@@ -4,6 +4,21 @@ Tanggal keputusan/persiapan: 29 September 2026. Permintaan melanjutkan proyek me
 mencakup persiapan lokal API, demo agregat dan kriteria rilis berikut. Ini belum menjadi bukti
 model valid atau layanan sudah dioperasikan. Eksperimen M1 baru mengikuti scope yang telah disetujui.
 
+## Status aktif 20 Oktober 2026
+
+[Laporan penerimaan terkini](RELEASE_ACCEPTANCE_2026-10-20.md) merangkum hasil yang sudah
+diimplementasikan dan batas rilis. V4 diterima untuk riset hipotek retrospektif privat;
+bundle/API, adapter bulanan sintetis, container, jurnal, pemulihan dan HTTPS lokal telah
+diverifikasi. Diagnostik layanan memakai model yang sama, jurnal aktif, concurrency1/5,
+penolakan kuota tetap60request/menit dan pemulihan setelah jendela waktu nyata.
+
+Pilot operasional tetap NOT_ADMITTED: belum ada provider/operator, hak penggunaan layanan,
+atau riwayat ketersediaan/koreksi asli. Urutan berikut ialah penerimaan sumber operasional,
+kontrak pilot, pemantauan tanpa tindakan kredit otomatis, outcome nyata yang matang, lalu
+penerimaan kualitas/keamanan/kapasitas/pemulihan oleh operator. Tidak perlu mengulang ujian
+historis kandidat riset yang sama. Populasi fintech berbeda memerlukan kontrak dan evaluasi
+baru. Scoring produksi tetap HOLD. Bagian bertanggal lama di bawah adalah riwayat.
+
 ## Status terbaru 7 Oktober 2026
 
 - Tableau agregat diterbitkan 6 Oktober; pemilik mengonfirmasi berfungsi. URL ada di [panduan](TABLEAU_PUBLIC_DASHBOARD_GUIDE.md).

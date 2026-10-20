@@ -27,12 +27,14 @@ live lending decisions. No measured loss reduction or operational business retur
 | Inference audit and delayed labels | Private request journal, retry deduplication and explicitly synthetic three-month outcome diagnostics | Real operational outcomes, central logging and prospective quality remain unverified |
 | Journal persistence and recovery | Container replacement, online SQLite backup, key/row reconciliation, write-failure and corrupt-backup rejection | Same-host synthetic drill; off-host recovery, retention and operating acceptance remain open |
 | Private HTTPS and credential rotation | Verified native/container TLS parity, CA/IP rejection and retired-token denial after restart | Local test certificate; operational identity, ingress and source admission remain open |
+| Bounded service diagnostic | Audited HTTPS at concurrency1/5, fixed quota exhaustion and recovery after its real time window | Small synthetic workload; no operating SLO or real-loan pilot acceptance |
 | Fintech production scoring | HOLD | Product/population/rights, real data availability and operating acceptance remain required |
 
 The API candidate is unchanged by container verification. No new training, threshold selection
 or independent test run is triggered by startup, client execution, CI or dashboard hosting.
 
 - [Project status](PROJECT_STATUS.md)
+- [Current release acceptance and remaining dependencies](docs/RELEASE_ACCEPTANCE_2026-10-20.md)
 - [Technical documentation](docs/README.md)
 - [Data design](docs/DATA_DESIGN.md)
 - [Evaluation and release plan](docs/EVALUATION_RELEASE_PLAN.md)

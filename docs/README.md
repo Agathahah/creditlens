@@ -1,10 +1,11 @@
 # CreditLens technical documentation
 
-Updated 2026-10-19. Documentation records implemented behavior, decisions, validation evidence and remaining work. The current product direction is portfolio monitoring after disbursement; older application-time plans remain dated historical context.
+Updated 2026-10-20. Documentation records implemented behavior, decisions, validation evidence and remaining work. The current product direction is portfolio monitoring after disbursement; older application-time plans remain dated historical context.
 
 | Document | Purpose |
 |---|---|
 | [Project status](../PROJECT_STATUS.md) | Current implementation and unresolved risks |
+| [Current release acceptance](RELEASE_ACCEPTANCE_2026-10-20.md) | Consolidated research/engineering evidence, operational admission boundary and remaining dependencies |
 | [PRD](PRD.md) | Product scope, intended use and acceptance criteria |
 | [Data design](DATA_DESIGN.md) | Lineage, grain, features and temporal constraints |
 | [Technical design](TECHNICAL_DESIGN.md) | Pipeline, bundle, serving and integration boundaries |
@@ -73,3 +74,4 @@ Raw data, credentials and backup archives are not repository deliverables. Histo
 
 - [Private mortgage pilot contract](PRIVATE_MORTGAGE_PILOT_CONTRACT.md) — intended operator workflow, source/timing evidence and current NOT_ADMITTED boundary.
 - [Private HTTPS and credential rotation](PRIVATE_RESEARCH_TRANSPORT_ACCEPTANCE.md) — verified local TLS, trust failures and restart-based test credential replacement.
+- [Bounded HTTPS service acceptance](PRIVATE_RESEARCH_CAPACITY_ACCEPTANCE.md) — concurrency, unchanged quota, real-window recovery and audit reconciliation; not an operating SLO.

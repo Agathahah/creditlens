@@ -125,3 +125,16 @@ uji lewat restart dengan jurnal lama tetap utuh. Sertifikat self-signed lokal ti
 trust store dan tidak menjadi sertifikat layanan publik. Model/credential asli tidak diubah.
 Langkah operasional berikut memerlukan sumber berizin dan operator; kontrol teknis lokal
 serta penambahan sampel historis tidak menggantikan bukti tersebut.
+
+## 20 Oktober 2026 — penerimaan layanan lokal dan keputusan akhir lingkup riset
+
+Diagnostik model nyata di Docker memakai HTTPS, jurnal aktif, concurrency1/5 dan batas
+60request/menit yang tidak diubah. Request yang melebihi kuota ditolak; setelah jendela
+61detik nyata, scoring serta pencatatan kembali berhasil. ID/status/probabilitas dan identitas
+model direkonsiliasi dengan jurnal privat. Sampel kecil ini bukan pengukuran SLO produksi.
+Lihat [kontrak diagnostik](PRIVATE_RESEARCH_CAPACITY_ACCEPTANCE.md).
+
+[Laporan penerimaan](RELEASE_ACCEPTANCE_2026-10-20.md) menyatukan bukti yang sudah selesai
+dan pemilik pekerjaan berikutnya. Tidak ada training/test ulang, promosi scoring, merge atau
+deployment publik. Langkah berikut yang dapat membuka pilot adalah sumber/operator serta
+metadata operasional yang dapat dibuktikan, bukan pengulangan eksperimen historis.

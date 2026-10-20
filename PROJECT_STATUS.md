@@ -71,6 +71,14 @@ notebooks and owner learning instructions stay private.
 
 ## 2026-10-20 — private HTTPS and pilot admission boundary
 
+The [current release acceptance](docs/RELEASE_ACCEPTANCE_2026-10-20.md) consolidates model,
+serving, security, monitoring and recovery evidence with accountable external dependencies.
+The remaining local service diagnostic also exercises audited HTTPS at concurrency1/5,
+the unchanged60requests/minute quota, excess-request rejection and recovery after a real
+61-second wait. This is a bounded synthetic diagnostic, not a lender capacity/SLO result.
+It does not alter the unchanged candidate or the NOT_ADMITTED operational-pilot decision.
+See [the fixed workload contract](docs/PRIVATE_RESEARCH_CAPACITY_ACCEPTANCE.md).
+
 Source access remains private Freddie retrospective samples; an authorized operational
 servicing source and authentic availability/correction feed are absent. The operational
 pilot is NOT_ADMITTED. The [pilot contract](docs/PRIVATE_MORTGAGE_PILOT_CONTRACT.md) records

@@ -557,3 +557,24 @@ trust/hostname and plaintext were rejected. Test-only token rotation through res
 rows preserved. Test keys/certificates/credentials and receipts remain private; original
 credentials, model, frozen sources and evaluations were not modified or reopened. No public
 identity, external TLS, operational pilot, hosting spend or production promotion is implied.
+
+## 2026-10-20 — bounded HTTPS service acceptance and consolidated release boundary
+
+- Fixed a synthetic-only accepted-model workload before execution: audited HTTPS at
+  concurrency1/5, unchanged60/minute quota, five expected429responses,401and real-window
+  recovery without restart/clock reset. Model outputs remain identical to the native bundle.
+- Reconciled66observed responses and60successful scores with unique committed request IDs,
+  status/probability and exact model identity. Source-bound Docker remains network-none,
+  non-root, read-only except the private journal,2CPU/2GiB; owned cleanup passed.
+- Added negative audit reconciliation tests for missing/duplicate IDs, changed status or
+  probability, mismatched body/header identity and wrong model. Final local suite376passed,
+  4skipped,8existing warnings; Black/isort/Ruff and mypy96source files plus script typing pass.
+- Reported coverage scope explicitly: configured src82%includes src test modules;
+  implementation-only excluding those modules77.63%(3175/4090). Standalone orchestration,
+  CLI/error paths and skipped integrations remain limitations.
+- Consolidated completed research/engineering evidence and external operating dependencies in
+  RELEASE_ACCEPTANCE_2026-10-20.md. Updated roadmap/dashboard source to show operator/source,
+  real monthly history, shadow observation and named service acceptance as the next sequence.
+- Operational pilot remains NOT_ADMITTED and production scoring HOLD. No archive, fitting,
+  consumed-test reuse, public scoring, hosting spend, merge, model/data/credential distribution
+  or personal learning content is included. Public dashboard revision is not freshly verified.

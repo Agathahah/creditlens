@@ -1081,7 +1081,8 @@ def _monthly_research(evidence: Evidence) -> None:
     st.warning(
         "V4 lulus evaluasi hipotek retrospektif. Rilis layanan fintech menunggu "
         "timestamp ketersediaan data, kesesuaian populasi/hak penggunaan, adapter "
-        "riwayat online, HTTPS, uji beban, monitoring dan rollback. API lokal dibatasi "
+        "riwayat operasional serta penerimaan keamanan, kapasitas dan outcome nyata. "
+        "HTTPS dan pemulihan lokal telah diuji. API lokal dibatasi "
         "untuk riset pribadi; tidak ada scoring pinjaman aktif di dashboard ini."
     )
     st.markdown(
@@ -1200,11 +1201,17 @@ def _deployment(evidence: Evidence) -> None:
     st.subheader("Urutan menuju layanan scoring fintech")
     _flow(
         [
-            ("Sumber holdout baru", "Hak penggunaan, as-of, maturity"),
-            ("Evaluasi independen", "Ranking, kalibrasi, threshold, fairness"),
-            ("Bundle & API", "Manifest, parity, security"),
-            ("Operasi layanan", "Monitoring, rollback, approval"),
+            ("Operator & sumber", "Produk, populasi dan izin operasional"),
+            ("Riwayat bulanan", "Availability, koreksi dan kelengkapan"),
+            ("Pilot pemantauan", "Tanpa tindakan kredit otomatis; outcome matang"),
+            ("Penerimaan layanan", "Kualitas, keamanan, kapasitas dan pemulihan"),
         ]
+    )
+    st.write(
+        "Model v4 sudah lulus ujian riset hipotek; kandidat yang sama tidak memerlukan "
+        "pengulangan test historis. Penerapannya pada populasi fintech yang berbeda "
+        "memerlukan kontrak data dan evaluasi baru. Bukti operasional dikumpulkan "
+        "dari pilot berizin, kemudian ditinjau oleh operator sebelum keputusan rilis."
     )
     st.warning(
         "Dashboard ini sudah menyajikan riset historis secara publik. Layanan scoring "
