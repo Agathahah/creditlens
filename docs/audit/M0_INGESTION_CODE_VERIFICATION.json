@@ -1,0 +1,25 @@
+{
+  "historical_dbt_evidence_unchanged": {
+    "logs/dbt.log": true,
+    "target/run_results.json": true,
+    "target/manifest.json": true
+  },
+  "source_sha256": {
+    "src/ingestion/lending_club.py": "e5fb1af4fc139a085b569efc8314ee2768641e62f052a1b428198f14a1cbde5e",
+    "src/ingestion/tests/test_lending_club.py": "f242c4e293efd7b1376bf847feef33bd5382029f0e2048b02d0564d2b3b2f679",
+    "scripts/verify_m0_ingestion.py": "d3870feabdd0312f7d64434003542a4a0c4aa2146bd5991578e2e08eb45df42c",
+    "scripts/load_data.py": "6802c8568442232fe95429d58a9bae1aeea61ed9a246c9eda5217b0a7d77f065",
+    "scripts/init_db.sql": "e1fae7d4352fead339a8066335e47080f1db43dd34c4ae3ba1da1e45db9fe323",
+    "src/common/orm_models.py": "a6922a846cfcf18e7197a713480de6c2d6f8b397bd140316739980280a1e49c8",
+    "migrations/versions/4b7d2a91c608_expand_loan_status.py": "dda741a2c4ce3de5f8a41da3967f87d7888f0df45d38ec524066241d9dca6b8b"
+  },
+  "validation": {
+    "unit_tests": "7 passed",
+    "postgres_fixture": "8 checks passed on final runner; cluster stopped",
+    "black_isort_ruff": "passed for loader, new module/tests, verification runner and revision",
+    "mypy": "passed for module and revision with follow-imports=silent",
+    "cli_help": "python -m scripts.load_data --help passed",
+    "git_diff_check": "passed"
+  },
+  "limits": "No full application suite, model training, evaluation, deployment, commit, push or Git rewrite."
+}

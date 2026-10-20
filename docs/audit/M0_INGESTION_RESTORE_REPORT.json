@@ -1,0 +1,22 @@
+{
+  "workspace": "/private/tmp/m0-restore-n99z7z89",
+  "status": "passed",
+  "source_backup_sha256": "d797044aa5b887d9b91666194b27a32d15327304297f04e8723769db6ce6c567",
+  "scope": [
+    "raw.lc_loans",
+    "staging.lc_loans_clean",
+    "mart.loan_features",
+    "mart.final_features"
+  ],
+  "ownership_acl_restored": false,
+  "restored_counts": {
+    "raw.lc_loans": 1599982,
+    "staging.lc_loans_clean": 1599982,
+    "mart.loan_features": 1599982,
+    "mart.final_features": 1599982
+  },
+  "raw_indexes_restored": 5,
+  "cluster_stopped": true,
+  "temporary_restored_database_removed": true,
+  "disk_free_gib": 4.469
+}

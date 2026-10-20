@@ -1,0 +1,26 @@
+{
+  "execution_id": "freddie_v3_independent_test_once_20261013",
+  "scope": "PRIVATE_RETROSPECTIVE_MORTGAGE_RESEARCH_ONLY",
+  "experiment_protocol_sha256": "f4eef57a25e638f9a4c694a16f3d93d2bd8ee8f50440d5c9758cbd440eee0411",
+  "validation_report_sha256": "a354f021d4771658d82cc6efe217a79b643c65c4c02c9412990c056196d16542",
+  "candidate_sha256": "a32248de47d3b5baa456b429c93bbf26479409f4398a8b6e64ffd7be21504a6c",
+  "source_manifest_sha256": "bb2cc5d696d184b3720da05ef1e651f3b406e195bb7e4a9a5eaef0ba72aa79f8",
+  "test_source_sha256": "e60f708ff0efb26b40418f5e70d867dfa014d296b405869004541223a4edb552",
+  "test_window": {
+    "vintage": 2020,
+    "as_of_start": "202307",
+    "as_of_end": "202403",
+    "last_outcome": "202406"
+  },
+  "resource_budget": {
+    "threads": 2,
+    "max_elapsed_minutes": 15,
+    "max_rss_gib": 2,
+    "seed": 42
+  },
+  "selection_and_calibration_locked": true,
+  "fit_or_threshold_mutations_allowed": false,
+  "all_test_vintage_contents_consumed_on_first_access": true,
+  "public_scoring_authorized": false,
+  "authorization_basis": "Conditional independent research evaluation under owner delegated continuation, after concrete validation acceptance and candidate lock; not an owner-signed checksum or production approval"
+}

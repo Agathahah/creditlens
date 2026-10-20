@@ -1,0 +1,217 @@
+{
+  "status": "passed",
+  "scope": "Approved M0 label rebuild: staging.lc_loans_clean, mart.loan_features, mart.final_features",
+  "started_at_utc": "2026-09-22T07:21:28.536586+00:00",
+  "finished_at_utc": "2026-09-22T07:33:18.787906+00:00",
+  "target": {
+    "database": "creditlens",
+    "role": "creditlens",
+    "server_version": "14.22 (Homebrew)",
+    "port": 5432,
+    "alembic_versions": [
+      "4b7d2a91c608"
+    ]
+  },
+  "backup": {
+    "sha256": "060527b72cd4eea7aeb416ec0840284b8c7986051cca4618c25031801bd18fb3",
+    "bytes": 416630843,
+    "matches_previously_restored_archive": true,
+    "private_restore_and_rollback_drill_status": "passed"
+  },
+  "source_hashes_match_prior_drill": true,
+  "disk_free_bytes_before": 20969590784,
+  "disk_free_bytes_after": 17712496640,
+  "preflight_checks": {
+    "disk_gate": true,
+    "backup_hash": true,
+    "backup_bytes": true,
+    "source_hashes": true,
+    "target": true,
+    "revision": true,
+    "layers_baseline": true,
+    "inputs_baseline": true,
+    "view_baseline": true,
+    "metadata_expected": true
+  },
+  "layers_before": {
+    "staging.lc_loans_clean": {
+      "count": 2260668,
+      "unique_ids": 2260668,
+      "zero": 1076751,
+      "one": 290066,
+      "null": 893851,
+      "mismatches": 21467
+    },
+    "mart.loan_features": {
+      "count": 2260668,
+      "unique_ids": 2260668,
+      "zero": 1076751,
+      "one": 290066,
+      "null": 893851,
+      "mismatches": 21467
+    },
+    "mart.final_features": {
+      "count": 2260668,
+      "unique_ids": 2260668,
+      "zero": 1076751,
+      "one": 290066,
+      "null": 893851,
+      "mismatches": 21467
+    }
+  },
+  "dbt": {
+    "version": "1.12.0-rc3",
+    "threads": 1,
+    "lock_timeout_seconds": 5,
+    "statement_timeout_seconds": 300,
+    "process_timeout_seconds": 600,
+    "exit_code": 0,
+    "timed_out": false,
+    "duration_seconds": 42.09,
+    "results": [
+      {
+        "unique_id": "model.creditlens.lc_loans_clean",
+        "status": "success",
+        "failures": null
+      },
+      {
+        "unique_id": "test.creditlens.not_null_lc_loans_clean_loan_id.4d29caf7e2",
+        "status": "pass",
+        "failures": 0
+      },
+      {
+        "unique_id": "test.creditlens.unique_lc_loans_clean_loan_id.d425861d88",
+        "status": "pass",
+        "failures": 0
+      },
+      {
+        "unique_id": "model.creditlens.loan_features",
+        "status": "success",
+        "failures": null
+      },
+      {
+        "unique_id": "test.creditlens.accepted_values_loan_features_is_default__0__1.ec342397f9",
+        "status": "pass",
+        "failures": 0
+      },
+      {
+        "unique_id": "test.creditlens.not_null_loan_features_id.8e39b8e782",
+        "status": "pass",
+        "failures": 0
+      },
+      {
+        "unique_id": "test.creditlens.not_null_loan_features_installment_to_income_ratio.2db3bc5379",
+        "status": "pass",
+        "failures": 0
+      },
+      {
+        "unique_id": "test.creditlens.unique_loan_features_id.5544512f92",
+        "status": "pass",
+        "failures": 0
+      },
+      {
+        "unique_id": "model.creditlens.final_features",
+        "status": "success",
+        "failures": null
+      },
+      {
+        "unique_id": "test.creditlens.accepted_values_final_features_is_default__0__1.7521f57ca0",
+        "status": "pass",
+        "failures": 0
+      },
+      {
+        "unique_id": "test.creditlens.loan_label_contract",
+        "status": "pass",
+        "failures": 0
+      },
+      {
+        "unique_id": "test.creditlens.nonempty_required_models",
+        "status": "pass",
+        "failures": 0
+      },
+      {
+        "unique_id": "test.creditlens.not_null_final_features_id.c45e496212",
+        "status": "pass",
+        "failures": 0
+      },
+      {
+        "unique_id": "test.creditlens.reconcile_loan_counts",
+        "status": "pass",
+        "failures": 0
+      },
+      {
+        "unique_id": "test.creditlens.unique_final_features_id.fabb277f88",
+        "status": "pass",
+        "failures": 0
+      }
+    ]
+  },
+  "layers_after": {
+    "staging.lc_loans_clean": {
+      "count": 2260668,
+      "unique_ids": 2260668,
+      "zero": 1076751,
+      "one": 268599,
+      "null": 915318,
+      "mismatches": 0
+    },
+    "mart.loan_features": {
+      "count": 2260668,
+      "unique_ids": 2260668,
+      "zero": 1076751,
+      "one": 268599,
+      "null": 915318,
+      "mismatches": 0
+    },
+    "mart.final_features": {
+      "count": 2260668,
+      "unique_ids": 2260668,
+      "zero": 1076751,
+      "one": 268599,
+      "null": 915318,
+      "mismatches": 0
+    }
+  },
+  "postflight_core_checks": {
+    "build_success": true,
+    "disk_gate": true,
+    "target": true,
+    "revision": true,
+    "layers_new_contract": true,
+    "inputs_unchanged": true,
+    "view_expected": true,
+    "metadata_unchanged": true
+  },
+  "non_label_sorted_row_sha256": {
+    "staging.lc_loans_clean": {
+      "rows": 2260668,
+      "before": "851eb6c85c501b18b37637652c06552343795096e083743537de7dbae5f96268",
+      "after": "851eb6c85c501b18b37637652c06552343795096e083743537de7dbae5f96268",
+      "match": true
+    },
+    "mart.loan_features": {
+      "rows": 2260668,
+      "before": "54fc1bee43d3536e50d8ae930c97b41d96128efff6c976de341b3ad464c18275",
+      "after": "54fc1bee43d3536e50d8ae930c97b41d96128efff6c976de341b3ad464c18275",
+      "match": true
+    },
+    "mart.final_features": {
+      "rows": 2260668,
+      "before": "13e92f6e67f6c6079f89dd02889aafc6672637ef77b8561a938f6564fd6a17e0",
+      "after": "13e92f6e67f6c6079f89dd02889aafc6672637ef77b8561a938f6564fd6a17e0",
+      "match": true
+    }
+  },
+  "raw_and_macro_input_fingerprints_unchanged": true,
+  "relation_metadata_unchanged": true,
+  "view_definition_matches_rehearsal": true,
+  "activity_observation": "No other database session visible before build; operator confirmed an exclusive M0 window. One PostgreSQL autovacuum worker on mart.final_features appeared during postflight; no other user workload was identified.",
+  "rollback_performed": false,
+  "limitations": [
+    "Backup is scoped to five relations, not the whole PostgreSQL server.",
+    "The prior private restore used --no-owner and --no-privileges; owner/ACL recovery was not rehearsed.",
+    "Aggregate input fingerprints support unchanged raw/macro data but are not collision-free equality proofs.",
+    "Matching SHA-256 streams over rows ordered by unique ID strongly supports unchanged non-label values; it is a cryptographic comparison, not a field-by-field difference listing.",
+    "This is a retrospective label correction, not evidence of cohort/as-of validity, model quality, CI coverage or production readiness."
+  ]
+}

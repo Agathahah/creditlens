@@ -1,0 +1,31 @@
+{
+  "workspace": "/private/tmp/creditlens-ingestion-test-q4d7_pbl",
+  "checks": [
+    "legacy_status_fails_and_entire_batch_rolls_back",
+    "unknown_downstream_view_blocks_migration_without_cascade",
+    "migration_upgrades_legacy_column_and_preserves_actual_dbt_view",
+    "resume_preserves_existing_values_and_full_long_status",
+    "repeated_resume_is_noop_including_loaded_at",
+    "default_upsert_updates_changed_outcomes_only",
+    "downgrade_refuses_long_values",
+    "safe_downgrade_restores_old_bound"
+  ],
+  "status": "passed",
+  "first": {
+    "read_rows": 3,
+    "excluded_required_fields": 1,
+    "skipped_existing": 1,
+    "written_rows": 1,
+    "unchanged_or_conflicted": 0,
+    "committed_batches": 1
+  },
+  "second": {
+    "read_rows": 3,
+    "excluded_required_fields": 1,
+    "skipped_existing": 2,
+    "written_rows": 0,
+    "unchanged_or_conflicted": 0,
+    "committed_batches": 0
+  },
+  "cluster_stopped": true
+}

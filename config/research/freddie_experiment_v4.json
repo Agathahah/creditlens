@@ -1,0 +1,195 @@
+{
+  "protocol_id": "freddie_mortgage_3m_v4_past_history_recent_calibration",
+  "status": "LOCKED_BEFORE_2021_OUTCOME_INSPECTION_OR_FIT_UNDER_DELEGATED_RESEARCH_AUTHORIZATION_2026-10-14",
+  "scope": "freddie_mortgage_retrospective_research",
+  "horizon_months": 3,
+  "label_version": "freddie_current_to_90plus_or_reo_3m_v1",
+  "operational_point_in_time_claim": false,
+  "public_scoring_authorized": false,
+  "split": {
+    "train": {
+      "vintage": 2018,
+      "as_of_start": "201901",
+      "as_of_end": "202009",
+      "last_outcome": "202012"
+    },
+    "calibration": {
+      "vintage": 2021,
+      "as_of_start": "202301",
+      "as_of_end": "202312",
+      "last_outcome": "202403",
+      "loan_partition": {
+        "method": "sha256_mod_2",
+        "salt": "creditlens-freddie-v4-calibration-20261014",
+        "bucket": 0
+      }
+    },
+    "validation": {
+      "vintage": 2021,
+      "as_of_start": "202404",
+      "as_of_end": "202412",
+      "last_outcome": "202503",
+      "loan_partition": {
+        "method": "sha256_mod_2",
+        "salt": "creditlens-freddie-v4-calibration-20261014",
+        "bucket": 1
+      }
+    },
+    "frozen_test": {
+      "vintage": 2022,
+      "as_of_start": "202504",
+      "as_of_end": "202512",
+      "last_outcome": "202603"
+    }
+  },
+  "features": [
+    "upb",
+    "loan_age",
+    "remaining_months",
+    "interest_rate",
+    "prior_dq_1",
+    "prior_dq_2",
+    "credit_score",
+    "orig_cltv",
+    "orig_dti",
+    "orig_ltv",
+    "worst_dq_6",
+    "dq_months_6",
+    "complete_status_6",
+    "worst_dq_12",
+    "dq_months_12",
+    "complete_status_12",
+    "months_since_known_dq_12",
+    "upb_change_ratio_3",
+    "upb_change_ratio_12"
+  ],
+  "candidates": {
+    "constant": "Train labeled prevalence; unchanged on later splits",
+    "logistic_regression": {
+      "C": 1.0,
+      "max_iter": 1000,
+      "class_weight": null
+    },
+    "hist_gradient_boosting": {
+      "max_iter": 80,
+      "max_depth": 3,
+      "learning_rate": 0.1,
+      "l2_regularization": 1.0
+    }
+  },
+  "preprocessing": "Train-only median imputation with missing indicators; train-only scaling for logistic regression",
+  "calibration": {
+    "method": "sigmoid",
+    "implementation": "CalibratedClassifierCV(FrozenEstimator(base), method=sigmoid, ensemble=False, n_jobs=1)",
+    "fit_role": "calibration_only",
+    "minimum_unique_adverse_loans": 50,
+    "raw_predictions": "diagnostic only; cannot replace calibrated candidate after validation"
+  },
+  "selection": "Highest calibrated validation AP; exact ties choose logistic regression; no parameter search",
+  "alert_policy": {
+    "method": "Monthly top fraction; deterministic tie handling using private loan key",
+    "fraction": 0.01,
+    "purpose": "Research capacity simulation; not a lender requirement"
+  },
+  "resource_budget": {
+    "threads": 2,
+    "max_elapsed_minutes": 15,
+    "max_rss_gib": 2,
+    "seed": 42
+  },
+  "proposed_research_gates": {
+    "minimum_unique_adverse_loans": {
+      "train": 50,
+      "validation": 30,
+      "frozen_test": 30
+    },
+    "ap_lift_over_prevalence_minimum": 2.0,
+    "ap_lift_loan_bootstrap_95pct_lower_bound_exceeds": 1.0,
+    "brier_skill_over_train_constant_minimum_exclusive": 0.0,
+    "recall_at_monthly_top_1pct_minimum": 0.2,
+    "alert_precision_lift_over_prevalence_minimum": 2.0,
+    "finite_probabilities_between_zero_and_one": true,
+    "report_monthly_censoring_and_counts": true,
+    "uncertainty": {
+      "method": "Paired bootstrap by loan, preserving all loan-months",
+      "replicates": 1000,
+      "interval": 0.95
+    },
+    "calibration_constant_brier_skill_minimum_exclusive": 0.0
+  },
+  "support_limit": "Support minima are research guardrails, not a power calculation or business validity guarantee",
+  "test_opening": "Vintage2022 performance/origination members are opened only once after locked candidate passes recomputed validation; vintage2020 is consumed and unsupported. ZIP directory metadata and whole-archive hashes do not inspect records.",
+  "service_acceptance": "Separate immutable bundle, parity, access, load, monitoring and rollback evidence; never automatic promotion",
+  "origination_features": {
+    "credit_score": {
+      "column": 1,
+      "sentinel": 9999,
+      "range": [
+        300,
+        850
+      ]
+    },
+    "orig_cltv": {
+      "column": 9,
+      "sentinel": 999,
+      "range": [
+        1,
+        998
+      ]
+    },
+    "orig_dti": {
+      "column": 10,
+      "sentinel": 999,
+      "range": [
+        1e-06,
+        65
+      ]
+    },
+    "orig_ltv": {
+      "column": 12,
+      "sentinel": 999,
+      "range": [
+        1,
+        998
+      ]
+    }
+  },
+  "development_basis": "Audited past-history candidates; reuse 2018 train to isolate bounded research, use newer vintage2021 for disjoint 2023 calibration and 2024 validation. Vintage2022 is the latest supplied cohort and is wholly sealed until conditional one-shot test. Years/windows chosen from origination year and official March2026 cutoff before any new outcome inspection.",
+  "sources": [
+    "https://www.freddiemac.com/fmac-resources/research/pdf/user_guide.pdf",
+    "https://www.aeaweb.org/articles?id=10.1257/aer.100.2.490",
+    "https://doi.org/10.1186/s12916-019-1466-7",
+    "https://scikit-learn.org/stable/modules/calibration.html",
+    "https://scikit-learn.org/stable/modules/generated/sklearn.calibration.CalibratedClassifierCV.html",
+    "https://jmlr.org/beta/papers/v23/22-0658.html"
+  ],
+  "previous_development_data_used": "V1/v2 validation calendar 2020 used for development; not independent evidence. Later 2019 sample windows are development validation too; no virgin validation claim.",
+  "history_features": [
+    "worst_dq_6",
+    "dq_months_6",
+    "complete_status_6",
+    "worst_dq_12",
+    "dq_months_12",
+    "complete_status_12",
+    "months_since_known_dq_12",
+    "upb_change_ratio_3",
+    "upb_change_ratio_12"
+  ],
+  "feature_dtype": "float32",
+  "history_contract": "Exact prior calendar months; incomplete delinquency windows NULL with completeness indicators; recency NULL means no known event and must be interpreted with completeness; UPB stock change is not a payment.",
+  "cohort_changes_not_causal_ablation": true,
+  "source_constraints": {
+    "supported_vintages": [
+      2018,
+      2021,
+      2022
+    ],
+    "expected_orig_columns": 31,
+    "expected_perf_columns": 35,
+    "expected_performance_cutoff": "202603",
+    "maximum_sample_loans": 50000,
+    "release_binding": "INFERRED_FROM_OFFICIAL_CUTOFF_AND_LAYOUT_WITHOUT_PUBLISHER_CHECKSUM"
+  },
+  "minimum_free_disk_gib": 2,
+  "authorization_basis": "Owner delegated bounded technical research decisions and requested continuation with supplied 2021/2022 archives; private retrospective scope and previously accepted source terms. Not an owner-signed hash or fintech/public scoring authorization."
+}

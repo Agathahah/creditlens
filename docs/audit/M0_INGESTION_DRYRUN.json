@@ -1,0 +1,10 @@
+{
+  "mode": "CSV normalization only; no database writes",
+  "read_rows": 2260701,
+  "valid_rows": 2260668,
+  "excluded_required_fields": 33,
+  "long_status_rows": 761,
+  "source_sha256": "55c16f75120f897683f02e7aabcf080d0e4a20c4832feb1d592cfa941bd62a2d",
+  "status": "passed",
+  "elapsed_seconds": 41.99
+}

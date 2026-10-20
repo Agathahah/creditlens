@@ -1,0 +1,266 @@
+{
+  "started_at_utc": "2026-09-11T08:57:44.148725+00:00",
+  "status": "passed",
+  "workspace": "/private/tmp/m0-label-8r_3kzkh",
+  "backup": {
+    "path": "<private-local-backup>/before.dump",
+    "sha256": "060527b72cd4eea7aeb416ec0840284b8c7986051cca4618c25031801bd18fb3",
+    "bytes": 416630843
+  },
+  "transport": "private Unix socket; TCP disabled",
+  "ownership_acl_restored": false,
+  "source_sha256": {
+    "models/staging/schema.yml": "aed3b520c0bc9b51851f9590eee16b0cfbb2f359df5c0290d16eaeca7a02b4bb",
+    "models/staging/lc_loans_clean.sql": "8287e14da4c45d9395527887c290770dc8ab8c6c1b3fbaffb12d558b997d8d45",
+    "models/staging/fred_macro_clean.sql": "54c7f85a5106c306d17da5ef86cee174338f23713341b55543da3f1b2cca0b7a",
+    "models/staging/sources.yml": "41fc37f843ef646ebf638f8ce4f5573a7714de13c7c82c86c9a42d120f931560",
+    "models/mart/schema.yml": "4566e93c8fcc9dbc9631e1e89922f0fc1d3f55594e162137b6792cf03c287449",
+    "models/mart/final_features.sql": "702169155ee4cad880286e2938bdeca545fcd2cbcc38936d86cb2e60dd65617e",
+    "models/mart/loan_features.sql": "b80edb49d2e4ef1d375f2846c9683c60f8b9eda0739e500b83c53df5986eec7f",
+    "models/mart/macro_features.sql": "9ebedef9f07acc63846259955d685300776e98a82766f1a85a8a7c4a27cee840",
+    "macros/generate_schema_name.sql": "1f4dfc70df10b892cdeead85c3d2b33807c0f922b495369207763407e4453073",
+    "tests/dbt/reconcile_loan_counts.sql": "9b16a9e543d644c5f821922d78d13fb32057761bf364fc4fa76fd978a6d83deb",
+    "tests/dbt/loan_label_contract.sql": "2d0e521f5232cd48d44af03a140ca84a012101300ef6d912c2e22a707f9c0967",
+    "tests/dbt/nonempty_required_models.sql": "41048fe768fe6e05d56bc5dfd08ede40619fa95159db56d9980219f800a75955"
+  },
+  "script_sha256": "3853274294db8dec66188dbabed30ad11ae164316ff7b294f3614b0d3d695b7a",
+  "steps": [
+    {
+      "step": "initdb",
+      "exit_code": 0
+    },
+    {
+      "step": "start",
+      "exit_code": 0
+    },
+    {
+      "step": "createdb",
+      "exit_code": 0
+    },
+    {
+      "step": "restore_archive",
+      "exit_code": 0
+    },
+    {
+      "step": "build_new_labels",
+      "exit_code": 0
+    },
+    {
+      "step": "rollback_label_relations",
+      "exit_code": 0
+    },
+    {
+      "step": "stop",
+      "exit_code": 0
+    }
+  ],
+  "server_version": "14.22 (Homebrew)",
+  "before": {
+    "layers": {
+      "staging.lc_loans_clean": {
+        "count": 2260668,
+        "unique_ids": 2260668,
+        "zero": 1076751,
+        "one": 290066,
+        "null": 893851,
+        "mismatches": 21467
+      },
+      "mart.loan_features": {
+        "count": 2260668,
+        "unique_ids": 2260668,
+        "zero": 1076751,
+        "one": 290066,
+        "null": 893851,
+        "mismatches": 21467
+      },
+      "mart.final_features": {
+        "count": 2260668,
+        "unique_ids": 2260668,
+        "zero": 1076751,
+        "one": 290066,
+        "null": 893851,
+        "mismatches": 21467
+      }
+    },
+    "input_fingerprints": {
+      "raw.lc_loans": [
+        2260668,
+        "-13264400112900421822230"
+      ],
+      "mart.macro_features": [
+        954,
+        "65634642451850055254"
+      ]
+    },
+    "view_definition_sha256": "1a09600d57d191364b5535d5a378c06c000468cb01d8d96000fd71f7a34dc46d"
+  },
+  "disk_free_before_build": 13316788224,
+  "dbt_results": [
+    {
+      "unique_id": "model.creditlens.lc_loans_clean",
+      "status": "success",
+      "failures": null
+    },
+    {
+      "unique_id": "test.creditlens.not_null_lc_loans_clean_loan_id.4d29caf7e2",
+      "status": "pass",
+      "failures": 0
+    },
+    {
+      "unique_id": "test.creditlens.unique_lc_loans_clean_loan_id.d425861d88",
+      "status": "pass",
+      "failures": 0
+    },
+    {
+      "unique_id": "model.creditlens.loan_features",
+      "status": "success",
+      "failures": null
+    },
+    {
+      "unique_id": "test.creditlens.accepted_values_loan_features_is_default__0__1.ec342397f9",
+      "status": "pass",
+      "failures": 0
+    },
+    {
+      "unique_id": "test.creditlens.not_null_loan_features_id.8e39b8e782",
+      "status": "pass",
+      "failures": 0
+    },
+    {
+      "unique_id": "test.creditlens.not_null_loan_features_installment_to_income_ratio.2db3bc5379",
+      "status": "pass",
+      "failures": 0
+    },
+    {
+      "unique_id": "test.creditlens.unique_loan_features_id.5544512f92",
+      "status": "pass",
+      "failures": 0
+    },
+    {
+      "unique_id": "model.creditlens.final_features",
+      "status": "success",
+      "failures": null
+    },
+    {
+      "unique_id": "test.creditlens.accepted_values_final_features_is_default__0__1.7521f57ca0",
+      "status": "pass",
+      "failures": 0
+    },
+    {
+      "unique_id": "test.creditlens.loan_label_contract",
+      "status": "pass",
+      "failures": 0
+    },
+    {
+      "unique_id": "test.creditlens.nonempty_required_models",
+      "status": "pass",
+      "failures": 0
+    },
+    {
+      "unique_id": "test.creditlens.not_null_final_features_id.c45e496212",
+      "status": "pass",
+      "failures": 0
+    },
+    {
+      "unique_id": "test.creditlens.reconcile_loan_counts",
+      "status": "pass",
+      "failures": 0
+    },
+    {
+      "unique_id": "test.creditlens.unique_final_features_id.fabb277f88",
+      "status": "pass",
+      "failures": 0
+    }
+  ],
+  "after": {
+    "layers": {
+      "staging.lc_loans_clean": {
+        "count": 2260668,
+        "unique_ids": 2260668,
+        "zero": 1076751,
+        "one": 268599,
+        "null": 915318,
+        "mismatches": 0
+      },
+      "mart.loan_features": {
+        "count": 2260668,
+        "unique_ids": 2260668,
+        "zero": 1076751,
+        "one": 268599,
+        "null": 915318,
+        "mismatches": 0
+      },
+      "mart.final_features": {
+        "count": 2260668,
+        "unique_ids": 2260668,
+        "zero": 1076751,
+        "one": 268599,
+        "null": 915318,
+        "mismatches": 0
+      }
+    },
+    "input_fingerprints": {
+      "raw.lc_loans": [
+        2260668,
+        "-13264400112900421822230"
+      ],
+      "mart.macro_features": [
+        954,
+        "65634642451850055254"
+      ]
+    },
+    "view_definition_sha256": "158122928d2ee5711a71ebdc3edcb7100a989813d6f135d3ab36beda626751a3"
+  },
+  "non_label_row_differences": {
+    "staging.lc_loans_clean": 0,
+    "mart.loan_features": 0,
+    "mart.final_features": 0
+  },
+  "rollback": {
+    "layers": {
+      "staging.lc_loans_clean": {
+        "count": 2260668,
+        "unique_ids": 2260668,
+        "zero": 1076751,
+        "one": 290066,
+        "null": 893851,
+        "mismatches": 21467
+      },
+      "mart.loan_features": {
+        "count": 2260668,
+        "unique_ids": 2260668,
+        "zero": 1076751,
+        "one": 290066,
+        "null": 893851,
+        "mismatches": 21467
+      },
+      "mart.final_features": {
+        "count": 2260668,
+        "unique_ids": 2260668,
+        "zero": 1076751,
+        "one": 290066,
+        "null": 893851,
+        "mismatches": 21467
+      }
+    },
+    "input_fingerprints": {
+      "raw.lc_loans": [
+        2260668,
+        "-13264400112900421822230"
+      ],
+      "mart.macro_features": [
+        954,
+        "65634642451850055254"
+      ]
+    },
+    "view_definition_sha256": "1a09600d57d191364b5535d5a378c06c000468cb01d8d96000fd71f7a34dc46d"
+  },
+  "rollback_row_differences": {
+    "staging.lc_loans_clean": 0,
+    "mart.loan_features": 0,
+    "mart.final_features": 0
+  },
+  "cluster_stopped": true,
+  "disk_free_after": 13389373440,
+  "finished_at_utc": "2026-09-11T09:06:28.991455+00:00"
+}

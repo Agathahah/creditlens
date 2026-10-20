@@ -51,6 +51,7 @@ def registry() -> ModelRegistry:
             outcome_name="is_default",
         ),
         expected_features=FEATURES,
+        bundle_verified=True,
     )
 
 
@@ -172,6 +173,7 @@ def test_predict_fetches_features_from_online_store(
         predictor=registry.predictor,
         explainer=registry.explainer,
         expected_features=registry.expected_features,
+        bundle_verified=True,
         feature_fetcher=lambda loan_id: features if loan_id == "app-low-001" else None,
     )
     fetch_client = TestClient(create_app(registry=fetching_registry))
@@ -190,6 +192,7 @@ def test_predict_without_features_or_fetcher_is_rejected(registry: ModelRegistry
         predictor=registry.predictor,
         explainer=registry.explainer,
         expected_features=registry.expected_features,
+        bundle_verified=True,
     )
     bare_client = TestClient(create_app(registry=bare_registry))
     response = bare_client.post("/predict", json={"applicant_id": "app-low-001"})
@@ -215,6 +218,7 @@ def test_survival_endpoint(registry: ModelRegistry) -> None:
         predictor=registry.predictor,
         explainer=registry.explainer,
         expected_features=registry.expected_features,
+        bundle_verified=True,
         survival_model=survival_model,
     )
     surv_client = TestClient(create_app(registry=surv_registry))
