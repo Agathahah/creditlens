@@ -77,3 +77,19 @@ Rilis hanya mengacu lingkungan, beban dan scope yang benar-benar diuji. Tidak ad
 production atau regulatory compliance dari CI, jumlah baris, deployment dashboard atau
 AP-lift saja. LendingClub dan Freddie tetap track berbeda; model hipotek tidak mengganti
 model aplikasi LendingClub. Tidak ada pembelian hosting, aktivasi scoring atau merge.
+
+
+## 20 Oktober 2026 — jurnal inferensi dan simulasi label tertunda
+
+API riset kini memiliki ID request dari server dan jurnal SQLite privat opsional; penulisan
+gagal menahan respons sukses. HMAC dengan kunci terpisah menghubungkan konteks sintetis ke
+prediksi terverifikasi. Pengulangan tidak menggandakan pengamatan kualitas. Label tiga bulan
+mempertahankan batas ketersediaan, ketidaklengkapan, idempotensi dan konflik bukti. Integrasi
+HTTP model nyata dengan outcome buatan telah diuji. Lihat
+[kontrak monitoring](FREDDIE_INFERENCE_MONITORING.md).
+
+Urutan berikutnya adalah penerimaan integrasi lokal, kemudian kontrak pilot: pemilik/operator,
+populasi/produk, hak penggunaan layanan, timestamp ketersediaan/koreksi asli dan outcome nyata.
+Penyimpanan riwayat serta jurnal persisten di lingkungan layanan, backup/restore/retensi,
+HTTPS/rotasi kredensial dan penerimaan kapasitas perlu diuji sebelum pilot operasional. Hasil
+simulasi tidak membuka scoring fintech atau mengubah sumber riset menjadi izin layanan.

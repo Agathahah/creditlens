@@ -66,3 +66,5 @@ Raw data, credentials and backup archives are not repository deliverables. Histo
 - [Monthly record adapter](FREDDIE_MONTHLY_ADAPTER_CONTRACT.md): supplied availability/correction selection, locked feature parity and authenticated loopback client boundaries.
 
 - [Isolated mortgage API container acceptance](FREDDIE_CONTAINER_ACCEPTANCE.md): private mounted artifacts, pinned public image, synthetic parity, bounded diagnostics and restart/recovery evidence.
+
+- [Private inference audit and synthetic delayed-label contract](FREDDIE_INFERENCE_MONITORING.md) — server request IDs, local journal, canonical links and outcome timing boundaries.

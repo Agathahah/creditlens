@@ -5,11 +5,14 @@ from __future__ import annotations
 import argparse
 import hmac
 import math
+import sqlite3
 from collections import deque
+from datetime import UTC, datetime
 from pathlib import Path
 from threading import Lock
 from time import monotonic
 from typing import Any
+from uuid import uuid4
 
 import joblib
 import numpy as np
@@ -25,6 +28,7 @@ from threadpoolctl import threadpool_limits
 from src.research.freddie_history_test import EXECUTION_SHA
 from src.research.freddie_history_train import PROTOCOL_SHA
 from src.research.freddie_metrics import validation_gates
+from src.research.freddie_monitoring import AuditStore
 from src.research.freddie_preflight import read_object, sha256
 from src.research.freddie_release import assess_validation_candidate
 
@@ -123,12 +127,13 @@ def verify_bundle(path: Path) -> tuple[dict[str, Any], Any]:
     return bundle, model
 
 
-def create_app(bundle_path: Path, token: str) -> FastAPI:
+def create_app(bundle_path: Path, token: str, audit_db: Path | None = None) -> FastAPI:
     """Create a bounded research app; the executable binds only to loopback.
 
     Args:
         bundle_path: Accepted private research bundle.
         token: Owner-only random bearer credential, at least32characters.
+        audit_db: Optional bounded private SQLite journal outside Git.
 
     Returns:
         Authenticated app with explicit research and production statuses.
@@ -139,6 +144,7 @@ def create_app(bundle_path: Path, token: str) -> FastAPI:
     if len(token) < 32:
         raise ValueError("A private random bearer token of at least32characters is required")
     bundle, model = verify_bundle(bundle_path)
+    journal = AuditStore(audit_db) if audit_db is not None else None
     app = FastAPI(
         title="CreditLens private mortgage research",
         docs_url=None,
@@ -153,8 +159,7 @@ def create_app(bundle_path: Path, token: str) -> FastAPI:
         """Reject malformed input without echoing feature values or non-JSON NaN tokens."""
         return JSONResponse({"detail": "Invalid research feature request"}, status_code=422)
 
-    @app.middleware("http")
-    async def boundary(request: Request, call_next: Any) -> Any:
+    async def dispatch(request: Request, call_next: Any) -> Any:
         authorization = request.headers.get("authorization", "")
         if not hmac.compare_digest(authorization.encode(), ("Bearer " + token).encode()):
             return JSONResponse({"detail": "Authentication required"}, status_code=401)
@@ -171,7 +176,37 @@ def create_app(bundle_path: Path, token: str) -> FastAPI:
                 return JSONResponse({"detail": "Request body too large"}, status_code=413)
             body.extend(chunk)
         request._body = bytes(body)
-        response = await call_next(request)
+        return await call_next(request)
+
+    @app.middleware("http")
+    async def boundary(request: Request, call_next: Any) -> Any:
+        request.state.request_id = str(uuid4())
+        request.state.audit_probability = None
+        started_at, started = datetime.now(UTC), monotonic()
+        try:
+            response = await dispatch(request, call_next)
+        except Exception:
+            # Keep model/input exceptions out of responses and private audit payloads.
+            request.state.audit_probability = None
+            response = JSONResponse({"detail": "Research request unavailable"}, status_code=503)
+        if journal is not None:
+            route = request.url.path if request.url.path in ("/score", "/ready") else "/other"
+            method = request.method if request.method in ("GET", "POST") else "OTHER"
+            try:
+                journal.record(
+                    request.state.request_id,
+                    started_at,
+                    method,
+                    route,
+                    response.status_code,
+                    (monotonic() - started) * 1000,
+                    bundle["model_id"],
+                    bundle["candidate_sha256"],
+                    request.state.audit_probability,
+                )
+            except (ValueError, OSError, sqlite3.Error):
+                response = JSONResponse({"detail": "Research audit unavailable"}, status_code=503)
+        response.headers["X-Request-ID"] = request.state.request_id
         response.headers["Cache-Control"] = "no-store"
         response.headers["X-Content-Type-Options"] = "nosniff"
         return response
@@ -181,6 +216,7 @@ def create_app(bundle_path: Path, token: str) -> FastAPI:
         """Report private research readiness separately from production scoring."""
         return {
             "research_ready": True,
+            "audit_enabled": journal is not None,
             "production_scoring_release": "HOLD",
             "scope": RESEARCH_SCOPE,
             "model_id": bundle["model_id"],
@@ -189,7 +225,7 @@ def create_app(bundle_path: Path, token: str) -> FastAPI:
         }
 
     @app.post("/score")
-    def score(payload: FeatureRequest) -> dict[str, Any]:
+    def score(payload: FeatureRequest, request: Request) -> dict[str, Any]:
         """Predict one exact ordered feature vector with the already-fitted pipeline."""
         if set(payload.features) != set(bundle["features"]):
             raise HTTPException(status_code=422, detail="Exact feature schema required")
@@ -247,7 +283,9 @@ def create_app(bundle_path: Path, token: str) -> FastAPI:
             probability = float(model.predict_proba(frame)[0, 1])
         if not math.isfinite(probability) or not 0 <= probability <= 1:
             raise HTTPException(status_code=503, detail="Research model output unavailable")
+        request.state.audit_probability = probability
         return {
+            "request_id": request.state.request_id,
             "probability": probability,
             "horizon_months": 3,
             "model_id": bundle["model_id"],
@@ -265,6 +303,7 @@ def main() -> None:
     parser.add_argument("--bundle", type=Path, required=True)
     parser.add_argument("--token-file", type=Path, required=True)
     parser.add_argument("--port", type=int, default=8001)
+    parser.add_argument("--audit-db", type=Path)
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[2]
     for path in (args.bundle, args.token_file):
@@ -273,7 +312,7 @@ def main() -> None:
     if not 1024 <= args.port <= 65535:
         raise ValueError("Invalid research port")
     print("Memeriksa bundle model riset privat...", flush=True)
-    app = create_app(args.bundle, args.token_file.read_text().strip())
+    app = create_app(args.bundle, args.token_file.read_text().strip(), args.audit_db)
     print(
         "Bundle terverifikasi. Memulai API lokal; tunggu pesan 'Uvicorn running on'. "
         "Biarkan terminal ini terbuka dan gunakan terminal kedua untuk mencoba scoring. "

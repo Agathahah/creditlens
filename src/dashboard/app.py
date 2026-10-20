@@ -956,7 +956,7 @@ def _monthly_research(evidence: Evidence) -> None:
         "Studi Freddie Mac yang terpisah mengembangkan pola panel bulanan untuk "
         "pemantauan setelah pencairan, dengan populasi hipotek AS."
     )
-    st.caption("Status lokal: 19 Oktober 2026 · V4 validation lulus · Ujian independen lulus")
+    st.caption("Status lokal: 20 Oktober 2026 · V4 validation lulus · Ujian independen lulus")
     _flow(
         [
             ("Panel bulanan", "Satu pinjaman × bulan laporan"),
@@ -1060,6 +1060,15 @@ def _monthly_research(evidence: Evidence) -> None:
         "Bundle dengan checksum salah menahan startup, lalu restart dengan pasangan "
         "image dan bundle yang baik memulihkan readiness. Beban sintetis kecil ini "
         "belum membuktikan kapasitas layanan atau akses publik."
+    )
+    st.subheader("Jejak prediksi dan outcome tertunda — 20 Oktober 2026")
+    st.write(
+        "API riset dapat mencatat ID request, versi model dan hasil scoring ke jurnal "
+        "privat. Request berulang tetap dihitung sebagai trafik, tetapi tidak menambah "
+        "jumlah pengamatan kualitas untuk pinjaman dan bulan yang sama. Pengujian "
+        "outcome sintetis membedakan label buruk, tidak buruk dan belum dapat dipastikan. "
+        "Label yang belum tersedia tidak diperlakukan sebagai nol. Ini membuktikan "
+        "alur integrasi monitoring; kualitas pinjaman aktif belum terukur."
     )
     st.subheader("Evaluasi dan rilis berikutnya")
     st.write(

@@ -1,6 +1,6 @@
 # CreditLens project status
 
-Updated 2026-10-19. M0 recovery and bounded LendingClub M1 are complete; the historical
+Updated 2026-10-20. M0 recovery and bounded LendingClub M1 are complete; the historical
 LendingClub model remains rejected. Separate Freddie v4 past-history research has passed
 both development validation and its one-shot independent vintage2022 test. Vintage2020/2022
 are consumed. A private loopback feature-scoring API and real offline/reload/HTTP parity
@@ -68,6 +68,26 @@ raw monthly-record/online-history adapter. No public model/data/API deployment o
 [The v4 contract and evidence](docs/FREDDIE_V4_HISTORY_PROTOCOL.md) records the exact scope,
 limitations and remaining operational gates. Numerical mortgage outputs, weights, tokens,
 notebooks and owner learning instructions stay private.
+
+## 2026-10-20 — private inference journal and synthetic delayed outcomes
+
+Feature and monthly client execution succeeded. The research API now
+returns server-generated request IDs and optionally commits a bounded private SQLite audit
+before returning a successful score. The journal records sanitized request metadata, model
+identity and successful probability; credentials, raw features and loan identifiers are excluded.
+Audit failure returns503. Separate HMAC context linking deduplicates exact model/loan/month
+retries while retaining every traffic event.
+
+Synthetic-only follow-up intake reuses the locked three-month label, explicit availability
+cutoffs and censoring rules. Resolved evidence must become available after actual scoring;
+conflicts fail closed, replay is idempotent and censored revisions are retained. Reports
+separate pending/censored/resolved observations by model. Actual accepted-model HTTP requests
+and toy future-outcome integration passed locally; these diagnostics establish monitoring
+plumbing, not prospective credit quality, source rights or production release.
+
+No source archive, fit, independent retest or threshold change occurred. The main LendingClub
+model remains rejected; the private mortgage candidate remains unchanged and accepted only
+for retrospective research. See [the monitoring contract](docs/FREDDIE_INFERENCE_MONITORING.md).
 
 ## 2026-10-19 — isolated research API packaging and recovery
 

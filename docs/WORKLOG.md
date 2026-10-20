@@ -516,3 +516,17 @@ check to python3 restored its positive/negative contracts. Final local suite: 31
 pass; the two new typed scripts also pass mypy with explicit namespace-package mapping.
 Numeric mortgage/diagnostic reports, credentials, source, model and owner learning/execution
 instructions stay private. No public scoring/model publication, merge or hosting spend.
+
+
+## 2026-10-20 — inference audit and synthetic delayed-label integration
+
+Implemented optional owner-only SQLite auditing outside Git, server UUIDs, sanitized request
+metadata and503on audit failure. A separate HMAC key links declared synthetic loan-month
+contexts to successful persisted scores. Exact retries retain one quality observation per
+model/key/loan/month; traffic remains complete. Reused the locked three-month panel label
+with explicit follow-up availability, gap/unknown/termination censoring, post-inference
+resolved-label timing, idempotency and conflict protection. Reports keep synthetic quality
+and actual request traffic separate. Real accepted-model HTTP plus toy future outcome checks
+passed locally; no source archive, training, test reopening or public scoring occurred.
+Numerical/private receipts and owner instructions remain outside Git. Production acceptance
+and authentic operational availability/outcomes remain open.
