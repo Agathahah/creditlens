@@ -67,7 +67,7 @@ must also pass its audit write. The schema is v1, with no automatic migration/ov
 an unrelated existing SQLite file. This journal is local and bounded, without rotation,
 retention scheduling, multi-node storage or operational alert delivery.
 
-The current container integration harness exercises the default serving mode. Native
+At introduction, the container integration harness exercised the default serving mode. Native
 journal verification does not establish persistent-volume journaling, backup/restore or
 multi-worker behavior in a deployed container. These remain separate operating checks.
 
@@ -78,3 +78,9 @@ the journal module is 94%. The demo orchestration has no unit coverage in that s
 instead exercised separately against the actual accepted model. Real database/server and
 container receipts remain private. Skipped optional integrations and uncovered failure/CLI
 branches are not treated as production acceptance.
+
+
+Follow-up20October2026: [the separate persistent-journal drill](FREDDIE_JOURNAL_RECOVERY.md)
+now verifies a writable state bind mount, container replacement, unavailable-journal503,
+online backup and fresh restore with committed scoring. It remains a same-host toy-context
+drill; off-host recovery, scheduling/retention and actual operating acceptance remain open.

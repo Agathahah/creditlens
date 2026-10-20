@@ -176,7 +176,32 @@ def _probe(container: str, action: str) -> dict[str, Any]:
     return dict(json.loads(_docker("exec", container, "python", "-c", PROBE, action).stdout))
 
 
-def _start(image: str, package: Path, name: str, owner: str) -> str:
+def _start(
+    image: str, package: Path, name: str, owner: str, audit_directory: Path | None = None
+) -> str:
+    audit_mount = (
+        []
+        if audit_directory is None
+        else [
+            "--no-healthcheck",
+            "--mount",
+            f"type=bind,src={audit_directory.resolve()},dst=/run/audit",
+        ]
+    )
+    audit_arguments = (
+        []
+        if audit_directory is None
+        else [
+            "--bundle",
+            "/run/research/bundle_manifest.json",
+            "--token-file",
+            "/run/research/api_token.txt",
+            "--port",
+            "8001",
+            "--audit-db",
+            "/run/audit/audit.sqlite",
+        ]
+    )
     _docker(
         "run",
         "--detach",
@@ -203,7 +228,9 @@ def _start(image: str, package: Path, name: str, owner: str) -> str:
         f"{os.getuid()}:{os.getgid()}",
         "--mount",
         f"type=bind,src={package.resolve()},dst=/run/research,readonly",
+        *audit_mount,
         image,
+        *audit_arguments,
     )
     return name
 

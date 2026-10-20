@@ -51,3 +51,13 @@ The new Research API Image Packaging CI job builds only public software/configur
 verifies runtime pins, non-root/no-private-artifact image content and missing-bundle refusal.
 It does not receive private weights, numerical reports or tokens; its PASS cannot substitute
 for the separate real accepted-bundle local verification or an operating release decision.
+
+
+## Follow-up — persistent journal recovery,20October2026
+
+A [separate stateful acceptance drill](FREDDIE_JOURNAL_RECOVERY.md) exercises the same accepted
+image with only a private journal bind mount writable. Earlier rows survive container
+replacement; a temporarily unavailable journal holds scoring with503. Online backup plus
+key/schema/logical validation restores into a fresh container/state directory and permits
+committed scoring. The request after the backup is explicitly outside its recovery point.
+No zero-loss, off-host failover, public ingress or production acceptance is claimed.

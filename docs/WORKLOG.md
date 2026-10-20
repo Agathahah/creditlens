@@ -530,3 +530,16 @@ and actual request traffic separate. Real accepted-model HTTP plus toy future ou
 passed locally; no source archive, training, test reopening or public scoring occurred.
 Numerical/private receipts and owner instructions remain outside Git. Production acceptance
 and authentic operational availability/outcomes remain open.
+
+
+## 2026-10-20 — persistent research journal and verified recovery
+
+Implemented owner-only SQLite online backup and fresh-directory restore with schema v1,
+integrity/foreign-key, HMAC-key and logical row reconciliation. An accepted-model Docker
+drill preserves journal rows across container replacement, verifies503on unavailable state,
+resumes writes and restores a verified backup into a fresh state/container. One successful
+post-backup request is explicitly outside the recovery point. A corrupt backup copy is
+rejected before a restore target is created. The chmod-only preliminary fault failed to
+block writes on Docker Desktop; its failed evidence is retained. Original journal/key,
+model and source archives are unchanged. Private receipts, backups and owner guides stay
+outside Git. No new evaluation, operational outcomes, public scoring or production promotion.

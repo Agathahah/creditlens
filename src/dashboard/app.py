@@ -1179,6 +1179,15 @@ def _deployment(evidence: Evidence) -> None:
         "berhasil dipulihkan melalui restart. Container tidak membuka port publik. "
         "Ini terpisah dari bukti Docker dashboard di atas."
     )
+    st.subheader("Jurnal persisten dan pemulihan — 20 Oktober 2026")
+    st.write(
+        "Jurnal prediksi tersimpan di luar container dan tetap utuh ketika container "
+        "uji diganti. Gangguan pada file jurnal menahan scoring; setelah jurnal "
+        "dikembalikan, penulisan kembali berjalan. Backup SQLite dan kunci penghubung "
+        "diverifikasi sebelum pemulihan ke folder baru. Request sesudah titik backup "
+        "belum tercakup dalam hasil restore. Pengujian ini memakai konteks sintetis "
+        "pada Mac yang sama; pemulihan off-host dan penerimaan operasi masih terbuka."
+    )
     st.subheader("Urutan menuju layanan scoring fintech")
     _flow(
         [

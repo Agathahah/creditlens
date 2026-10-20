@@ -69,6 +69,26 @@ raw monthly-record/online-history adapter. No public model/data/API deployment o
 limitations and remaining operational gates. Numerical mortgage outputs, weights, tokens,
 notebooks and owner learning instructions stay private.
 
+## 2026-10-20 — persistent Docker journal and backup recovery
+
+A separate local drill preserved the original synthetic monitoring journal and HMAC key,
+then verified accepted-model scoring against a writable owner-only journal bind mount.
+Removing and recreating the test container preserved all earlier rows. A temporarily missing
+test-copy journal produced503without a successful score; returning it restored committed
+writes. A chmod-only preliminary fault did not block writes on this Docker Desktop bind
+mount and is retained as failed evidence, not a passed storage-security test.
+
+SQLite online backup, integrity/schema/foreign-key checks, key identity and logical table
+fingerprints admit only verified snapshots. Restore requires a fresh private directory;
+corrupt copies and existing targets are rejected. Same-image scoring after restoration
+matched the unchanged candidate and persisted new request IDs. The post-backup request was
+explicitly excluded from recovery, accounting for the backup point rather than claiming
+zero data loss. Temporary owned containers were removed; original artifacts are unchanged.
+
+This same-host, network-none synthetic drill does not establish off-host recovery, retention,
+public ingress, authentic operational outcomes or production acceptance. See
+[the journal recovery contract](docs/FREDDIE_JOURNAL_RECOVERY.md).
+
 ## 2026-10-20 — private inference journal and synthetic delayed outcomes
 
 Feature and monthly client execution succeeded. The research API now

@@ -93,3 +93,19 @@ populasi/produk, hak penggunaan layanan, timestamp ketersediaan/koreksi asli dan
 Penyimpanan riwayat serta jurnal persisten di lingkungan layanan, backup/restore/retensi,
 HTTPS/rotasi kredensial dan penerimaan kapasitas perlu diuji sebelum pilot operasional. Hasil
 simulasi tidak membuka scoring fintech atau mengubah sumber riset menjadi izin layanan.
+
+
+## 20 Oktober 2026 — persistensi dan pemulihan jurnal lokal terverifikasi
+
+Pengujian terpisah membuktikan jurnal tetap utuh saat container diganti, scoring ditahan503
+ketika jurnal uji hilang, dan penulisan pulih setelah jurnal dikembalikan. Backup SQLite
+beserta kunci penghubung diperiksa dengan checksum, schema, foreign key dan sidik baris.
+Restore ke folder baru menolak backup rusak, menjaga titik pemulihan dan menerima request
+baru dengan model yang sama. Satu request sesudah backup sengaja berada di luar snapshot;
+pemulihan ini tidak diklaim tanpa kehilangan data. Lihat
+[kontrak pemulihan](FREDDIE_JOURNAL_RECOVERY.md).
+
+Langkah berikutnya adalah kontrak pilot privat dan riwayat dengan timestamp ketersediaan
+asli, kemudian penyimpanan operasional, backup off-host/retensi, siklus kredensial, penerimaan
+kapasitas dan outcome nyata yang matang. Hasil hipotek retrospektif dan data sintetis tidak
+menggantikan syarat populasi/hak penggunaan atau membenarkan scoring fintech publik.

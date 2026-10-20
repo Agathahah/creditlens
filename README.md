@@ -25,6 +25,7 @@ live lending decisions. No measured loss reduction or operational business retur
 | Monthly adapter and API | Supplied-availability checks; batch/reload/HTTP parity on synthetic monthly input | Authentic operational timestamps/history store remain open |
 | Research API container | Pinned software-only image; isolated accepted-bundle parity, invalid-input and restart/recovery verification | Local network-none synthetic workload; not public ingress or an operating SLO |
 | Inference audit and delayed labels | Private request journal, retry deduplication and explicitly synthetic three-month outcome diagnostics | Real operational outcomes, central logging and prospective quality remain unverified |
+| Journal persistence and recovery | Container replacement, online SQLite backup, key/row reconciliation, write-failure and corrupt-backup rejection | Same-host synthetic drill; off-host recovery, retention and operating acceptance remain open |
 | Fintech production scoring | HOLD | Product/population/rights, real data availability and operating acceptance remain required |
 
 The API candidate is unchanged by container verification. No new training, threshold selection

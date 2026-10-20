@@ -68,3 +68,5 @@ Raw data, credentials and backup archives are not repository deliverables. Histo
 - [Isolated mortgage API container acceptance](FREDDIE_CONTAINER_ACCEPTANCE.md): private mounted artifacts, pinned public image, synthetic parity, bounded diagnostics and restart/recovery evidence.
 
 - [Private inference audit and synthetic delayed-label contract](FREDDIE_INFERENCE_MONITORING.md) — server request IDs, local journal, canonical links and outcome timing boundaries.
+
+- [Private journal persistence and backup recovery](FREDDIE_JOURNAL_RECOVERY.md) — bounded container state, verified snapshots, fresh restore and recovery-point accounting.
