@@ -142,3 +142,15 @@ versi, secret dipindahkan dari default development, dan kebutuhan disk diperiksa
 
 Sampai langkah tersebut selesai, Docker hanya membuktikan API dapat dipaketkan dan menolak scoring
 ketika model tidak tersedia.
+
+
+## Private HTTPS acceptance
+
+The current source also supports paired `--tls-cert-file`/`--tls-key-file` on the private
+research API and `--ca-file` on the monthly client. Explicit CA trust preserves normal
+certificate/IP checks; no insecure fallback or non-loopback binding is added. The
+[transport contract](PRIVATE_RESEARCH_TRANSPORT_ACCEPTANCE.md) describes the isolated
+network-none Docker verification, synthetic input, journal preservation and restart-based
+test credential rotation. Certificates/private keys are runtime files outside Git and must
+never enter the image. The operational pilot remains NOT_ADMITTED under the
+[pilot contract](PRIVATE_MORTGAGE_PILOT_CONTRACT.md).

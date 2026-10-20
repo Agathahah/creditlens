@@ -6,6 +6,7 @@ import argparse
 import hmac
 import math
 import sqlite3
+import ssl
 from collections import deque
 from datetime import UTC, datetime
 from pathlib import Path
@@ -28,7 +29,7 @@ from threadpoolctl import threadpool_limits
 from src.research.freddie_history_test import EXECUTION_SHA
 from src.research.freddie_history_train import PROTOCOL_SHA
 from src.research.freddie_metrics import validation_gates
-from src.research.freddie_monitoring import AuditStore
+from src.research.freddie_monitoring import AuditStore, private_file
 from src.research.freddie_preflight import read_object, sha256
 from src.research.freddie_release import assess_validation_candidate
 
@@ -297,6 +298,29 @@ def create_app(bundle_path: Path, token: str, audit_db: Path | None = None) -> F
     return app
 
 
+def validate_tls_pair(cert_file: Path | None, key_file: Path | None) -> None:
+    """Require a complete bounded private certificate/key pair before loading a model.
+
+    Args:
+        cert_file: Optional owner-only certificate chain outside the repository.
+        key_file: Matching owner-only PEM private key outside the repository.
+
+    Raises:
+        ValueError: Partial pair, unsafe path or oversized certificate/key input.
+        ssl.SSLError: Invalid certificate or mismatched key.
+    """
+    if cert_file is None and key_file is None:
+        return
+    if cert_file is None or key_file is None:
+        raise ValueError("Both TLS certificate and private key are required")
+    for path in (cert_file, key_file):
+        private_file(path)
+        if path.stat().st_size > 32768:
+            raise ValueError("Bounded TLS certificate and key required")
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    context.load_cert_chain(cert_file, key_file)
+
+
 def main() -> None:
     """Serve only on127.0.0.1 with a token read from an owner-only file, never printed."""
     parser = argparse.ArgumentParser(description=__doc__)
@@ -304,6 +328,8 @@ def main() -> None:
     parser.add_argument("--token-file", type=Path, required=True)
     parser.add_argument("--port", type=int, default=8001)
     parser.add_argument("--audit-db", type=Path)
+    parser.add_argument("--tls-cert-file", type=Path)
+    parser.add_argument("--tls-key-file", type=Path)
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[2]
     for path in (args.bundle, args.token_file):
@@ -311,6 +337,7 @@ def main() -> None:
             raise ValueError("Bundle and credential must be owner-only and outside Git")
     if not 1024 <= args.port <= 65535:
         raise ValueError("Invalid research port")
+    validate_tls_pair(args.tls_cert_file, args.tls_key_file)
     print("Memeriksa bundle model riset privat...", flush=True)
     app = create_app(args.bundle, args.token_file.read_text().strip(), args.audit_db)
     print(
@@ -319,7 +346,16 @@ def main() -> None:
         "Ctrl+C menghentikan server.",
         flush=True,
     )
-    uvicorn.run(app, host="127.0.0.1", port=args.port, access_log=False, log_level="info")
+    uvicorn.run(
+        app,
+        host="127.0.0.1",
+        port=args.port,
+        access_log=False,
+        log_level="info",
+        ssl_certfile=str(args.tls_cert_file) if args.tls_cert_file else None,
+        ssl_keyfile=str(args.tls_key_file) if args.tls_key_file else None,
+        ssl_version=ssl.PROTOCOL_TLS_SERVER,
+    )
 
 
 if __name__ == "__main__":

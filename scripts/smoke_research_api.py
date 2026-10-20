@@ -177,7 +177,12 @@ def _probe(container: str, action: str) -> dict[str, Any]:
 
 
 def _start(
-    image: str, package: Path, name: str, owner: str, audit_directory: Path | None = None
+    image: str,
+    package: Path,
+    name: str,
+    owner: str,
+    audit_directory: Path | None = None,
+    tls: bool = False,
 ) -> str:
     audit_mount = (
         []
@@ -202,6 +207,17 @@ def _start(
             "/run/audit/audit.sqlite",
         ]
     )
+    if tls:
+        if audit_directory is None:
+            raise ValueError("TLS acceptance requires its private audit directory")
+        audit_arguments.extend(
+            [
+                "--tls-cert-file",
+                "/run/research/tls_cert.pem",
+                "--tls-key-file",
+                "/run/research/tls_key.pem",
+            ]
+        )
     _docker(
         "run",
         "--detach",

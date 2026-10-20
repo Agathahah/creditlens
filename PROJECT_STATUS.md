@@ -69,6 +69,27 @@ raw monthly-record/online-history adapter. No public model/data/API deployment o
 limitations and remaining operational gates. Numerical mortgage outputs, weights, tokens,
 notebooks and owner learning instructions stay private.
 
+## 2026-10-20 — private HTTPS and pilot admission boundary
+
+Source access remains private Freddie retrospective samples; an authorized operational
+servicing source and authentic availability/correction feed are absent. The operational
+pilot is NOT_ADMITTED. The [pilot contract](docs/PRIVATE_MORTGAGE_PILOT_CONTRACT.md) records
+the business workflow, required provider/operator evidence and fixed admission sequence.
+No source acceptance, fitting or independent-test decision is repeated.
+
+The loopback API now optionally accepts a complete bounded owner-only TLS certificate/key
+pair, validated before model loading. The monthly client enables HTTPS only with an explicit
+private trust anchor, normal chain/IP checks and no redirect following or insecure fallback.
+Actual accepted-model native and isolated Docker HTTPS agree with the existing candidate;
+TLS1.3was negotiated. Wrong CA/hostname and plaintext were rejected. Restarting with fresh
+test-only credentials rejects the retired token401and permits a new persisted score while
+preserving earlier journal rows. Original credentials and model artifacts are unchanged.
+
+The self-signed local certificate and restart-based rotation are bounded engineering
+acceptance, not public TLS, enterprise identity, zero-downtime rotation or production admission.
+Private keys/tokens/receipts stay outside Git. See
+[the transport contract](docs/PRIVATE_RESEARCH_TRANSPORT_ACCEPTANCE.md).
+
 ## 2026-10-20 — persistent Docker journal and backup recovery
 
 A separate local drill preserved the original synthetic monitoring journal and HMAC key,

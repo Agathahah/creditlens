@@ -109,3 +109,19 @@ Langkah berikutnya adalah kontrak pilot privat dan riwayat dengan timestamp kete
 asli, kemudian penyimpanan operasional, backup off-host/retensi, siklus kredensial, penerimaan
 kapasitas dan outcome nyata yang matang. Hasil hipotek retrospektif dan data sintetis tidak
 menggantikan syarat populasi/hak penggunaan atau membenarkan scoring fintech publik.
+
+
+## 20 Oktober 2026 — transport privat dan batas penerimaan pilot
+
+Sumber yang tersedia tetap sampel Freddie untuk riset pribadi. Pilot operasional berstatus
+NOT_ADMITTED karena belum ada provider/operator serta riwayat availability/koreksi asli
+untuk penggunaan operasional. [Kontrak pilot](PRIVATE_MORTGAGE_PILOT_CONTRACT.md) mencatat
+alur analis, bukti sumber/populasi/hak penggunaan, metadata minimum dan urutan penerimaan.
+Tidak ada penerimaan sumber, training atau tes independen yang diulang.
+
+[Pengujian HTTPS privat](PRIVATE_RESEARCH_TRANSPORT_ACCEPTANCE.md) memverifikasi model yang
+sama pada native dan Docker TLS, penolakan CA/IP salah serta plaintext, dan rotasi token
+uji lewat restart dengan jurnal lama tetap utuh. Sertifikat self-signed lokal tidak masuk
+trust store dan tidak menjadi sertifikat layanan publik. Model/credential asli tidak diubah.
+Langkah operasional berikut memerlukan sumber berizin dan operator; kontrol teknis lokal
+serta penambahan sampel historis tidak menggantikan bukti tersebut.

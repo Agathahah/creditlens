@@ -1188,6 +1188,15 @@ def _deployment(evidence: Evidence) -> None:
         "belum tercakup dalam hasil restore. Pengujian ini memakai konteks sintetis "
         "pada Mac yang sama; pemulihan off-host dan penerimaan operasi masih terbuka."
     )
+    st.subheader("Koneksi privat dan penerimaan pilot")
+    st.write(
+        "Koneksi HTTPS privat sudah diuji dengan pemeriksaan sertifikat dan identitas "
+        "server. Sertifikat yang salah ditolak; penggantian token melalui restart "
+        "menutup akses token lama dan mempertahankan jurnal. Pengujian memakai "
+        "sertifikat lokal serta input sintetis. Pilot pinjaman nyata menunggu sumber "
+        "operasional berizin, riwayat ketersediaan dan koreksi asli, serta operator "
+        "yang menetapkan tindakan dan kriteria penerimaan."
+    )
     st.subheader("Urutan menuju layanan scoring fintech")
     _flow(
         [

@@ -543,3 +543,17 @@ rejected before a restore target is created. The chmod-only preliminary fault fa
 block writes on Docker Desktop; its failed evidence is retained. Original journal/key,
 model and source archives are unchanged. Private receipts, backups and owner guides stay
 outside Git. No new evaluation, operational outcomes, public scoring or production promotion.
+
+
+## 2026-10-20 — private transport and pilot admission
+
+Recorded NOT_ADMITTED operational pilot status and evidence requirements for provider,
+operator, usage/population, authentic availability/correction history and actual outcomes.
+Implemented optional private paired TLS startup validation and explicit-CA monthly HTTPS
+with certificate/IP verification, literal loopback and no redirect/insecure fallback.
+Accepted-model native and isolated Docker TLS matched the unchanged probability; incorrect
+trust/hostname and plaintext were rejected. Test-only token rotation through restart yielded
+401for the retired credential and committed scoring for its replacement with earlier journal
+rows preserved. Test keys/certificates/credentials and receipts remain private; original
+credentials, model, frozen sources and evaluations were not modified or reopened. No public
+identity, external TLS, operational pilot, hosting spend or production promotion is implied.

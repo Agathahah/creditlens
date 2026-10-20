@@ -70,3 +70,6 @@ Raw data, credentials and backup archives are not repository deliverables. Histo
 - [Private inference audit and synthetic delayed-label contract](FREDDIE_INFERENCE_MONITORING.md) — server request IDs, local journal, canonical links and outcome timing boundaries.
 
 - [Private journal persistence and backup recovery](FREDDIE_JOURNAL_RECOVERY.md) — bounded container state, verified snapshots, fresh restore and recovery-point accounting.
+
+- [Private mortgage pilot contract](PRIVATE_MORTGAGE_PILOT_CONTRACT.md) — intended operator workflow, source/timing evidence and current NOT_ADMITTED boundary.
+- [Private HTTPS and credential rotation](PRIVATE_RESEARCH_TRANSPORT_ACCEPTANCE.md) — verified local TLS, trust failures and restart-based test credential replacement.

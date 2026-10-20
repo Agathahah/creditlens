@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import argparse
 import json
-from http.client import HTTPConnection, HTTPException
+import ssl
+from http.client import HTTPConnection, HTTPException, HTTPSConnection
 from pathlib import Path
 from typing import Any
 
+from src.research.freddie_monitoring import private_file
 from src.research.freddie_monthly_adapter import (
     ADAPTER_VERSION,
     DEFAULT_PROTOCOL,
@@ -17,7 +19,11 @@ from src.research.freddie_monthly_adapter import (
 
 
 def score_snapshot(
-    snapshot: MonthlySnapshot, token: str, port: int = 8001, protocol: Path = DEFAULT_PROTOCOL
+    snapshot: MonthlySnapshot,
+    token: str,
+    port: int = 8001,
+    protocol: Path = DEFAULT_PROTOCOL,
+    ca_file: Path | None = None,
 ) -> dict[str, Any]:
     """Send only engineered features to literal loopback without redirect following.
 
@@ -26,6 +32,7 @@ def score_snapshot(
         token: Private API credential; never included in output.
         port: Unprivileged local API port.
         protocol: Immutable feature protocol.
+        ca_file: Optional owner-only trust anchor outside Git; enables verified HTTPS.
 
     Returns:
         Research score and supplied-timestamp checks, not production acceptance.
@@ -39,7 +46,15 @@ def score_snapshot(
     body = json.dumps(build_feature_request(snapshot, protocol), allow_nan=False)
     headers = {"Authorization": "Bearer " + token, "Content-Type": "application/json"}
     responses = []
-    connection = HTTPConnection("127.0.0.1", port, timeout=10)
+    connection: HTTPConnection
+    if ca_file is not None:
+        private_file(ca_file)
+        if ca_file.stat().st_size > 32768:
+            raise ValueError("Bounded private CA file required")
+        context = ssl.create_default_context(cafile=ca_file)
+        connection = HTTPSConnection("127.0.0.1", port, timeout=10, context=context)
+    else:
+        connection = HTTPConnection("127.0.0.1", port, timeout=10)
     try:
         for route, payload in (("/ready", None), ("/score", body)):
             connection.request("GET" if payload is None else "POST", route, payload, headers)
@@ -68,6 +83,8 @@ def score_snapshot(
         raise ValueError("Inconsistent research readiness/score")
     return {
         **score,
+        "transport": "https" if ca_file is not None else "http",
+        "tls_peer_verification_enabled": ca_file is not None,
         "adapter_version": ADAPTER_VERSION,
         "ready_http": 200,
         "score_http": 200,
@@ -83,6 +100,7 @@ def main() -> None:
     parser.add_argument("--snapshot", type=Path, required=True)
     parser.add_argument("--token-file", type=Path, required=True)
     parser.add_argument("--port", type=int, default=8001)
+    parser.add_argument("--ca-file", type=Path)
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[2]
     try:
@@ -92,7 +110,11 @@ def main() -> None:
         if args.snapshot.stat().st_size > 131072 or args.token_file.stat().st_size > 4096:
             raise ValueError("Private input too large")
         snapshot = MonthlySnapshot.model_validate_json(args.snapshot.read_bytes())
-        result = score_snapshot(snapshot, args.token_file.read_text().strip(), args.port)
+        result = score_snapshot(
+            snapshot, args.token_file.read_text().strip(), args.port, ca_file=args.ca_file
+        )
+    except ssl.SSLError:
+        parser.exit(2, "Verifikasi TLS gagal. Periksa CA, masa berlaku dan identitas sertifikat.\n")
     except (OSError, HTTPException):
         parser.exit(2, "API lokal belum dapat dihubungi. Jalankan server di terminal pertama.\n")
     except ValueError:
